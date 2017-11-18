@@ -7,6 +7,9 @@
 # Test binary, build with `go test -c`
 *.test
 
+# Exclude WSO2 .zip file
+wso2am-2.1.0.zip
+
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
