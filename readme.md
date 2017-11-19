@@ -7,12 +7,12 @@
 
 ## Login to API Publisher
 
-    $ https://192.168.1.161:9443/publisher
+    $ https://<host-address>:9443/publisher
     
 ## API Store
 
-    $ https://192.168.1.161:9443/store
+    $ https://<host-address>:9443/store
 
-## API Gateway
+## API Gateway (Carbon)
 
-    $ https://192.168.1.161:9443/carbon
+    $ https://<host-address>:9443/carbon
