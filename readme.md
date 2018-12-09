@@ -2,7 +2,12 @@
 
     $ docker build -f Dockerfile.builder -t tetracon/api-manager:2.1.0 .
 
-## Java site
+## Docker run
+
+    $ docker run -d -p 9443:9443 --name apim -t tetracon/api-manager:2.1.0
+
+## How-to install Java8 in the container
+
     https://hub.docker.com/r/appcela/docker-debian-oracle-jdk/~/dockerfile/
 
 ## Login to API Publisher
@@ -16,3 +21,14 @@
 ## API Gateway (Carbon)
 
     $ https://<host-address>:9443/carbon
+
+# Swagger API
+
+## Swagger Editor installation for Docker
+
+    $ docker pull swaggerapi/swagger-editor:latest
+    $ docker run -d --name sw-editor -p 8080:8080 swaggerapi/swagger-editor
+
+## Swagger Code Generator
+
+    $ 

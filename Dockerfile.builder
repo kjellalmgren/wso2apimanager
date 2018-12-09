@@ -9,11 +9,8 @@ ENV BUILD 25
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
 
-# ARG VCS_REF
-#LABEL org.label-schema.vcs-ref=$VCS_REF \
-#      org.label-schema.vcs-url="https://github.com/ihcsim/docker-wso2apim"
-
-ARG APIM_VERSION=${APIM_VERSION:-2.1.0}
+# Check to version on WSO2 web site
+ARG APIM_VERSION=${APIM_VERSION:-2.6.0}
 
 WORKDIR /opt/wso2am-${APIM_VERSION}
 
@@ -40,7 +37,7 @@ RUN apt-get update && \
     apt-get clean  && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean && \
-    echo "===> Installing API-Manager 2.1.0" && \
+    echo "===> Installing API-Manager 2.6.0" && \
     unzip /opt/wso2am-${APIM_VERSION}.zip -d /opt && \
     rm /opt/wso2am-${APIM_VERSION}.zip && \
     apt-get update && \
