@@ -1,10 +1,10 @@
 # Build WSO2 API-Manager Docker images
 
-    $ docker build -f Dockerfile.builder -t tetracon/api-manager:2.1.0 .
+    $ docker build -f Dockerfile.builder -t tetracon/api-manager:2.6.0 .
 
 ## Docker run
 
-    $ docker run -d -p 9443:9443 --name apim -t tetracon/api-manager:2.1.0
+    $ docker run -d -p 9443:9443 --name apim -t tetracon/api-manager:2.6.0
 
 ## How-to install Java8 in the container
 
