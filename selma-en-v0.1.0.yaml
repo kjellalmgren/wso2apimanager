@@ -28,7 +28,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ObjectWithLoan'
+                $ref: '#/components/schemas/ListObjectWithLoan'
         '403':
           description: Forbidden
         '404':
@@ -57,14 +57,16 @@ servers:
 components:
   schemas:
     ListObjectsWithLoan:
-      type: object
+      type: array
+      items:
+        type: object
       required:
         - id
       properties:
         id:
           type: string
           format: string
-    ListPurposesOfLoan:
+    ListPurposesWithLoan:
       type: array
       items:
         type: object
