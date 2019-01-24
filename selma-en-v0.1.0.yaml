@@ -15,7 +15,7 @@ tags:
   - name: Selma digitalt inträde för enskild näringsidkare
     description: Access Selma signed metrics
 paths:
-  /getobjectforloan:
+  /v1/getobjectforloan:
     get:
       tags:
         - getobjectforloan
@@ -33,7 +33,7 @@ paths:
           description: Forbidden
         '404':
           description: Invalid page
-  /listnumberofsigned:
+  /v1/listnumberofsigned:
     get:
       tags:
         - listnumberofsigned
