@@ -1,0 +1,78 @@
+openapi: 3.0.1
+info:
+  version: 0.1.0
+  title: Selma-EN (enskild näringsidkare)
+  description:
+    Detta API definierar den informationsmängd som flyter mellan GUI och LP-REST API för
+  termsOfService: terms
+  contact:
+    name: Kjell Almgren
+    email: kjell.almgren@landshypotek.se
+  license:
+    name: MIT
+    url: 'http://opensource.org/licenses/MIT'
+tags:
+  - name: Selma digitalt inträde för enskild näringsidkare
+    description: Access Selma signed metrics
+paths:
+  /getobjectforloan:
+    get:
+      tags:
+        - getobjectforloan
+      summary: Get object for loan (syfte ändamål)
+      description: Returnerar en lista på ändamål och syfte för lånet
+      operationId: GetObjectForLoan
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NumberOfSigned'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  /listnumberofsigned:
+    get:
+      tags:
+        - listnumberofsigned
+      summary: get list of number of signed
+      description: description....
+      operationId: ListNumberOfSigned
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListNumberOfSigned'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+servers:
+  - url: 'http://localhost:8000/'
+  - url: 'https://localhost:8000/'
+components:
+  schemas:
+    NumberOfSigned:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: string
+    ListNumberOfSigned:
+      type: array
+      items:
+        type: object
+      properties:
+        id:
+          type: string
+          format: string
+        name:
+          type: string
+          format: string
+
