@@ -13,40 +13,40 @@ info:
     url: 'http://opensource.org/licenses/MIT'
 tags:
   - name: Selma digitalt inträde för enskild näringsidkare
-    description: Access Selma signed metrics
+    description: Selma SME-Light
 paths:
-  /v1/getobjectforloan:
+  /v1/common/listobjectwithloan:
     get:
       tags:
-        - getobjectforloan
-      summary: Get object for loan (syfte ändamål)
-      description: Returnerar en lista på ändamål och syfte för lånet
-      operationId: GetObjectForLoan
+        - listobjectwithloan
+      summary: get a list of objects for loan (ändamål)
+      description: Returnerar en förekomst, ändamål och syfte för lånet
+      operationId: GetObjectWithLoan
       responses:
         '200':
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NumberOfSigned'
+                $ref: '#/components/schemas/ObjectWithLoan'
         '403':
           description: Forbidden
         '404':
           description: Invalid page
-  /v1/listnumberofsigned:
+  /v1/common/listpurposewithloan:
     get:
       tags:
-        - listnumberofsigned
-      summary: get list of number of signed
-      description: description....
-      operationId: ListNumberOfSigned
+        - listobjectforloan
+      summary: get a list of purposes with the loan
+      description: Returnerar en lista på syfte för lånet
+      operationId: ListPurposeWithLoan
       responses:
         '200':
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListNumberOfSigned'
+                $ref: '#/components/schemas/ListPurposeWithLoan'
         '403':
           description: Forbidden
         '404':
@@ -56,7 +56,7 @@ servers:
   - url: 'https://localhost:8000/'
 components:
   schemas:
-    NumberOfSigned:
+    ListObjectsWithLoan:
       type: object
       required:
         - id
@@ -64,7 +64,7 @@ components:
         id:
           type: string
           format: string
-    ListNumberOfSigned:
+    ListPurposesOfLoan:
       type: array
       items:
         type: object
