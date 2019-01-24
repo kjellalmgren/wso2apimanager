@@ -21,14 +21,14 @@ paths:
         - listobjectwithloan
       summary: get a list of objects for loan (ändamål)
       description: Returnerar en förekomst, ändamål och syfte för lånet
-      operationId: GetObjectWithLoan
+      operationId: ListObjectsWithLoan
       responses:
         '200':
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListObjectWithLoan'
+                $ref: '#/components/schemas/ListObjectsWithLoan'
         '403':
           description: Forbidden
         '404':
@@ -36,17 +36,17 @@ paths:
   /v1/common/listpurposewithloan:
     get:
       tags:
-        - listobjectforloan
+        - listobjectswithloan
       summary: get a list of purposes with the loan
       description: Returnerar en lista på syfte för lånet
-      operationId: ListPurposeWithLoan
+      operationId: ListPurposesWithLoan
       responses:
         '200':
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListPurposeWithLoan'
+                $ref: '#/components/schemas/ListPurposesWithLoan'
         '403':
           description: Forbidden
         '404':
