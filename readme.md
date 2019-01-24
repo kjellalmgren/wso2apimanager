@@ -13,14 +13,20 @@
 ## Login to API Publisher
 
     $ https://<host-address>:9443/publisher
+    or
+    https://localhost:9443/publisher
     
 ## API Store
 
     $ https://<host-address>:9443/store
+    or
+    $ https://localhost:9443/store
 
 ## API Gateway (Carbon)
 
     $ https://<host-address>:9443/carbon
+    or
+    https://localhost:9443/carbon
 
 # Swagger API
 
@@ -28,6 +34,7 @@
 
     $ docker pull swaggerapi/swagger-editor:latest
     $ docker run -d --name sw-editor -p 8080:8080 swaggerapi/swagger-editor
+    $ http://localhost:8080
 
 ## Swagger Code Generator
 
