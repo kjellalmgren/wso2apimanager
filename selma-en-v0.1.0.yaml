@@ -68,6 +68,9 @@ components:
         type: object
       required:
         - id
+      example:
+        id: 10
+        name: Lisa Lisasson
       properties:
         id:
           type: string
@@ -81,6 +84,9 @@ components:
         type: object
         required:
         - id
+      example:
+        id: 10
+        name: Kjell Almgren
       properties:
         id:
           type: string
