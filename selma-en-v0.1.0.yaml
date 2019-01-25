@@ -6,7 +6,7 @@ info:
     Detta API definierar den informationsmängd som flyter mellan GUI och LP-REST API för
   termsOfService: terms
   contact:
-    name: Kjell Almgren
+    name: Kjell Osse Almgren
     email: kjell.almgren@landshypotek.se
   license:
     name: MIT
@@ -15,38 +15,44 @@ tags:
   - name: Selma digitalt inträde för enskild näringsidkare
     description: Selma SME-Light
 paths:
-  /v1/common/listobjectwithloan:
+  /v1/common/listobjects:
     get:
       tags:
-        - listobjectwithloan
+        - listobjects
+      security:
+        - {}
+        - BearerAuthOAuth: []
       summary: get a list of objects for loan (ändamål)
       description: Returnerar en förekomst, ändamål och syfte för lånet
-      operationId: ListObjectsWithLoan
+      operationId: ListObjects
       responses:
         '200':
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListObjectsWithLoan'
+                $ref: '#/components/schemas/ListObjects'
         '403':
           description: Forbidden
         '404':
           description: Invalid page
-  /v1/common/listpurposewithloan:
+  /v1/common/listpurposes:
     get:
       tags:
-        - listobjectswithloan
+        - listobjects
+      security:
+        - {}
+        - BearerAuthOAuth: []
       summary: get a list of purposes with the loan
       description: Returnerar en lista på syfte för lånet
-      operationId: ListPurposesWithLoan
+      operationId: ListPurposes
       responses:
         '200':
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListPurposesWithLoan'
+                $ref: '#/components/schemas/ListPurposes'
         '403':
           description: Forbidden
         '404':
@@ -56,7 +62,7 @@ servers:
   - url: 'https://localhost:8000/'
 components:
   schemas:
-    ListObjectsWithLoan:
+    ListObjects:
       type: array
       items:
         type: object
@@ -66,10 +72,15 @@ components:
         id:
           type: string
           format: string
-    ListPurposesWithLoan:
+        name:
+          type: string
+          format: string
+    ListPurposes:
       type: array
       items:
         type: object
+        required:
+        - id
       properties:
         id:
           type: string
@@ -77,4 +88,3 @@ components:
         name:
           type: string
           format: string
-
