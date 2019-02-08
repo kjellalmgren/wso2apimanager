@@ -1,0 +1,115 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Selma SME Light
+  description: >-
+    This model is the API between customer SME-Gui and the persistence framework base on Activiti
+  termsOfService: terms
+  contact:
+    name: Kjell Almgren
+    email: kjell.almgren@landshypotek.se
+  license:
+    name: MIT
+    url: 'http://opensource.org/licenses/MIT'
+tags:
+  - name: Selma SME(EN) API Definitions
+    description: Access layer of the prcoess engine
+paths:
+  /Customer:
+    get:
+      tags:
+        - getCustomer
+      summary: Get a specific customer by ProcessId, customerId
+      description: Get a specific customer from the modell
+      operationId: getCustomer
+      parameters:
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  /Customers:
+    get:
+      tags:
+        - getCustomers
+      summary: get a list of customers
+      description: Get a of available customers by ProcessId....
+      operationId: getCustomers
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customers'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Not found
+servers:
+  - url: 'http://localhost:8000/'
+  - url: 'https://localhost:8000/'
+  
+components:
+  schemas:
+    processId:
+      description: TBD
+      type: string
+      example: 12
+    customerId:
+      description: >-
+        This identification is denoting the addressed account, where the
+        transaction has been performed.
+      type: string
+      example: 197001010101
+    customerType:
+      description: TBD
+      type: object
+      required:
+        - prcoessId
+        - cusromerId
+      properties:
+        prcoessId:
+          $ref: '#/components/schemas/processId'    
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        name:
+          type: string
+          format: string
+        role:
+          type: string
+          format: string
+    Customer:
+      $ref: '#/components/schemas/customerType'
+    Customers:
+      description: List of customerType
+      type: array
+      items:
+        $ref: '#/components/schemas/customerType'
+  parameters:
+    processId:
+      name: processId in the Activiti framework
+      in: path
+      description: TBD
+      required: true
+      schema:
+        $ref: '#/components/schemas/processId'
+    customerId:
+      name: customerId of a specific customer
+      in: path
+      description: description
+      required: true
+      schema:
+        $ref: '#/components/schemas/customerId'
+      
+        
