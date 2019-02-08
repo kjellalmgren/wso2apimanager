@@ -1,5 +1,5 @@
 # Principer Selma-Light
-Här dokumenterar vi de olika principer vi kommit fram till under projektets gång. Principerna är indelade i olika området och belyser olika saker, hög och lågt.
+Här dokumenterar vi de olika principer vi kommit fram till under projektets gång. Principerna är indelade i olika området och belyser olika saker, högt och lågt.
 
 ## Arkitekturella principer
 - Insamlingsstegen är frikopplad från ett kreditärende i LP
