@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 1.0.0
+  version: 0.2.1
   title: Selma SME Light
   description: >-
     This model is the API between customer SME-Gui and the persistence framework base on Activiti
