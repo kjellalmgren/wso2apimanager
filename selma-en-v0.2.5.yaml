@@ -1,0 +1,414 @@
+openapi: 3.0.1
+info:
+  version: 0.2.5
+  #####################################################
+  # 2019-01-15 0.2.0 kal Initial version
+  # 2019-02-10 0.2.1 kal Minor changes
+  # 2019-02-11 0.2.2 kal getCustomer, getCustomers
+  # 2019-02-12 0.2.3 kal updateCusotmer, deleteCustomer
+  # 2019-02-12 0.2.4 kal getCompany, getCompanies
+  # 2019-02-12 0.2.5 kal updateCompany, deleteCompany
+  #####################################################
+  # Errors has not been defined any responses
+  #####################################################
+  title: Selma SME Light
+  description: >-
+    This definition is the API between customer SME-Gui and the persistence framework based on Activiti
+  termsOfService: terms
+  contact:
+    name: API v1 for sme initiative
+    email: developer@landshypotek.se
+    url: developer.landshypotek.se/v1/sme
+  license:
+    name: MIT
+    url: 'http://opensource.org/licenses/MIT'
+tags:
+  - name: Selma SME(EN) API Definitions
+    description: Access layer of the process engine
+paths:
+  #
+  # get a specific customer
+  /v1/Customer/{processId}/{customerId}:
+    get:
+      tags:
+        - getCustomer
+      summary: Get a specific customer by processId, customerId
+      description: Get a specific customer from the process layer
+      operationId: getCustomer
+      parameters:
+        # parameters required for getCustomer request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  # Get a list of available customer for a given processId in Activiti
+  ##
+  /v1/Customers/{processId}:
+    get:
+      tags:
+        - getCustomers
+      summary: get a list of available customers
+      description: Get a list of available customers by ProcessId....
+      operationId: getCustomers
+      parameters:
+        # parameters required for getCustomers request
+        - $ref: '#/components/parameters/processId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customers'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  # Update of a specific customerId
+  #
+  /v1/updateCustomer/{processId}/{customerId}:
+    post:
+      tags:
+        - updateCustomer
+      summary: update a specific customer in Activiti
+      description: descripition
+      operationId: updateCustomer
+      parameters:
+      # required parameters to update a customer in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateCustomer'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+#
+# Delete a specific customer
+#
+  /v1/deleteCustomer/{processId}/{customerId}:
+    post:
+      tags:
+        - deleteCustomer
+      summary: Delete a specific customer in Activiti
+      description: descripition
+      operationId: deleteCustomer
+      parameters:
+      # required parameters to delete a customer in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/customerUpdate'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ####################################################
+  # Company
+  ####################################################
+    # get a specific customer
+  /v1/Company/{processId}/{companyId}:
+    get:
+      tags:
+        - getCompany
+      summary: Get a specific company by ProcessId, companyId
+      description: Get a specific company from the process layer
+      operationId: getCompany
+      parameters:
+        # parameters required for getCompany request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  #####################################################################
+  # Get a list of available companies for a given processId in Activiti
+  #####################################################################
+  /v1/Companies/{processId}:
+    get:
+      tags:
+        - getCompanies
+      summary: get a list of available companies
+      description: Get a list of available companies by ProcessId....
+      operationId: getCompanies
+      parameters:
+        # parameters required for getCompanies request
+        - $ref: '#/components/parameters/processId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Companies'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  # Update of a specific customerId
+  #
+  /v1/updateCompany/{processId}/{companyId}:
+    post:
+      tags:
+        - updateCompany
+      summary: update a specific company in Activiti
+      description: descripition
+      operationId: updateCompany
+      parameters:
+      # required parameters to update a customer in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/companyId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateCompany'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  # Delete a specific comnpany
+  #
+  /v1/deleteCompany/{processId}/{companyId}:
+    post:
+      tags:
+        - deleteCompany
+      summary: Delete a specific company in Activiti
+      description: descripition
+      operationId: deleteCompany
+      parameters:
+      # required parameters to delete a customer in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/companyId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/customerUpdate'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+#
+# Defined servers for the API
+#
+servers:
+  - url: 'http://localhost:8000/'
+  - url: 'https://localhost:8000/'
+#
+#####################################################
+# schemas
+#####################################################
+components:
+  schemas:
+    processId:
+      description: Activiti framework unique identification
+      type: string
+      example: 12
+    customerId:
+      description: >-
+        customerId is swedish ssn or corporate organisation number
+      type: string
+      example: 197001010101
+    customerName:
+      description: Full name of the customer/applicant
+      type: string
+      example: Anna Andersson
+    customerRole:
+      description: Huvudlåntagare or Medlåntagare i SAP
+      type: string
+      example: Huvudlåntagare
+    companyId:
+      description: >-
+        companyId is swedish ssn or corporate organisation number
+      type: string
+      example: 197001010101
+    companyName:
+      description: Full name of the company
+      type: string
+      example: Anna Andersson Mjölkproduktion
+    #
+    #####################################################
+    # customerType
+    #####################################################
+    customerType:
+      description: Type of customer instance
+      type: object
+      required:
+        - processId
+        - customerId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'    
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        customerName:
+          $ref: '#/components/schemas/customerName'
+        role:
+          $ref: '#/components/schemas/customerRole'
+    #
+    #####################################################
+    # Customer
+    #####################################################
+    Customer:
+      $ref: '#/components/schemas/customerType'
+    #
+    #####################################################
+    # Customers
+    #####################################################
+    Customers:
+      description: List of customerType
+      type: array
+      items:
+        $ref: '#/components/schemas/customerType'
+    #
+    #####################################################
+    # companyType
+    #####################################################
+    companyType:
+      description: Type of company instance
+      type: object
+      required:
+        - processId
+        - companyId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'    
+        companyId:
+          $ref: '#/components/schemas/companyId'
+        customerName:
+          $ref: '#/components/schemas/companyName'
+    #
+    #####################################################
+    # Company
+    #####################################################
+    Company:
+      $ref: '#/components/schemas/companyType'
+    #
+    #####################################################
+    # Companies
+    #####################################################
+    Companies:
+      description: TBD
+      type: array
+      items:
+        $ref: '#/components/schemas/companyType'
+  #
+  #####################################################
+  # Predefined Parameters
+  #####################################################
+  #
+  parameters:
+    processId:
+      name: processId
+      in: path
+      description: >- 
+        unique identity in Activiti framework
+      required: true
+      schema:
+        $ref: '#/components/schemas/processId'
+    customerId:
+      name: customerId
+      in: path
+      description: >- 
+        customerId is swedish ssn or corporate organisation number
+      required: true
+      schema:
+        $ref: '#/components/schemas/customerId'
+    companyId:
+      name: companyId
+      in: path
+      description: >- 
+        companyId is swedish ssn or corporate organisation number
+      required: true
+      schema:
+        $ref: '#/components/schemas/companyId'
+  #
+  #####################################################
+  # Reuseable request bodies
+  #####################################################
+  #
+  requestBodies:
+    #
+    ###################################################
+    # updateCustomer
+    ###################################################
+    updateCustomer:
+      description: Update a specific customer in the Activiti framework
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: "#/components/schemas/customerType"
+    #
+    ###################################################
+    # updateCompany
+    ###################################################
+    updateCompany:
+      description: Update a specific company in the Activiti framework
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: "#/components/schemas/companyType"
+      
+        
