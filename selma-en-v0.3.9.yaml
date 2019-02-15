@@ -1,0 +1,1711 @@
+openapi: 3.0.1
+info:
+  version: 0.3.9 2019-02-15
+  ############################################################################################
+  # 2019-01-15 0.2.0 kal Initial version
+  # 2019-02-10 0.2.1 kal Minor changes
+  # 2019-02-11 0.2.2 kal getCustomer, getCustomers
+  # 2019-02-12 0.2.3 kal updateCustomer, deleteCustomer
+  # 2019-02-12 0.2.4 kal getCompany, getCompanies
+  # 2019-02-12 0.2.5 kal updateCompany, deleteCompany
+  # 2019-02-12 0.2.6 kal Added eMail and mobile number to customerType
+  # 2019-02-12 0.2.7 kal Added household object
+  # 2019-02-12 0.2.8 kal Added loan object
+  # 2019-02-13 0.2.9 kal Added colleteral object
+  # 2019-02-13 0.3.0 kal Added external loans
+  # 2019-02-13 0.3.1 kal future functionality and documentation
+  # 2019-02-13 0.3.2 kal Add element in customerTypes
+  # 2019-02-13 0.3.3 kal Added PersonalEconomies
+  # 2019-02-13 0.3.4 kal Fixed bugg, only return 200 OK when delete is executed
+  # 2019-02-13 0.3.5 kal Removed customerId from Loan, it will only be connected PrcoessId
+  # 2019-02-13 0.3.6 kal Added CompanyEconomy
+  # 2019-02-14 0.3.7 kal Added attribute element in many custom type definitions
+  # 2019-02-15 0.3.8 kal Add purposes, main purposes, purposes
+  # 2019-02-15 0.3.9 kal Minor changes, spelling and grammer, purposeDisplayText
+  ###########################################################################################
+  # Errors definitions has not been defined in any responses
+  #################################################################################
+  # Future request
+  #   getAvailableProcessIds(customerId)
+  #     - will return all of user started applications
+  #     TBD - mybe we should only handle one processId for an applications
+  #     - Be able to delete an ProcessId (kund avslår ansökan)
+  #     - how do we handle status codes, is it at Activiti-layer
+  #     - Add CompanyEconomy (budget) fixed in v0.3.6
+  #     - Add attachement
+  # bugs:
+  #     Fixed in 0.3.4 Closed
+  #   - delete methods should NOT return the specific type, just 200 OK
+  #     Fixed in 0.3.5 Closed
+  #   - External loans have to be connected to prcoessId and CustomerId
+  #     Fixed in 0.3.5 Closed
+  #   - New loan should be connected to only ProcessId (sökt lån)
+  #
+  #################################################################################
+  title: Selma SME Light
+  description: >-
+    This definition is the API between customer SME-Gui and the persistence framework based on Activiti
+  termsOfService: terms
+  contact:
+    name: API v1 for SME initiative
+    email: developer@landshypotek.se
+    url: developer.landshypotek.se/v1/sme
+  license:
+    name: MIT
+    url: 'http://opensource.org/licenses/MIT'
+tags:
+  - name: Selma SME(EN) API Definitions
+    description: Access layer to the process engine(Activiti)
+paths:
+  #
+  ##################################################
+  # get a specific customer
+  ##################################################
+  /v1/Customer/{processId}/{customerId}:
+    get:
+      tags:
+        - getCustomer
+      summary: Get a specific customer by processId, customerId
+      description: Get a specific customer from the process layer
+      operationId: getCustomer
+      parameters:
+        # parameters required for getCustomer request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  ####################################################################
+  # Get a list of available customer for a given processId in Activiti
+  ####################################################################
+  /v1/Customers/{processId}:
+    get:
+      tags:
+        - getCustomers
+      summary: get a list of available customers
+      description: Get a list of available customers by ProcessId....
+      operationId: getCustomers
+      parameters:
+        # parameters required for getCustomers request
+        - $ref: '#/components/parameters/processId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customers'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ###########################################
+  # Update of a specific customerId
+  ###########################################
+  /v1/updateCustomer/{processId}/{customerId}:
+    post:
+      tags:
+        - updateCustomer
+      summary: update a specific customer in Activiti
+      description: descripition
+      operationId: updateCustomer
+      parameters:
+      # required parameters to update a customer in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateCustomer'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ############################################
+  # Delete a specific customer
+  ############################################
+  /v1/deleteCustomer/{processId}/{customerId}:
+    post:
+      tags:
+        - deleteCustomer
+      summary: Delete a specific customer in Activiti
+      description: descripition
+      operationId: deleteCustomer
+      parameters:
+      # required parameters to delete a customer in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/customerUpdate'
+      responses:
+        '200':
+          description: Successful
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ####################################################
+  # Company
+  ####################################################
+    # get a specific customer
+  /v1/Company/{processId}/{companyId}:
+    get:
+      tags:
+        - getCompany
+      summary: Get a specific company by ProcessId, companyId
+      description: Get a specific company from the process layer
+      operationId: getCompany
+      parameters:
+        # parameters required for getCompany request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  #####################################################################
+  # Get a list of available companies for a given processId in Activiti
+  #####################################################################
+  /v1/Companies/{processId}:
+    get:
+      tags:
+        - getCompanies
+      summary: get a list of available companies
+      description: Get a list of available companies by ProcessId....
+      operationId: getCompanies
+      parameters:
+        # parameters required for getCompanies request
+        - $ref: '#/components/parameters/processId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Companies'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ########################################################
+  # Update of a specific customerId
+  ########################################################
+  /v1/updateCompany/{processId}/{companyId}:
+    post:
+      tags:
+        - updateCompany
+      summary: update a specific company in Activiti
+      description: descripition
+      operationId: updateCompany
+      parameters:
+      # required parameters to update a customer in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/companyId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateCompany'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ########################################################
+  # Delete a specific comnpany
+  ########################################################
+  /v1/deleteCompany/{processId}/{companyId}:
+    post:
+      tags:
+        - deleteCompany
+      summary: Delete a specific company in Activiti
+      description: descripition
+      operationId: deleteCompany
+      parameters:
+      # required parameters to delete a customer in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/companyId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/customerUpdate'
+      responses:
+        '200':
+          description: Successful
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ##################################################
+  # get a specific household
+  ##################################################
+  /v1/Household/{processId}/{customerId}/{householdId}:
+    get:
+      tags:
+        - getHousehold
+      summary: Get a specific household by processId, customerId
+      description: Get a specific household from the process layer
+      operationId: getHousehold
+      parameters:
+        # parameters required for getCustomer request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/householdId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Household'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  #####################################################################################
+  # Get a list of available households for a given processId and customerId in Activiti
+  #####################################################################################
+  /v1/Households/{processId}/{customerId}:
+    get:
+      tags:
+        - getHouseholds
+      summary: get a list of available households
+      description: Get a list of available households by ProcessId....
+      operationId: getHouseholds
+      parameters:
+        # parameters required for getHouseholds request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Households'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ###########################################
+  # Update of a specific household
+  ###########################################
+  /v1/updateHousehold/{processId}/{customerId}/{householdId}:
+    post:
+      tags:
+        - updateHousehold
+      summary: update a specific household in Activiti
+      description: descripition
+      operationId: updateHousehold
+      parameters:
+      # required parameters to update a household in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/householdId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateHousehold'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Household'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ############################################
+  # Delete a specific household
+  ############################################
+  /v1/deleteHousehold/{processId}/{customerId}/{householdId}:
+    post:
+      tags:
+        - deleteHousehold
+      summary: Delete a specific household in Activiti
+      description: descripition
+      operationId: deleteHousehold
+      parameters:
+      # required parameters to delete a household in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/householdId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/householdUpdate'
+      responses:
+        '200':
+          description: Successful
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ##################################################
+  # get a specific colleteral
+  ##################################################
+  /v1/Colleteral/{processId}/{customerId}/{colleteralId}:
+    get:
+      tags:
+        - getColleteral
+      summary: Get a specific colleteral by processId, customerId and colleteralId
+      description: Get a specific colleteral from the process layer
+      operationId: getColleteral
+      parameters:
+        # parameters required for getColleteral request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/colleteralId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Colleteral'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  ######################################################################################
+  # Get a list of available colleterals for a given processId and customerId in Activiti
+  ######################################################################################
+  /v1/Colleterals/{processId}/{customerId}:
+    get:
+      tags:
+        - getColleterals
+      summary: get a list of available colleterals
+      description: Get a list of available colleterals by ProcessId and customerId...
+      operationId: getColleterals
+      parameters:
+        # parameters required for getColleterals request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Colleterals'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ###########################################
+  # Update of a specific household
+  ###########################################
+  /v1/updateColleteral/{processId}/{customerId}/{colleteralId}:
+    post:
+      tags:
+        - updateColleteral
+      summary: update a specific colleteral in Activiti
+      description: descripition
+      operationId: updateColleteral
+      parameters:
+      # required parameters to update a colleteral in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/colleteralId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateColleteral'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Colleteral'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ############################################
+  # Delete a specific colleteral
+  ############################################
+  /v1/deleteColleteral/{processId}/{customerId}/{colleteralId}:
+    post:
+      tags:
+        - deleteColleteral
+      summary: Delete a specific colleteral in Activiti
+      description: descripition
+      operationId: deleteColleteral
+      parameters:
+      # required parameters to delete a colleteral in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/colleteralId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/colleteralUpdate'
+      responses:
+        '200':
+          description: Successful
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ##################################################
+  # get a specific loan
+  ##################################################
+  /v1/Loan/{processId}/{loanId}:
+    get:
+      tags:
+        - getLoan
+      summary: Get a specific loan by processId
+      description: Get a specific loan from the process layer
+      operationId: getLoan
+      parameters:
+        # parameters required for getCustomer request
+        - $ref: '#/components/parameters/processId'
+        # - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/loanId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  ################################################################################
+  # Get a list of available loans for a given processId in Activiti
+  ################################################################################
+  /v1/Loans/{processId}:
+    get:
+      tags:
+        - getLoans
+      summary: get a list of available loans
+      description: Get a list of available loans by ProcessId...
+      operationId: getLoans
+      parameters:
+        # parameters required for getHouseholdsCustomers request
+        - $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loans'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ###########################################
+  # Update of a specific loan
+  ###########################################
+  /v1/updateLoan/{processId}/{loanId}:
+    post:
+      tags:
+        - updateLoan
+      summary: update a specific loan in Activiti
+      description: TBD
+      operationId: updateLoan
+      parameters:
+      # required parameters to update a customer in Activiti
+        - $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/loanId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateLoan'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ############################################
+  # Delete a specific loan
+  ############################################
+  /v1/deleteLoan/{processId}/{loanId}:
+    post:
+      tags:
+        - deleteLoan
+      summary: Delete a specific loan in Activiti
+      description: TBD
+      operationId: deleteLoan
+      parameters:
+      # required parameters to delete a loan in Activiti
+        - $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/loanId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/householdUpdate'
+      responses:
+        '200':
+          description: Successful
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ##################################################
+  # get a specific extloan
+  ##################################################
+  /v1/ExtLoan/{processId}/{customerId}/{extloanId}:
+    get:
+      tags:
+        - getExtLoan
+      summary: Get a specific extloan by processId, customerId
+      description: Get a specific extloan from the process layer
+      operationId: getExtLoan
+      parameters:
+        # parameters required for getExtLoan request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/extloanId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtLoan'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  ################################################################################
+  # Get a list of available extloans for a given processId and customerId in Activiti
+  ################################################################################
+  /v1/ExtLoans/{processId}/{customerId}:
+    get:
+      tags:
+        - getExtLoans
+      summary: get a list of available extloans
+      description: Get a list of available extloans by ProcessId and customerId....
+      operationId: getExtLoans
+      parameters:
+        # parameters required for getExtLoans request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtLoans'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ###########################################
+  # Update of a specific extloan
+  ###########################################
+  /v1/updateExtLoan/{processId}/{customerId}/{extloanId}:
+    post:
+      tags:
+        - updateExtLoan
+      summary: update a specific extloan in Activiti
+      description: descripition
+      operationId: updateExtLoan
+      parameters:
+      # required parameters to update a extLoan in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/extloanId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateExtLoan'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtLoan'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ############################################
+  # Delete a specific extloan
+  ############################################
+  /v1/deleteExtLoan/{processId}/{customerId}/{extloanId}:
+    post:
+      tags:
+        - deleteExtLoan
+      summary: Delete a specific extloan in Activiti
+      description: descripition
+      operationId: deleteExtLoan
+      parameters:
+      # required parameters to delete a loan in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/extloanId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/extloanUpdate'
+      responses:
+        '200':
+          description: Successful
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ###############################################
+  # PersonalEconomy
+  ###############################################
+  /v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
+    get:
+      tags:
+        - getPersonalEconomy
+      summary: Get a specific PersonalEconomy by processId, customerId
+      description: Get a specific PersonalEconomy from the process layer
+      operationId: getPersonalEconomy
+      parameters:
+        # parameters required for getPersonalEconomy request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/personalEconomyId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalEconomy'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  ################################################################################
+  # Get a list of available PersonalEconomies for a given processId and customerId
+  # in Activiti
+  ################################################################################
+  /v1/PersonalEconomies/{processId}/{customerId}:
+    get:
+      tags:
+        - getPersonalEconomies
+      summary: get a list of available PersonalEconomies
+      description: Get a list of available PersonalEconomies by ProcessId and customerId....
+      operationId: getPersonalEconomies
+      parameters:
+        # parameters required for getPersonalEconomies request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalEconomies'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ###########################################
+  # Update of a specific PersonalEconomy
+  ###########################################
+  /v1/updatePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
+    post:
+      tags:
+        - updatePersonalEconomy
+      summary: update a specific PersonalEconomy in Activiti
+      description: TBD
+      operationId: updatePersonalEconomy
+      parameters:
+      # required parameters to update a PersonalEconomy in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/personalEconomyId'
+      requestBody:
+        $ref: '#/components/requestBodies/updatePersonalEconomy'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalEconomy'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ############################################
+  # Delete a specific PersonalEconomy
+  ############################################
+  /v1/deletePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
+    post:
+      tags:
+        - deletePersonalEconomy
+      summary: Delete a specific PersonalEconomy in Activiti
+      description: TBD
+      operationId: deletePersonalEconomy
+      parameters:
+      # required parameters to delete a loan in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/personalEconomyId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/personalEconomyUpdate'
+      responses:
+        '200':
+          description: Successful
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  # AAAAAA
+  ###############################################
+  # CompanyEconomy
+  ###############################################
+  /v1/CompanyEconomy/{processId}/{companyEconomyId}:
+    get:
+      tags:
+        - getCompanyEconomy
+      summary: Get a specific CompanyEconomy by processId
+      description: Get a specific CompanyEconomy from the process layer
+      operationId: getCompanyEconomy
+      parameters:
+        # parameters required for getCompanyEconomy request
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/companyEconomyId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEconomy'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+  #
+  ################################################################################
+  # Get a list of available CompanyEconomies for a given processId
+  # in Activiti
+  ################################################################################
+  /v1/CompanyEconomies/{processId}:
+    get:
+      tags:
+        - getCompanyEconomies
+      summary: get a list of available CompanyEconomies
+      description: Get a list of available CompanyEconomies by ProcessId
+      operationId: getCompanyEconomies
+      parameters:
+        # parameters required for getCompanylEconomies request
+        - $ref: '#/components/parameters/processId'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEconomies'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ###########################################
+  # Update of a specific CompanyEconomy
+  ###########################################
+  /v1/updateCompanyEconomy/{processId}/{companyEconomyId}:
+    post:
+      tags:
+        - updateCompanyEconomy
+      summary: update a specific CompanyEconomy in Activiti
+      description: TBD
+      operationId: updateCompanyEconomy
+      parameters:
+      # required parameters to update a CompanyEconomy in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/companyEconomyId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateCompanyEconomy'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEconomy'
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+  ############################################
+  # Delete a specific CompanyEconomy
+  ############################################
+  /v1/deleteCompanyEconomy/{processId}/{companyEconomyId}:
+    post:
+      tags:
+        - deleteCompanyEconomy
+      summary: Delete a specific CompanyEconomy in Activiti
+      description: TBD
+      operationId: deleteCompanyEconomy
+      parameters:
+      # required parameters to delete a loan in Activiti
+        - $ref: '#/components/parameters/processId'
+        - $ref: '#/components/parameters/companyEconomyId'
+      #requestBody:
+      #  $ref: '#/components/requestBodies/companyEconomyUpdate'
+      responses:
+        '200':
+          description: Successful
+        '403':
+          description: Forbidden
+        '404':
+          description: Invalid page
+        '500':
+          description: Page Not found
+  #
+#####################################################
+# Defined servers for the API
+#####################################################
+servers:
+  - url: 'http://localhost:8000/'
+  - url: 'https://localhost:8000/'
+#
+###################################################################################################
+# schemas definitions
+###################################################################################################
+components:
+  schemas:
+    processId:
+      description: Activiti framework unique identification
+      type: string
+      example: '9a65d28a-46bb-4442-b96d-6a09fda6b18b'
+    #################################################
+    # Customer
+    #################################################
+    customerId:
+      description: >-
+        customerId is swedish ssn or corporate organisation number
+      type: string
+      example: '197001010101'
+    customerName:
+      description: Full name of the customer/applicant
+      type: string
+      example: 'Anna Andersson'
+    customerAddress:
+      description: TBD
+      type: string
+      example: 'Trossvägen 1'
+    customerPostAddress:
+      description: TBD
+      type: string
+      example: '181 66 Lidingö'
+    customerRole:
+      description: Huvudlåntagare or Medlåntagare i SAP
+      type: string
+      example: 'Huvudlåntagare/medlåntagare in SAP'
+    customerEmail:
+      description: customer enter email for notification
+      type: string
+      example: 'kjell.almgren@landshypotek.se'
+    customerMobileNumber:
+      description: customer entered mobile number for notification
+      type: string
+      example: '0733981482'
+    #
+    #################################################
+    # Company
+    #################################################
+    companyId:
+      description: >-
+        generated guid in the model
+      type: string
+      example: '02d6a03e-5895-4077-98f7-7a5c192868b7'
+    orgNumber:
+      description: ->
+        Organisation number from external service, swedish ssn (ruoring.io)
+      type: string
+      example: '550101-1010'
+    companyName:
+      description: Full name of the company from external services
+      type: string
+      example: 'Anna Andersson Mjölkproduktion'
+    companyCreated:
+      description: ->
+        date when company was established, from external service
+      type: string
+      example: '2012-01-01'
+    #
+    #####################################################
+    # Household
+    #####################################################
+    householdId:
+      description: TBD
+      type: string
+      example: '02d6a03e-5895-4077-98f7-7a5c192878b8'
+    householdName:
+      description: TBD
+      type: string
+      example: 'Stora hushållet'
+    civilState:
+      description: ->
+        TBD
+      type: string
+      example: 'Gift'
+    numberOfChildsAtHome:
+      description: >-
+        Number of child in this household
+      type: string
+      example: '2'
+    numberOfCars:
+      description: >-
+        number of cars in this houshold
+      type: string
+      example: '2'
+    childCareCosts:
+      description: >-
+        TBD
+      type: string
+      example: '1 500 SEK'
+    childMaintenanceCost:
+      description: ->
+        TBD
+      type: string
+      example: '0 SEK'
+    #
+    #####################################################
+    # Loan
+    #####################################################
+    loanId:
+      description: TBD
+      type: string
+      example: '08f55e2f-e947-48f4-89d2-d31af2fc28d6'
+    loanNumber:
+      description: >-
+        This will only be a temporary loanNumber, when can we reserv a loan number in SAP
+      type: string
+      example: '9397000010'
+    loanAmount:
+      description: >-
+        Customer want to loan this amount
+      type: string
+      example: '2 500 000 SEK'
+    numberOfLoans:
+      description: >-
+        Customer want to split this loan in number of load
+      type: string
+      example: '2'
+    purposeOfLoan:
+      description: >-
+        Syfte with this loan
+      type: string
+      example: 'Köp av jordbruksfastighet'
+    #
+    #####################################################
+    # Colleteral
+    #####################################################
+    colleteralId:
+      description: TBD
+      type: string
+      example: '82faaa1a-42f7-4d87-aecf-96c450a0ce59'
+    colleteralName:
+      description: TBD
+      type: string
+      example: 'SKOGEN 4:3'
+    colleteralMunicipality:
+      description: >-
+        Kommun där fastigheten och/eller säkerheten finns
+      type: string
+      example: 'Katrineholm'
+    colleteralStreet:
+      description: >-
+        TBD
+      type: string
+      example: 'Bergsgatan 12'
+    #
+    #####################################################
+    # ExtLoan
+    #####################################################
+    extloanId:
+      description: TBD
+      type: string
+      example: '3164d347-e173-4c4f-8839-26d32716e5bf'
+    extCreditInstitut:
+      description: TBD
+      type: string
+      example: 'SEB'
+    extloanNumber:
+      description: TBD
+      type: string
+      example: '0028600'
+    extloanClearing:
+      description: TBD
+      type: string
+      example: '5270'
+    #
+    #####################################################
+    # personalEconomy
+    #####################################################
+    personalEconomyId:
+      description: >-
+        TBD
+      type: string
+      example: 'b0c0edaa-3d75-4364-9179-1ecc8d9198d0'
+    yearlyIncome:
+      description: >-
+        TBD
+      type: string
+      example: '340 000 SEK'
+    income:
+      description: >-
+        TBD
+      type: string
+      example: '40 000 SEK'
+    typeOfEmployeement:
+      description: >-
+          TBD
+      type: string
+      example: 'Tillsvidare'
+    employeer:
+      description: ->
+        TBD
+      type: string
+      example: 'Skatteverket'
+    #####################################################
+    # Syfte/Ändamål - TBD
+    #####################################################
+    mainPurposes:
+      description: >-
+        Ändamål och syfte (TBD)
+      type: string
+      enum:
+        - KOP # Köp
+        - OVR # Övertag
+        - ULN # Utökning av lån
+        - NOB # Nyutlåning mot obelånat
+      example: KOP
+    purposes:
+      description: >-
+        Ändamål och syfte ska sättas på respektive lån som går över till LP. I de fall
+        där det inte specifiseras ska handläggar gör det innan överföring till SAP.
+        Detta för att de ska bli rätt i statistiken ned i SAS.
+      type: string
+      enum:
+        - FKP # Fastighetsköp - privatbostad
+        - FAF # Fastighetsköp - annan fastighet
+        - FKJ # Fastighetsköp jordbruk
+        - FBB # Finanisering befintlig bostad
+        - FBI # Finanisering befintlig bostad (omläggning internt)
+        - RTM # Ny/tillbyggnad/renovering mjölkstall
+    purposeDisplayText:
+      description: >-
+        TBD
+      type: string
+      enum:
+        - 'Fastighetsköp - privatbostad'
+        - 'Fastighetsköp - annan fastighet'
+        - 'Fastighetsköp - jordbruk'
+        - 'Finansiering befintlig bostad'
+        - 'Finansiering befintlig bostad (omläggning internt)'
+        - 'Ny/tillbyggnad/renovering mjölkstall'
+    #
+    #####################################################
+    # companyEconomy
+    #####################################################
+    companyEconomyId:
+      description: TBD
+      type: string
+      example: '32084646-d030-4c51-a316-b1342c3551ab'
+    #
+    #####################################################
+    # END Schema definitions
+    #####################################################
+    #
+    # Type definitions
+    #
+    #####################################################
+    # customerType
+    #####################################################
+    customerType:
+      description: Type of customer instance
+      type: object
+      required:
+        - processId
+        - customerId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'    
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        customerName:
+          $ref: '#/components/schemas/customerName'
+        customerAddress:
+          $ref: '#/components/schemas/customerAddress'
+        customerPostAddress:
+          $ref: '#/components/schemas/customerPostAddress'
+        role:
+          $ref: '#/components/schemas/customerRole'
+        eMail:
+          $ref: '#/components/schemas/customerEmail'
+        mobileNumber:
+          $ref: '#/components/schemas/customerMobileNumber'
+    #
+    #####################################################
+    # Customer
+    #####################################################
+    Customer:
+      $ref: '#/components/schemas/customerType'
+    #
+    #####################################################
+    # Customers
+    #####################################################
+    Customers:
+      description: List of customerType
+      type: array
+      items:
+        $ref: '#/components/schemas/customerType'
+    #
+    #####################################################
+    # companyType
+    #####################################################
+    companyType:
+      description: Type of company instance
+      type: object
+      required:
+        - processId
+        - companyId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'    
+        companyId:
+          $ref: '#/components/schemas/companyId'
+        orgNumber:
+          $ref: '#/components/schemas/orgNumber'
+        companyName:
+          $ref: '#/components/schemas/companyName'
+        created:
+          $ref: '#/components/schemas/companyCreated'
+        
+    #
+    #####################################################
+    # Company
+    #####################################################
+    Company:
+      $ref: '#/components/schemas/companyType'
+    #
+    #####################################################
+    # Companies
+    #####################################################
+    Companies:
+      description: TBD
+      type: array
+      items:
+        $ref: '#/components/schemas/companyType'
+    #
+    #######################################################
+    # householdType
+    #######################################################
+    householdType:
+      description: >-
+        TBD
+      type: object
+      required:
+        - processId
+        - customerId
+        - householdId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        householdId:
+          $ref: '#/components/schemas/householdId'
+        householdName:
+          $ref: '#/components/schemas/householdName'
+        civilState:
+          $ref: '#/components/schemas/civilState'
+        numberOfChildsAtHome:
+          $ref: '#/components/schemas/numberOfChildsAtHome'
+        numberOfCars:
+          $ref: '#/components/schemas/numberOfCars'
+        childCareCosts:
+          $ref: '#/components/schemas/childCareCosts'
+        childMaintenaceCost:
+          $ref: '#/components/schemas/childMaintenanceCost'
+    #
+    #######################################################
+    # Household
+    #######################################################
+    Household:
+      $ref: '#/components/schemas/householdType'
+    #
+    #######################################################
+    # Households
+    #######################################################
+    Households:
+      description: >-
+        return all available households for a customer
+      type: array
+      items:
+        $ref: '#/components/schemas/householdType'
+    #
+    #######################################################
+    # loanType
+    #######################################################
+    loanType:
+      description: >-
+        This represent the customer loan structure
+      type: object
+      required:
+        - processId
+        - customerId
+        - loanId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        loanId:
+          $ref: '#/components/schemas/loanId'
+        loanNumber:
+          $ref: '#/components/schemas/loanNumber'
+        loanAmount:
+          $ref: '#/components/schemas/loanAmount'
+        numberOfLoans:
+          $ref: '#/components/schemas/numberOfLoans'
+        purposeOfLoan:
+          $ref: '#/components/schemas/purposeOfLoan'
+    #
+    #######################################################
+    # Loan
+    #######################################################
+    Loan:
+      $ref: '#/components/schemas/loanType'
+    #
+    #######################################################
+    # Loans
+    #######################################################
+    Loans:
+      description: TBD
+      type: array
+      items:
+        $ref: '#/components/schemas/loanType'
+    #
+    #######################################################
+    # extloanType
+    #######################################################
+    extloanType:
+      description: >-
+        Externa lån kunden har i andra kreditinstitut, detta exkluderar LH-lån
+      type: object
+      required:
+        - processId
+        - customerId
+        - extloanId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        extloanId:
+          $ref: '#/components/schemas/extloanId'
+        extCreditInstitut:
+          $ref: '#/components/schemas/extCreditInstitut'
+        extloanClearing:
+          $ref: '#/components/schemas/extloanClearing'
+        extloanNumber:
+          $ref: '#/components/schemas/extloanNumber'
+    #
+    #######################################################
+    # ExtLoan
+    #######################################################
+    ExtLoan:
+      $ref: '#/components/schemas/extloanType'
+    #
+    #######################################################
+    # ExtLoans
+    #######################################################
+    ExtLoans:
+      description: TBD
+      type: array
+      items:
+        $ref: '#/components/schemas/extloanType'
+    #
+    #######################################################
+    # colleteralType
+    #######################################################
+    colleteralType:
+      description: >-
+        Säkerheter för lånet, om köp, även andra fastigheter kan användas som säkerhet för lånet
+      type: object
+      required:
+        - processId
+        - customerId
+        - colleteralId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        colleteralId:
+          $ref: '#/components/schemas/colleteralId'
+        colleteralName:
+          $ref: '#/components/schemas/colleteralName'
+        colleteralMunicipality:
+          $ref: '#/components/schemas/colleteralMunicipality'
+        colleteralStreet:
+          $ref: '#/components/schemas/colleteralStreet'
+    #
+    #######################################################
+    # Colleteral
+    #######################################################
+    Colleteral:
+      $ref: '#/components/schemas/colleteralType'
+    #
+    #######################################################
+    # Colleterals
+    #######################################################
+    Colleterals:
+      description: TBD
+      type: array
+      items:
+        $ref: '#/components/schemas/colleteralType'
+    #
+    #######################################################
+    # personalEconomyType
+    #######################################################
+    personalEconomyType:
+      description: >-
+        TBD
+      type: object
+      required:
+        - processId
+        - customerId
+        - personalEconomyId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        personalEconomyId:
+          $ref: '#/components/schemas/personalEconomyId'
+        YearlyIncome:
+          $ref: '#/components/schemas/yearlyIncome'  # brutto inkomst
+        Income:
+          $ref: '#/components/schemas/income'   # inkomst av tjänst
+        TypeOfEmployeement:
+          $ref: '#/components/schemas/typeOfEmployeement' # aanställningsform
+        Employeer:
+          $ref: '#/components/schemas/employeer' # arbetsgivare
+    #
+    #####################################################
+    # PersonalEconomy
+    #####################################################
+    PersonalEconomy:
+      $ref: '#/components/schemas/personalEconomyType'
+    #
+    #####################################################
+    # PersonalEconomies
+    #####################################################
+    PersonalEconomies:
+      description: ->
+        TBD
+      type: array
+      items:
+        $ref: '#/components/schemas/personalEconomyType'
+    #
+    #######################################################
+    # companyEconomyType
+    #######################################################
+    companyEconomyType:
+      description: >-
+        TBD
+      type: object
+      required:
+        - processId
+        - companyEconomyId
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        companyEconomyId:
+          $ref: '#/components/schemas/companyEconomyId'
+    #
+    #####################################################
+    # CompanyEconomy
+    #####################################################
+    CompanyEconomy:
+      $ref: '#/components/schemas/companyEconomyType'
+    #
+    #####################################################
+    # CompanyEconomies
+    #####################################################
+    CompanyEconomies:
+      description: ->
+        TBD
+      type: array
+      items:
+        $ref: '#/components/schemas/companyEconomyType'
+    #  
+  #####################################################
+  # Predefined Parameters
+  #####################################################
+  #
+  parameters:
+    processId:
+      name: processId
+      in: path
+      description: >- 
+        unique identity in Activiti framework
+      required: true
+      schema:
+        $ref: '#/components/schemas/processId'
+    customerId:
+      name: customerId
+      in: path
+      description: >- 
+        customerId is swedish ssn or corporate organisation number
+      required: true
+      schema:
+        $ref: '#/components/schemas/customerId'
+    companyId:
+      name: companyId
+      in: path
+      description: >- 
+        companyId is swedish ssn or corporate organisation number
+      required: true
+      schema:
+        $ref: '#/components/schemas/companyId'
+    householdId:
+      name: householdId
+      in: path
+      description: TBD
+      required: true
+      schema:
+        $ref: '#/components/schemas/householdId'
+    loanId:
+      name: loanId
+      in: path
+      description: TBD
+      required: true
+      schema:
+        $ref: '#/components/schemas/loanId'
+    colleteralId:
+      name: colleteralId
+      in: path
+      description: TBD
+      required: true
+      schema:
+        $ref: '#/components/schemas/colleteralId'
+    extloanId:
+      name: extloanId
+      in: path
+      description: TBD
+      required: true
+      schema:
+        $ref: '#/components/schemas/extloanId'
+    personalEconomyId:
+      name: personalEconomyId
+      in: path
+      description: TBD
+      required: true
+      schema:
+        $ref: '#/components/schemas/personalEconomyId'
+    companyEconomyId:
+      name: companyEconomyId
+      in: path
+      description: TBD
+      required: true
+      schema:
+        $ref: '#/components/schemas/companyEconomyId'
+  #
+  #####################################################
+  # Reuseable request bodies
+  #####################################################
+  requestBodies:
+    #
+    ###################################################
+    # updateCustomer
+    ###################################################
+    updateCustomer:
+      description: Update a specific customer in the Activiti framework
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: '#/components/schemas/customerType'
+    #
+    ###################################################
+    # updateCompany
+    ###################################################
+    updateCompany:
+      description: Update a specific company in the Activiti framework
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: '#/components/schemas/companyType'
+    #
+    ###################################################
+    # updateHousehold
+    ###################################################
+    updateHousehold:
+      description: Update a specific household in the Activiti framework
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: '#/components/schemas/householdType'
+    #
+    ###################################################
+    # updateLoan
+    ###################################################
+    updateLoan:
+      description: TBD
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: '#/components/schemas/loanType'
+    #
+    ###################################################
+    # updateColleteral
+    ###################################################
+    updateColleteral:
+      description: TBD
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: '#/components/schemas/colleteralType'
+    #
+    ###################################################
+    # updateextLoan
+    ###################################################
+    updateExtLoan:
+      description: TBD
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: '#/components/schemas/extloanType'
+    #
+    ###################################################
+    # updatePersonalEconomy
+    ###################################################
+    updatePersonalEconomy:
+      description: TBD
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: '#/components/schemas/personalEconomyType'
+    #
+    ###################################################
+    # updateCompanyEconomy
+    ###################################################
+    updateCompanyEconomy:
+      description: TBD
+      required: true
+      content: 
+        application/json:
+          schema:
+            oneOf: 
+              - $ref: '#/components/schemas/companyEconomyType'
+    #
