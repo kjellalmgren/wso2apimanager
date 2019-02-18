@@ -18,6 +18,37 @@ tags:
 - name: Selma SME(EN) API Definitions
   description: Access layer to the process engine(Activiti)
 paths:
+  /v1/Process/{customerId}:
+    get:
+      tags:
+      - getProcesses
+      summary: get a list of active processes for a customerId
+      description: TBD
+      operationId: getProcesses
+      parameters:
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Processes'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: The requested task was not found
+        500:
+          description: Page not found
   /v1/Customer/{processId}/{customerId}:
     get:
       tags:
@@ -49,10 +80,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
-          description: Invalid page
+          description: The requested task was not found
+        500:
+          description: Page not found
   /v1/Customers/{processId}:
     get:
       tags:
@@ -76,10 +111,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customers'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
-          description: Invalid page
+          description: The requested task was not found
         500:
           description: Page Not found
   /v1/updateCustomer/{processId}/{customerId}:
@@ -115,6 +152,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -148,6 +187,8 @@ paths:
       responses:
         200:
           description: Successful
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -185,10 +226,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Company'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
           description: Invalid page
+        500:
+          description: Page Not found
   /v1/Companies/{processId}:
     get:
       tags:
@@ -212,6 +257,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Companies'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -251,6 +298,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Company'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -284,6 +333,8 @@ paths:
       responses:
         200:
           description: Successful
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -329,10 +380,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Household'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
           description: Invalid page
+        500:
+          description: Page Not found
   /v1/Households/{processId}/{customerId}:
     get:
       tags:
@@ -364,6 +419,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Households'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -411,6 +468,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Household'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -452,6 +511,8 @@ paths:
       responses:
         200:
           description: Successful
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -497,10 +558,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Colleteral'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
           description: Invalid page
+        500:
+          description: Page Not found
   /v1/Colleterals/{processId}/{customerId}:
     get:
       tags:
@@ -532,6 +597,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Colleterals'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -579,6 +646,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Colleteral'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -620,6 +689,8 @@ paths:
       responses:
         200:
           description: Successful
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -657,10 +728,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Loan'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
           description: Invalid page
+        500:
+          description: Page Not found
   /v1/Loans/{processId}:
     get:
       tags:
@@ -684,6 +759,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Loans'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -723,6 +800,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Loan'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -756,6 +835,8 @@ paths:
       responses:
         200:
           description: Successful
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -801,10 +882,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExtLoan'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
           description: Invalid page
+        500:
+          description: Page Not found
   /v1/ExtLoans/{processId}/{customerId}:
     get:
       tags:
@@ -836,6 +921,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExtLoans'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -883,6 +970,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExtLoan'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -924,6 +1013,8 @@ paths:
       responses:
         200:
           description: Successful
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -969,10 +1060,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PersonalEconomy'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
           description: Invalid page
+        500:
+          description: Page Not found
   /v1/PersonalEconomies/{processId}/{customerId}:
     get:
       tags:
@@ -1004,6 +1099,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PersonalEconomies'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -1051,6 +1148,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PersonalEconomy'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -1092,6 +1191,8 @@ paths:
       responses:
         200:
           description: Successful
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -1129,10 +1230,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyEconomy'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
           description: Invalid page
+        500:
+          description: Page Not found
   /v1/CompanyEconomies/{processId}:
     get:
       tags:
@@ -1156,6 +1261,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyEconomies'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -1195,6 +1302,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyEconomy'
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -1228,6 +1337,115 @@ paths:
       responses:
         200:
           description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Budgets/{processId}:
+    get:
+      tags:
+      - getBudgets
+      summary: get a list of available budgets
+      description: Get a list of available Budgets
+      operationId: getBudgets
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budgets'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/updateBudget/{processId}/{companyEconomyId}:
+    post:
+      tags:
+      - updateBudget
+      summary: update a specific Budget in Activiti
+      description: TBD
+      operationId: updateBudget
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyEconomyId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateBudget'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budget'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteBudget/{processId}/{companyEconomyId}:
+    post:
+      tags:
+      - deleteBudget
+      summary: Delete a specific Budget in Activiti
+      description: TBD
+      operationId: deleteBudget
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
         403:
           description: Forbidden
         404:
@@ -1346,7 +1564,7 @@ components:
       example: Bergsgatan 12
     extloanId:
       type: string
-      description: TBD
+      description: Type definitions for external loans
       example: 3164d347-e173-4c4f-8839-26d32716e5bf
     extCreditInstitut:
       type: string
@@ -1362,7 +1580,7 @@ components:
       example: "5270"
     personalEconomyId:
       type: string
-      description: TBD
+      description: Type definitions for personal economy
       example: b0c0edaa-3d75-4364-9179-1ecc8d9198d0
     yearlyIncome:
       type: string
@@ -1411,8 +1629,12 @@ components:
       - Ny/tillbyggnad/renovering mjölkstall
     companyEconomyId:
       type: string
-      description: TBD
+      description: Type definition for company economy
       example: 32084646-d030-4c51-a316-b1342c3551ab
+    budgetId:
+      type: string
+      description: Type definition for company budget
+      example: 32084646-d030-4c51-a316-b1342c3551dc
     customerType:
       required:
       - customerId
@@ -1553,7 +1775,7 @@ components:
       $ref: '#/components/schemas/extloanType'
     ExtLoans:
       type: array
-      description: TBD
+      description: Type definition for external loans
       items:
         $ref: '#/components/schemas/extloanType'
     colleteralType:
@@ -1622,14 +1844,53 @@ components:
           $ref: '#/components/schemas/processId'
         companyEconomyId:
           $ref: '#/components/schemas/companyEconomyId'
-      description: TBD
+      description: Type definition for company economy
     CompanyEconomy:
       $ref: '#/components/schemas/companyEconomyType'
     CompanyEconomies:
       type: array
-      description: -> TBD
+      description: -> Type definition for company economies, returns array of CompanyEconomies
       items:
         $ref: '#/components/schemas/companyEconomyType'
+    budgetType:
+      required:
+      - budgetId
+      - companyId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        companyId:
+          $ref: '#/components/schemas/companyId'
+        companyEconomyId:
+          $ref: '#/components/schemas/budgetId'
+      description: Type definition for companyBudget
+    Budget:
+      $ref: '#/components/schemas/budgetType'
+    Budgets:
+      type: array
+      description: Return an array of type budgetType
+      items:
+        $ref: '#/components/schemas/budgetType'
+    processType:
+      required:
+      - customerId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+      description: TBD
+    Process:
+      $ref: '#/components/schemas/processType'
+    Processes:
+      type: array
+      description: Return a list of type processType
+      items:
+        $ref: '#/components/schemas/processType'
   parameters:
     processId:
       name: processId
@@ -1776,4 +2037,12 @@ components:
           schema:
             oneOf:
             - $ref: '#/components/schemas/companyEconomyType'
+      required: true
+    updateBudget:
+      description: TBD
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/budgetType'
       required: true
