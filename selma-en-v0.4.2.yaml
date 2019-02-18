@@ -18,7 +18,7 @@ tags:
 - name: Selma SME(EN) API Definitions
   description: Access layer to the process engine(Activiti)
 paths:
-  /v1/Process/{customerId}:
+  /v1/Processes/{customerId}:
     get:
       tags:
       - getProcesses
@@ -52,6 +52,37 @@ paths:
       security:
       - {}
       - BearerAuthOAuth: []
+  /v1/deleteProcess/{processId}:
+    post:
+      tags:
+      - deleteProcess
+      summary: Delete a specific processId in Activiti
+      description: Will remove evry customerId under a processId in Activiti framework
+      operationId: deleteProcess
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200OK'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
   /v1/Customer/{processId}/{customerId}:
     get:
       tags:
@@ -1537,6 +1568,10 @@ paths:
           description: Page Not found
 components:
   schemas:
+    200OK:
+      type: string
+      description: Successful
+      example: OK
     processId:
       type: string
       description: Activiti framework unique identification
