@@ -5,7 +5,7 @@ info:
   termsOfService: terms
   contact:
     name: API v1 for SME initiative
-    url: developer.landshypotek.se/v1/sme
+    url: api.landshypotek.se/v1/sme
     email: developer@landshypotek.se
   license:
     name: MIT
@@ -522,11 +522,11 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
-  /v1/Colleteral/{processId}/{customerId}/{colleteralId}:
+  /v1/Collateral/{processId}/{customerId}/{collateralId}:
     get:
       tags:
-      - getColleteral
-      summary: Get a specific colleteral by processId, customerId and colleteralId
+      - getCollateral
+      summary: Get a specific collateral by processId, customerId and collateralId
       description: Get a specific colleteral from the process layer
       operationId: getColleteral
       parameters:
@@ -546,21 +546,21 @@ paths:
         explode: false
         schema:
           $ref: '#/components/schemas/customerId'
-      - name: colleteralId
+      - name: collateralId
         in: path
         description: TBD
         required: true
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/colleteralId'
+          $ref: '#/components/schemas/collateralId'
       responses:
         200:
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Colleteral'
+                $ref: '#/components/schemas/Collateral'
         401:
           description: Unauthorized
         403:
@@ -569,13 +569,13 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
-  /v1/Colleterals/{processId}/{customerId}:
+  /v1/Collaterals/{processId}/{customerId}:
     get:
       tags:
-      - getColleterals
-      summary: get a list of available colleterals
-      description: Get a list of available colleterals by ProcessId and customerId...
-      operationId: getColleterals
+      - getCollaterals
+      summary: get a list of available collaterals
+      description: Get a list of available collaterals by ProcessId and customerId...
+      operationId: getCollaterals
       parameters:
       - name: processId
         in: path
@@ -599,7 +599,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Colleterals'
+                $ref: '#/components/schemas/Collaterals'
         401:
           description: Unauthorized
         403:
@@ -608,13 +608,13 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
-  /v1/updateColleteral/{processId}/{customerId}/{colleteralId}:
+  /v1/updateCollateral/{processId}/{customerId}/{collateralId}:
     post:
       tags:
-      - updateColleteral
-      summary: update a specific colleteral in Activiti
+      - updateCollateral
+      summary: update a specific collateral in Activiti
       description: descripition
-      operationId: updateColleteral
+      operationId: updateCollateral
       parameters:
       - name: processId
         in: path
@@ -632,23 +632,23 @@ paths:
         explode: false
         schema:
           $ref: '#/components/schemas/customerId'
-      - name: colleteralId
+      - name: collateralId
         in: path
         description: TBD
         required: true
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/colleteralId'
+          $ref: '#/components/schemas/collateralId'
       requestBody:
-        $ref: '#/components/requestBodies/updateColleteral'
+        $ref: '#/components/requestBodies/updateCollateral'
       responses:
         200:
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Colleteral'
+                $ref: '#/components/schemas/Collateral'
         401:
           description: Unauthorized
         403:
@@ -657,13 +657,13 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
-  /v1/deleteColleteral/{processId}/{customerId}/{colleteralId}:
+  /v1/deleteCollateral/{processId}/{customerId}/{collateralId}:
     post:
       tags:
-      - deleteColleteral
-      summary: Delete a specific colleteral in Activiti
+      - deleteCollateral
+      summary: Delete a specific collateral in Activiti
       description: descripition
-      operationId: deleteColleteral
+      operationId: deleteCollateral
       parameters:
       - name: processId
         in: path
@@ -681,14 +681,14 @@ paths:
         explode: false
         schema:
           $ref: '#/components/schemas/customerId'
-      - name: colleteralId
+      - name: collateralId
         in: path
         description: TBD
         required: true
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/colleteralId'
+          $ref: '#/components/schemas/collateralId'
       responses:
         200:
           description: Successful
@@ -700,12 +700,12 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
-  /v1/Loan/{processId}/{loanId}:
+  /v1/Loan/{processId}/{customerId}/{loanId}:
     get:
       tags:
       - getLoan
       summary: Get a specific loan by processId
-      description: Get a specific loan from the process layer
+      description: Get a specific loan from customerId and processId layer
       operationId: getLoan
       parameters:
       - name: processId
@@ -716,6 +716,14 @@ paths:
         explode: false
         schema:
           $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
       - name: loanId
         in: path
         description: TBD
@@ -739,11 +747,11 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
-  /v1/Loans/{processId}:
+  /v1/Loans/{processId}/{customerId}:
     get:
       tags:
       - getLoans
-      summary: get a list of available loans
+      summary: get a list of available loans on processId and customerId
       description: Get a list of available loans by ProcessId...
       operationId: getLoans
       parameters:
@@ -755,6 +763,14 @@ paths:
         explode: false
         schema:
           $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
       responses:
         200:
           description: Successful
@@ -770,7 +786,7 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
-  /v1/updateLoan/{processId}/{loanId}:
+  /v1/updateLoan/{processId}/{customerId}/{loanId}:
     post:
       tags:
       - updateLoan
@@ -786,6 +802,14 @@ paths:
         explode: false
         schema:
           $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
       - name: loanId
         in: path
         description: TBD
@@ -811,11 +835,11 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
-  /v1/deleteLoan/{processId}/{loanId}:
+  /v1/deleteLoan/{processId}/{customerId}/{loanId}:
     post:
       tags:
       - deleteLoan
-      summary: Delete a specific loan in Activiti
+      summary: Delete a specific loan on a customer in Activiti
       description: TBD
       operationId: deleteLoan
       parameters:
@@ -827,6 +851,14 @@ paths:
         explode: false
         schema:
           $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
       - name: loanId
         in: path
         description: TBD
@@ -1601,20 +1633,20 @@ components:
       type: string
       description: Customer want to split this loan in number of load
       example: "2"
-    colleteralId:
+    collateralId:
       type: string
       description: TBD
       format: uuid
       example: 82faaa1a-42f7-4d87-aecf-96c450a0ce59
-    colleteralName:
+    collateralName:
       type: string
       description: TBD
       example: SKOGEN 4:3
-    colleteralMunicipality:
+    collateralMunicipality:
       type: string
       description: Kommun där fastigheten och/eller säkerheten finns
       example: Katrineholm
-    colleteralStreet:
+    collateralStreet:
       type: string
       description: TBD
       example: Bergsgatan 12
@@ -1838,9 +1870,9 @@ components:
       description: Type definition for external loans
       items:
         $ref: '#/components/schemas/extloanType'
-    colleteralType:
+    collateralType:
       required:
-      - colleteralId
+      - collateralId
       - customerId
       - processId
       type: object
@@ -1849,22 +1881,22 @@ components:
           $ref: '#/components/schemas/processId'
         customerId:
           $ref: '#/components/schemas/customerId'
-        colleteralId:
-          $ref: '#/components/schemas/colleteralId'
-        colleteralName:
-          $ref: '#/components/schemas/colleteralName'
-        colleteralMunicipality:
-          $ref: '#/components/schemas/colleteralMunicipality'
-        colleteralStreet:
-          $ref: '#/components/schemas/colleteralStreet'
+        collateralId:
+          $ref: '#/components/schemas/collateralId'
+        collateralName:
+          $ref: '#/components/schemas/collateralName'
+        collateralMunicipality:
+          $ref: '#/components/schemas/collateralMunicipality'
+        collateralStreet:
+          $ref: '#/components/schemas/collateralStreet'
       description: Säkerheter för lånet, om köp, även andra fastigheter kan användas som säkerhet för lånet
-    Colleteral:
-      $ref: '#/components/schemas/colleteralType'
-    Colleterals:
+    Collateral:
+      $ref: '#/components/schemas/collateralType'
+    Collaterals:
       type: array
-      description: Array list of type colleteralType
+      description: Array list of type collateralType
       items:
-        $ref: '#/components/schemas/colleteralType'
+        $ref: '#/components/schemas/collateralType'
     personalEconomyType:
       required:
       - customerId
@@ -1997,15 +2029,15 @@ components:
       explode: false
       schema:
         $ref: '#/components/schemas/loanId'
-    colleteralId:
-      name: colleteralId
+    collateralId:
+      name: collateralId
       in: path
       description: TBD
       required: true
       style: simple
       explode: false
       schema:
-        $ref: '#/components/schemas/colleteralId'
+        $ref: '#/components/schemas/collateralId'
     extloanId:
       name: extloanId
       in: path
@@ -2059,23 +2091,23 @@ components:
             - $ref: '#/components/schemas/householdType'
       required: true
     updateLoan:
-      description: TBD
+      description: Update a specific loan on a customer
       content:
         application/json:
           schema:
             oneOf:
             - $ref: '#/components/schemas/loanType'
       required: true
-    updateColleteral:
-      description: TBD
+    updateCollateral:
+      description: Update a specific collateral on a customer
       content:
         application/json:
           schema:
             oneOf:
-            - $ref: '#/components/schemas/colleteralType'
+            - $ref: '#/components/schemas/collateralType'
       required: true
     updateExtLoan:
-      description: TBD
+      description: Update a specific external loan on a cusomter
       content:
         application/json:
           schema:
@@ -2083,7 +2115,7 @@ components:
             - $ref: '#/components/schemas/extloanType'
       required: true
     updatePersonalEconomy:
-      description: TBD
+      description: Update personal economy on a customer
       content:
         application/json:
           schema:
@@ -2099,7 +2131,7 @@ components:
             - $ref: '#/components/schemas/companyEconomyType'
       required: true
     updateBudget:
-      description: TBD
+      description: Update a budget on a specific company
       content:
         application/json:
           schema:
