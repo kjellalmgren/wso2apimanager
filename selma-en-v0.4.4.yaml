@@ -2,11 +2,9 @@ openapi: 3.0.1
 info:
   title: Selma SME Light
   description: |-
-    This definition is the API between customer SME-Gui and the persistence framework based on Activiti<br>
-     !----------------------------------------------------------------------
-    <br> **Processes**<br> Processes/Process<br> <br> **BusinessArea**                                            (TBD)<br> **Security/oauth2**                                         (TBD)<br> <br> **ApplicationData**<br> **Loans/Loan**                                              (TBD)<br> **Applicant/ELoans/ELoan**<br> **Applicant/PersonalEconomies/PersonalEconomy**<br> **Applicant/ApplicantInformation**                         (TBD)<br> <br> **Companies/Budgets/Budget**<br> **Companies/CompanyEconomies/CompanyEconomy**<br> **Companies/Collaterals/Colleteral**<br> <br> To be decided where this should be connected (Sökande/Medsökande)<br> **Households**<br> **Households/Household**<br> **Households/Hosuehold/Cars/Car**<br> **Households/Household/Childs/Child**<br>
-    When customer logg-in to Selma-EN, we will create a processI with apllicant CustomerId. When a customer added attachment to the flow, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a case Id to be able to attach a document to the case Id in DM.
-    All update-methods should act as a add-method if Applicant does not exist ! ---------------------------------------------------------------------<br>
+    This definition is the API between customer SME-Gui and the persistence framework based on Activiti<br> !--------------------------------------------------------------------------- <br> **Processes**<br> Processes/Process<br> <br> **BusinessArea**                                            (TBD)<br> **Security/oauth2**                                         (TBD)<br> <br> **ApplicationData**<br> **Loans/Loan**                                              (TBD)<br> **Applicant/ELoans/ELoan**<br> **Applicant/PersonalEconomies/PersonalEconomy**<br> **Applicant/ApplicantInformation**                         (TBD)<br> <br> **Companies/Budgets/Budget**<br> **Companies/CompanyEconomies/CompanyEconomy**<br> **Companies/Collaterals/Colleteral**<br> <br> To be decided where this should be connected (Sökande/Medsökande)<br> **Households**<br> **Households/Household**<br> **Households/Hosuehold/Cars/Car**<br> **Households/Household/Childs/Child**<br>
+    When customer logg-in to Selma-EN, we will create a processId with apllicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
+    All update-methods should act as a add-method if e.g.Applicant does not exist ! ----------------------------------------------------------------------------<br>
   termsOfService: terms
   contact:
     name: API v1 for SME initiative
