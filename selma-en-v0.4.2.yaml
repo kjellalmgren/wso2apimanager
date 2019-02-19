@@ -1,7 +1,10 @@
 openapi: 3.0.1
 info:
   title: Selma SME Light
-  description: This definition is the API between customer SME-Gui and the persistence framework based on Activiti
+  description: |-
+    This definition is the API between customer SME-Gui and the persistence framework based on Activiti<br>
+     !----------------------------------------------------------------------
+    <br> **Processes**<br> Processes/Process<br> <br> **BusinessArea**                                            (TBD)<br> **Security/oauth2**                                         (TBD)<br> <br> **ApplicationData**<br> **Customers/Loans/Loan**<br> **Customers/ELoans/ELoan**<br> **Customers/PersonalEconomies/PersonalEconomy**<br> **Customers/Customer/CustomerInformation**                  (TBD)<br> <br> **Companies/Budgets/Budget**<br> **Companies/CompanyEconomies/CompanyEconomy**<br> **Companies/Collaterals/Colleteral**<br> <br> To be decided where this should be connected (Sökande/Medsökande)<br> **Households**<br> **Households/Household**<br> **Households/Hosuehold/Cars/Car**<br> **Households/Household/Childs/Child**<br> ! ---------------------------------------------------------------------<br>
   termsOfService: terms
   contact:
     name: API v1 for SME initiative
