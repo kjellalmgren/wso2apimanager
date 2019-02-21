@@ -2,8 +2,7 @@ openapi: 3.0.1
 info:
   title: Selma SME Light
   description: |-
-    This definition is the API between customer SME-Gui and the persistence framework based on Activiti<br> !--------------------------------------------------------------------------- <br> **Processes**<br> Processes/Process<br> <br> **BusinessArea**                                            (TBD)<br> **Security/oauth2**                                         (TBD)<br> <br> **ApplicationData**<br> **Loans/Loan**                                              (TBD)<br> **Applicant/ELoans/ELoan**<br> **Applicant/PersonalEconomies/PersonalEconomy**<br> **Applicant/ApplicantInformation**                         (TBD)<br> <br> **Companies/Budgets/Budget**<br> **Companies/CompanyEconomies/CompanyEconomy**<br> **Companies/Collaterals/Colleteral**<br> <br> To be decided where this should be connected (Sökande/Medsökande)<br> **Households**<br> **Households/Household**<br> **Households/Hosuehold/Cars/Car**<br> **Households/Household/Childs/Child**<br>
-    When customer logg-in to Selma-EN, we will create a processId with apllicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
+    This definition is the API between customer SME-Gui and the persistence framework based on Activiti<br> !--------------------------------------------------------------------------- <br> **Processes**<br> **Processes/Process**<br> <br> **BusinessArea**                                            (TBD)<br> **Security/oauth2**                                         (TBD)<br> <br> **ApplicationData**<br> **Loans/Loan**                                              (TBD)<br> **Applicant/ELoans/ELoan**<br> **Applicant/PersonalEconomies/PersonalEconomy**<br> **Applicant/ApplicantInformation**                         (TBD)<br> <br> **Companies/Budgets/Budget**<br> **Companies/CompanyEconomies/CompanyEconomy**<br> **Companies/Collaterals/Colleteral**<br> <br> To be decided where this should be connected (Sökande/Medsökande)<br> **Households**<br> **Households/Household**<br> **Households/Hosuehold/Cars/Car**<br> **Households/Household/Childs/Child**<br> <br> When customer logg-in to Selma-EN, we will create a processId with apllicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
     All update-methods should act as a add-method if e.g.Applicant does not exist ! ----------------------------------------------------------------------------<br>
   termsOfService: terms
   contact:
@@ -1562,30 +1561,38 @@ components:
       description: unique id for each applicant in the credit case
       format: uuid
       example: 12ab301d-b0ae-46ba-ac99-ff7389fe356e
-    customerName:
+    applicantName:
       type: string
       description: Full name of the customer/applicant
       example: Anna Andersson
-    customerAddress:
+    applicantAddress:
       type: string
       description: Street address of Applicant
       example: Trossvägen 1
-    customerPostAddress:
+    applicantPostAddress:
       type: string
       description: Postal number and postal city
       example: 181 66 Lidingö
-    customerRole:
+    applicantRole:
       type: string
-      description: Huvudlåntagare or Medlåntagare i SAP
+      description: Huvudlåntagare or Medlåntagare i SAP (behöver vi hantera detta?)
       example: Huvudlåntagare/medlåntagare in SAP
-    customerEmail:
+    applicantEmail:
       type: string
-      description: customer enter email for notification
+      description: applicant enter email for notification
       example: kjell.almgren@landshypotek.se
-    customerMobileNumber:
+    applicantMobileNumber:
       type: string
-      description: customer entered mobile number for notification
+      description: applicant entered mobile number for notification
       example: "0733981482"
+    applicantMember:
+      type: string
+      description: Member in Landshypotek Ekonomiska förening
+      example: Yes
+    applicantEmployeed:
+      type: string
+      description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer
+      example: EMPLOYEED
     companyId:
       type: string
       description: generated guid in the model
@@ -1597,11 +1604,12 @@ components:
       example: 550101-1010
     companyName:
       type: string
-      description: Full name of the company from external services
+      description: Full name of the company from external services or BusinessName in SAP
       example: Anna Andersson Mjölkproduktion
     companyCreated:
       type: string
-      description: date when company was established, from external service
+      description: 'date when company was established, from external service or existing
+        customer in SAP '
       example: 2012-01-01
     householdId:
       type: string
@@ -1624,10 +1632,6 @@ components:
       type: string
       description: number of cars in this houshold
       example: "2"
-    childCareCosts:
-      type: string
-      description: Banromsorgkostnad
-      example: 1 500 SEK
     childMaintenanceCost:
       type: string
       description: -> Underhållskostander barn
@@ -1757,17 +1761,17 @@ components:
         applicantId:
           $ref: '#/components/schemas/applicantId'
         applicantName:
-          $ref: '#/components/schemas/customerName'
+          $ref: '#/components/schemas/applicantName'
         applicantAddress:
-          $ref: '#/components/schemas/customerAddress'
+          $ref: '#/components/schemas/applicantAddress'
         applicantPostAddress:
-          $ref: '#/components/schemas/customerPostAddress'
+          $ref: '#/components/schemas/applicantPostAddress'
         role:
-          $ref: '#/components/schemas/customerRole'
-        eMail:
-          $ref: '#/components/schemas/customerEmail'
-        mobileNumber:
-          $ref: '#/components/schemas/customerMobileNumber'
+          $ref: '#/components/schemas/applicantRole'
+        contactInformation:
+          $ref: '#/components/schemas/ContactInformationType'
+        member:
+          $ref: '#/components/schemas/applicantMember'
       description: Type of applicant instance
     Applicant:
       $ref: '#/components/schemas/applicantType'
@@ -1776,6 +1780,14 @@ components:
       description: List of applicantType
       items:
         $ref: '#/components/schemas/applicantType'
+    ContactInformationType:
+      type: object
+      properties:
+        eMail:
+          $ref: '#/components/schemas/applicantEmail'
+        mobileNumber:
+          $ref: '#/components/schemas/applicantMobileNumber'
+      description: TBD
     companyType:
       required:
       - companyId
@@ -1821,8 +1833,6 @@ components:
           $ref: '#/components/schemas/numberOfChildsAtHome'
         numberOfCars:
           $ref: '#/components/schemas/numberOfCars'
-        childCareCosts:
-          $ref: '#/components/schemas/childCareCosts'
         childMaintenaceCost:
           $ref: '#/components/schemas/childMaintenanceCost'
       description: Household should be loosely coupled in the model. We have to support many customerId in a household.
