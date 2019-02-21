@@ -85,6 +85,92 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
+  /v1/reserveCaseId/{processId}/{customerId}:
+    post:
+      tags:
+      - reserveCaseId
+      summary: Reserve a CaseId in Loan Process to be able to use attachment i DM
+      description: TBD
+      operationId: reserveCaseId
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/caseId'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}:
+    post:
+      tags:
+      - setCaseIdStatus
+      summary: TBD
+      description: TBD
+      operationId: setCaseIdStatus
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: caseId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/caseId'
+      - name: caseIdStatus
+        in: path
+        description: set status in Loan Process for this caseId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/caseIdStatus'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200OK'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
   /v1/Applicant/{processId}/{customerId}:
     get:
       tags:
@@ -1506,6 +1592,18 @@ paths:
           description: Page Not found
 components:
   schemas:
+    caseId:
+      type: string
+      description: reserved a caseId in Loan Process
+      example: "106100"
+    caseIdStatus:
+      type: string
+      description: Set status on the caseid
+      example: CLOSEDBYAPPLICANT
+      enum:
+      - CLOSEDBYAPPLICANT
+      - CLOSEDBYOFFICER
+      - CLOSEDBYTHINNING
     200OK:
       type: string
       description: Successful
@@ -1980,6 +2078,24 @@ components:
       explode: false
       schema:
         $ref: '#/components/schemas/processId'
+    caseId:
+      name: caseId
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/caseId'
+    caseIdStatus:
+      name: caseIdStatus
+      in: path
+      description: set status in Loan Process for this caseId
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/caseIdStatus'
     customerId:
       name: customerId
       in: path
