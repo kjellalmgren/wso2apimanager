@@ -377,11 +377,11 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
-  /v1/Household/{processId}/{customerId}/{householdId}:
+  /v1/Household/{processId}/{householdId}:
     get:
       tags:
       - getHousehold
-      summary: Get a specific household by processId, customerId
+      summary: Get a specific household by processId
       description: Get a specific household from the process layer
       operationId: getHousehold
       parameters:
@@ -393,14 +393,6 @@ paths:
         explode: false
         schema:
           $ref: '#/components/schemas/processId'
-      - name: customerId
-        in: path
-        description: customerId is swedish ssn or corporate organisation number
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/customerId'
       - name: householdId
         in: path
         description: TBD
@@ -1596,21 +1588,17 @@ components:
       type: string
       description: Household name (will be removed)
       example: Stora hushållet
-    civilState:
-      type: string
-      description: -> Cevilstånd
-      example: Gift
     numberOfChildsAtHome:
       type: string
       description: Number of child in this household
       example: "2"
     numberOfCars:
       type: string
-      description: number of cars in this houshold
+      description: number of cars in this houshold (Will probably be removed for SME-companies)
       example: "2"
     childMaintenanceCost:
       type: string
-      description: -> Underhållskostander barn
+      description: Underhållskostnad för barn i annat hushåll Underhållskostander barn
       example: 0 SEK
     loanId:
       type: string
@@ -1790,7 +1778,6 @@ components:
         $ref: '#/components/schemas/companyType'
     householdType:
       required:
-      - customerIds
       - householdId
       - processId
       type: object
@@ -1803,15 +1790,13 @@ components:
           $ref: '#/components/schemas/householdId'
         householdName:
           $ref: '#/components/schemas/householdName'
-        civilState:
-          $ref: '#/components/schemas/civilState'
         numberOfChildsAtHome:
           $ref: '#/components/schemas/numberOfChildsAtHome'
         numberOfCars:
           $ref: '#/components/schemas/numberOfCars'
         childMaintenaceCost:
           $ref: '#/components/schemas/childMaintenanceCost'
-      description: Household should be loosely coupled in the model. We have to support many customerId in a household.
+      description: Household should be loosely coupled in the model. We have to support many customerId in a household, this is done by adding customerId to the array customerIds.
     Household:
       $ref: '#/components/schemas/householdType'
     Households:
