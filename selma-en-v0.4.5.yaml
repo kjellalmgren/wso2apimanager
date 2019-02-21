@@ -1604,6 +1604,7 @@ components:
       - CLOSEDBYAPPLICANT
       - CLOSEDBYOFFICER
       - CLOSEDBYTHINNING
+      - READYFOROFFICER
     200OK:
       type: string
       description: Successful
