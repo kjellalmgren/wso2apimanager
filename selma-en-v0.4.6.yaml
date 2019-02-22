@@ -1719,6 +1719,98 @@ paths:
           description: Invalid page
         500:
           description: Page Not found
+  /v1/updateKycInformation/{processId}/{customerId}/{kycId}:
+    post:
+      tags:
+      - updateKycInformation
+      summary: update a specific KycInformation in Activiti
+      description: TBD
+      operationId: updateKycInformation
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: kycId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/kycInformationType'
+      requestBody:
+        $ref: '#/components/requestBodies/updateKycInformation'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycInformation'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteKycInformation/{processId}/{companyId}/{kycId}:
+    post:
+      tags:
+      - deleteKycInformation
+      summary: Delete a specific KycInformation in Activiti
+      description: TBD
+      operationId: deleteKycInformation
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      - name: kycId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/kycInformationType'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
 components:
   schemas:
     caseId:
@@ -1953,6 +2045,24 @@ components:
       description: TBD
       format: uuid
       example: 9bca3a55-2458-41d5-9420-f12bdcd0c809
+    kycAcceptUC:
+      type: string
+      description: TBD
+      enum:
+      - "true"
+      - "false"
+    kycAcceptGDPR:
+      type: string
+      description: TBD
+      enum:
+      - "true"
+      - "false"
+    kycUCAware:
+      type: string
+      description: TBD
+      enum:
+      - "true"
+      - "false"
     applicantType:
       required:
       - applicantId
@@ -2228,6 +2338,12 @@ components:
           $ref: '#/components/schemas/customerId'
         kycId:
           $ref: '#/components/schemas/kycId'
+        kycAcceptUC:
+          $ref: '#/components/schemas/kycAcceptUC'
+        kycAcceptGDPR:
+          $ref: '#/components/schemas/kycAcceptGDPR'
+        kycUCAware:
+          $ref: '#/components/schemas/kycUCAware'
       description: KYC-Information
     KycInformation:
       $ref: '#/components/schemas/kycInformationType'
@@ -2417,6 +2533,14 @@ components:
           schema:
             oneOf:
             - $ref: '#/components/schemas/budgetType'
+      required: true
+    updateKycInformation:
+      description: update a specific customer information object
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/kycInformationType'
       required: true
   headers:
     X-Request-ID:
