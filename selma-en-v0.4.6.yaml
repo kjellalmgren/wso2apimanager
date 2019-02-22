@@ -1,0 +1,2430 @@
+openapi: 3.0.1
+info:
+  title: Selma SME Light
+  description: |-
+    This definition is the API between customer SME-Gui and the persistence framework based on Activiti<br> !---------------------------------------------------------------------------<br> <br> **Processes**<br> **Processes/Process**<br> <br> **BusinessArea**                                            (TBD)<br> **Security/oauth2**                                         (TBD)<br> <br> **ApplicationData**<br> **Loans/Loan**                                              (TBD)<br> **Applicant/ELoans/ELoan**<br> **Applicant/PersonalEconomies/PersonalEconomy**<br> **Applicant/ApplicantInformation**                         (TBD)<br> <br> **Companies/Budgets/Budget**<br> **Companies/CompanyEconomies/CompanyEconomy**<br> **Companies/Collaterals/Colleteral**<br> <br> To be decided where this should be connected (Sökande/Medsökande)<br> **Households**<br> **Households/Household**<br> **Households/Hosuehold/Cars/Car**<br> **Households/Household/Childs/Child**<br> <br> When customer logg-in to Selma-EN, we will create a processId with apllicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
+    All update-methods should act as a add-method if e.g.Applicant does not exist<br> ! ----------------------------------------------------------------------------<br>
+  termsOfService: terms
+  contact:
+    name: API v1 for SME initiative
+    url: api.landshypotek.se/v1/sme
+    email: developer@landshypotek.se
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+  version: 0.4.6
+servers:
+- url: http://localhost:8000/
+- url: https://localhost:8000/
+tags:
+- name: Selma SME(EN) API Definitions
+  description: Access layer to the process engine(Activiti)
+paths:
+  /v1/Processes/{customerId}:
+    get:
+      tags:
+      - getProcesses
+      summary: get a list of active processes for a customerId
+      description: Return a list of active applications for a customer
+      operationId: getProcesses
+      parameters:
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Processes'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: The requested task was not found
+        500:
+          description: Page not found
+      security:
+      - {}
+      - BearerAuthOAuth: []
+  /v1/deleteProcess/{processId}:
+    post:
+      tags:
+      - deleteProcess
+      summary: Delete a specific processId in Activiti
+      description: Will remove evry customerId under a processId in Activiti framework. All Applicants in a credit case will be deleted
+      operationId: deleteProcess
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200OK'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/reserveCaseId/{processId}/{customerId}:
+    post:
+      tags:
+      - reserveCaseId
+      summary: Reserve a CaseId in Loan Process to be able to use attachment i DM
+      description: TBD
+      operationId: reserveCaseId
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/caseId'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}:
+    post:
+      tags:
+      - setCaseIdStatus
+      summary: set status on the reserved caseId
+      description: When we create/reserve a caseId in LP we also have to set the status
+      operationId: setCaseIdStatus
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: caseId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/caseId'
+      - name: caseIdStatus
+        in: path
+        description: set status in Loan Process for this caseId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/caseIdStatus'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200OK'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Applicant/{processId}/{customerId}:
+    get:
+      tags:
+      - getApplicant
+      summary: Get a specific applicant by processId, customerId
+      description: Get a specific applicant from the process layer
+      operationId: getCustomer
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applicant'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: The requested task was not found
+        500:
+          description: Page not found
+  /v1/Applicants/{processId}:
+    get:
+      tags:
+      - getApplicants
+      summary: get a list of available applicants
+      description: Get a list of available applicants by ProcessId....
+      operationId: getApplicants
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applicants'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: The requested task was not found
+        500:
+          description: Page Not found
+  /v1/updateApplicant/{processId}/{customerId}:
+    post:
+      tags:
+      - updateApplicant
+      summary: update a specific applicant in Activiti
+      description: TBD
+      operationId: updateApplicant
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateApplicant'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applicant'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteApplicant/{processId}/{customerId}:
+    post:
+      tags:
+      - deleteApplicant
+      summary: Delete a specific applicant in Activiti
+      description: TBD
+      operationId: deleteApplicant
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Company/{processId}/{companyId}:
+    get:
+      tags:
+      - getCompany
+      summary: Get a specific company by ProcessId, companyId
+      description: Get a specific company from the process layer
+      operationId: getCompany
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Companies/{processId}:
+    get:
+      tags:
+      - getCompanies
+      summary: get a list of available companies
+      description: Get a list of available companies by ProcessId....
+      operationId: getCompanies
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Companies'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/updateCompany/{processId}/{companyId}:
+    post:
+      tags:
+      - updateCompany
+      summary: update a specific company in Activiti
+      description: TBD
+      operationId: updateCompany
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateCompany'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteCompany/{processId}/{companyId}:
+    post:
+      tags:
+      - deleteCompany
+      summary: Delete a specific company in Activiti
+      description: descripition
+      operationId: deleteCompany
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Household/{processId}/{householdId}:
+    get:
+      tags:
+      - getHousehold
+      summary: Get a specific household by processId
+      description: Get a specific household from the process layer
+      operationId: getHousehold
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: householdId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/householdId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Household'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Households/{processId}:
+    get:
+      tags:
+      - getHouseholds
+      summary: get a list of available households
+      description: Get a list of available households by ProcessId....
+      operationId: getHouseholds
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Households'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/updateHousehold/{processId}/{householdId}:
+    post:
+      tags:
+      - updateHousehold
+      summary: update a specific household in Activiti
+      description: TBD
+      operationId: updateHousehold
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: householdId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/householdId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateHousehold'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Household'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteHousehold/{processId}/{householdId}:
+    post:
+      tags:
+      - deleteHousehold
+      summary: Delete a specific household in Activiti
+      description: TBD
+      operationId: deleteHousehold
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: householdId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/householdId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteHouseholdMember/{processId}/{householdId}/{customerId}:
+    post:
+      tags:
+      - deleteHouseholdMember
+      summary: TBD
+      description: TBD
+      operationId: deleteHouseholdMember
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: householdId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/householdId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Collateral/{processId}/{customerId}/{collateralId}:
+    get:
+      tags:
+      - getCollateral
+      summary: Get a specific collateral by processId, customerId and collateralId
+      description: Get a specific colleteral from the process layer
+      operationId: getColleteral
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: collateralId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/collateralId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collateral'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Collaterals/{processId}/{customerId}:
+    get:
+      tags:
+      - getCollaterals
+      summary: get a list of available collaterals
+      description: Get a list of available collaterals by ProcessId and customerId...
+      operationId: getCollaterals
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collaterals'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/updateCollateral/{processId}/{customerId}/{collateralId}:
+    post:
+      tags:
+      - updateCollateral
+      summary: update a specific collateral in Activiti
+      description: descripition
+      operationId: updateCollateral
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: collateralId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/collateralId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateCollateral'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collateral'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteCollateral/{processId}/{customerId}/{collateralId}:
+    post:
+      tags:
+      - deleteCollateral
+      summary: Delete a specific collateral in Activiti
+      description: TBD
+      operationId: deleteCollateral
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: collateralId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/collateralId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Loan/{processId}/{loanId}:
+    get:
+      tags:
+      - getLoan
+      summary: Get a specific loan by processId
+      description: Get a specific loan from customerId and processId layer
+      operationId: getLoan
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: loanId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/loanId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Loans/{processId}:
+    get:
+      tags:
+      - getLoans
+      summary: get a list of available loans on processId
+      description: Get a list of available loans by ProcessId...
+      operationId: getLoans
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loans'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/updateLoan/{processId}/{loanId}:
+    post:
+      tags:
+      - updateLoan
+      summary: update a specific loan in Activiti
+      description: TBD
+      operationId: updateLoan
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: loanId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/loanId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateLoan'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteLoan/{processId}/{loanId}:
+    post:
+      tags:
+      - deleteLoan
+      summary: Delete a specific loan on a customer in Activiti
+      description: TBD
+      operationId: deleteLoan
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: loanId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/loanId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/ExtLoan/{processId}/{customerId}/{extloanId}:
+    get:
+      tags:
+      - getExtLoan
+      summary: Get a specific extloan by processId, customerId
+      description: Get a specific extloan from the process layer
+      operationId: getExtLoan
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: extloanId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/extloanId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtLoan'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/ExtLoans/{processId}/{customerId}:
+    get:
+      tags:
+      - getExtLoans
+      summary: get a list of available extloans
+      description: Get a list of available extloans by ProcessId and customerId....
+      operationId: getExtLoans
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtLoans'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/updateExtLoan/{processId}/{customerId}/{extloanId}:
+    post:
+      tags:
+      - updateExtLoan
+      summary: update a specific extloan in Activiti
+      description: TBD
+      operationId: updateExtLoan
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: extloanId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/extloanId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateExtLoan'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtLoan'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteExtLoan/{processId}/{customerId}/{extloanId}:
+    post:
+      tags:
+      - deleteExtLoan
+      summary: Delete a specific extloan in Activiti
+      description: TBD
+      operationId: deleteExtLoan
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: extloanId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/extloanId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
+    get:
+      tags:
+      - getPersonalEconomy
+      summary: Get a specific PersonalEconomy by processId, customerId
+      description: Get a specific PersonalEconomy from the process layer
+      operationId: getPersonalEconomy
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: personalEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/personalEconomyId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalEconomy'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/PersonalEconomies/{processId}/{customerId}:
+    get:
+      tags:
+      - getPersonalEconomies
+      summary: get a list of available PersonalEconomies
+      description: Get a list of available PersonalEconomies by ProcessId and customerId....
+      operationId: getPersonalEconomies
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalEconomies'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/updatePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
+    post:
+      tags:
+      - updatePersonalEconomy
+      summary: update a specific PersonalEconomy in Activiti
+      description: TBD
+      operationId: updatePersonalEconomy
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: personalEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/personalEconomyId'
+      requestBody:
+        $ref: '#/components/requestBodies/updatePersonalEconomy'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalEconomy'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deletePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
+    post:
+      tags:
+      - deletePersonalEconomy
+      summary: Delete a specific PersonalEconomy in Activiti
+      description: TBD
+      operationId: deletePersonalEconomy
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: personalEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/personalEconomyId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/CompanyEconomy/{processId}/{companyEconomyId}:
+    get:
+      tags:
+      - getCompanyEconomy
+      summary: Get a specific CompanyEconomy by processId
+      description: Get a specific CompanyEconomy from the process layer
+      operationId: getCompanyEconomy
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEconomy'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/CompanyEconomies/{processId}/{companyId}:
+    get:
+      tags:
+      - getCompanyEconomies
+      summary: get a list of available CompanyEconomies
+      description: Get a list of available CompanyEconomies by ProcessId and companyId
+      operationId: getCompanyEconomies
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEconomies'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/updateCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
+    post:
+      tags:
+      - updateCompanyEconomy
+      summary: update a specific CompanyEconomy in Activiti
+      description: Update economy on a specific company
+      operationId: updateCompanyEconomy
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      - name: companyEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyEconomyId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateCompanyEconomy'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEconomy'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
+    post:
+      tags:
+      - deleteCompanyEconomy
+      summary: Delete a specific CompanyEconomy on a companyId in Activiti
+      description: TBD
+      operationId: deleteCompanyEconomy
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      - name: companyEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/Budgets/{processId}/{companyId}:
+    get:
+      tags:
+      - getBudgets
+      summary: get a list of available budgets
+      description: Get a list of available Budgets
+      operationId: getBudgets
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budgets'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/updateBudget/{processId}/{companyId}/{companyEconomyId}:
+    post:
+      tags:
+      - updateBudget
+      summary: update a specific Budget in Activiti
+      description: TBD
+      operationId: updateBudget
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      - name: companyEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyEconomyId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateBudget'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budget'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/deleteBudget/{processId}/{companyId}/{companyEconomyId}:
+    post:
+      tags:
+      - deleteBudget
+      summary: Delete a specific Budget in Activiti
+      description: TBD
+      operationId: deleteBudget
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: companyId
+        in: path
+        description: companyId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyId'
+      - name: companyEconomyId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/KycInformations/{processId}/{customerId}:
+    get:
+      tags:
+      - getKycInformations
+      summary: get a list of available KycInformations
+      description: Get a list of available KycInformations
+      operationId: getKycInformations
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycInformations'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+  /v1/KycInformation/{processId}/{customerId}/{kycId}:
+    get:
+      tags:
+      - getKycInformation
+      summary: get a list of available KycInformations
+      description: Get a list of available KycInformations
+      operationId: getKycInformations
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: customerId
+        in: path
+        description: customerId is swedish ssn or corporate organisation number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/customerId'
+      - name: kycId
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/kycInformationType'
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycInformation'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page Not found
+components:
+  schemas:
+    caseId:
+      type: string
+      description: reserved a caseId in Loan Process
+      example: "106100"
+    caseIdStatus:
+      type: string
+      description: Set status on the caseid
+      example: CLOSEDBYAPPLICANT
+      enum:
+      - CLOSEDBYAPPLICANT
+      - STARTEDBYAPPLICANT
+      - CLOSEDBYOFFICER
+      - CLOSEDBYTHINNING
+      - READYFOROFFICER
+    200OK:
+      type: string
+      description: Successful
+      example: "200"
+    processId:
+      type: string
+      description: Activiti framework unique identification
+      format: uuid
+      example: 9a65d28a-46bb-4442-b96d-6a09fda6b18b
+    customerIds:
+      type: array
+      description: This holds a array of one to many Applicant/make/maka in a household
+      items:
+        $ref: '#/components/schemas/customerId'
+    customerId:
+      type: string
+      description: customerId is swedish ssn or corporate organisation number
+      example: "197001010101"
+    applicantId:
+      type: string
+      description: unique id for each applicant in the credit case
+      format: uuid
+      example: 12ab301d-b0ae-46ba-ac99-ff7389fe356e
+    applicantName:
+      type: string
+      description: Full name of the customer/applicant
+      example: Anna Andersson
+    applicantAddress:
+      type: string
+      description: Street address of Applicant
+      example: Trossvägen 1
+    applicantPostAddress:
+      type: string
+      description: Postal number and postal city
+      example: 181 66 Lidingö
+    applicantRole:
+      type: string
+      description: Huvudlåntagare or Medlåntagare i SAP (behöver vi hantera detta?)
+      example: Huvudlåntagare/medlåntagare in SAP
+    applicantEmail:
+      type: string
+      description: applicant enter email for notification
+      example: kjell.almgren@landshypotek.se
+    applicantMobileNumber:
+      type: string
+      description: applicant entered mobile number for notification
+      example: "0733981482"
+    applicantMember:
+      type: string
+      description: Member in Landshypotek Ekonomiska förening
+      example: Yes
+    applicantEmployeed:
+      type: string
+      description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer
+      example: EMPLOYEED
+    applicantBySms:
+      type: string
+      description: TBD
+      enum:
+      - "true"
+      - "false"
+    applicantByeMail:
+      type: string
+      description: TBD
+      enum:
+      - "true"
+      - "false"
+    companyId:
+      type: string
+      description: generated guid in the model
+      format: uuid
+      example: 02d6a03e-5895-4077-98f7-7a5c192868b7
+    orgNumber:
+      type: string
+      description: Organisation number from external service, swedish ssn (ruoring.io)
+      example: 550101-1010
+    companyName:
+      type: string
+      description: Full name of the company from external services or BusinessName in SAP
+      example: Anna Andersson Mjölkproduktion
+    companyCreated:
+      type: string
+      description: 'date when company was established, from external service or existing
+        customer in SAP '
+      example: 2012-01-01
+    householdId:
+      type: string
+      description: Hosuehold identity
+      format: uuid
+      example: 02d6a03e-5895-4077-98f7-7a5c192878b8
+    numberOfChildsAtHome:
+      type: string
+      description: Number of child in this household
+      example: "2"
+    numberOfCars:
+      type: string
+      description: number of cars in this houshold (Will probably be removed for SME-companies)
+      example: "2"
+    childMaintenanceCost:
+      type: string
+      description: Underhållskostnad för barn i annat hushåll Underhållskostander barn
+      example: 2 000 SEK
+    loanId:
+      type: string
+      description: Loan identity
+      format: uuid
+      example: 08f55e2f-e947-48f4-89d2-d31af2fc28d6
+    loanNumber:
+      type: string
+      description: This will only be a temporary loanNumber, when can we reserv a loan number in SAP
+      example: "9397000010"
+    loanAmount:
+      type: string
+      description: Applicants want to loan this amount
+      example: 2 500 000 SEK
+    numberOfLoans:
+      type: string
+      description: Customer want to split this loan into 2 loans
+      example: "2"
+    collateralId:
+      type: string
+      description: Collateral identity
+      format: uuid
+      example: 82faaa1a-42f7-4d87-aecf-96c450a0ce59
+    collateralName:
+      type: string
+      description: Fastighetbeteckning
+      example: SKOGEN 4:3
+    collateralMunicipality:
+      type: string
+      description: Kommun där fastigheten och/eller säkerheten finns registrerad
+      example: Katrineholm
+    collateralStreet:
+      type: string
+      description: Street address of the collateral
+      example: Bergsgatan 12
+    extloanId:
+      type: string
+      description: Type definitions for external loans
+      format: uuid
+      example: 3164d347-e173-4c4f-8839-26d32716e5bf
+    extCreditInstitut:
+      type: string
+      description: Kreditinstitut, Bank
+      example: SEB
+    extloanNumber:
+      type: string
+      description: Loan originator
+      example: "0028600"
+    extloanClearing:
+      type: string
+      description: Clearing number
+      example: "5270"
+    personalEconomyId:
+      type: string
+      description: Type definitions for personal economy
+      format: uuid
+      example: b0c0edaa-3d75-4364-9179-1ecc8d9198d0
+    yearlyIncome:
+      type: string
+      description: TBD
+      example: 340 000 SEK
+    income:
+      type: string
+      description: TBD
+      example: 40 000 SEK
+    typeOfEmployeement:
+      type: string
+      description: TBD
+      example: Tillsvidare
+    employeer:
+      type: string
+      description: -> TBD
+      example: Skatteverket
+    mainPurposes:
+      type: string
+      description: Ändamål och syfte (TBD)
+      example: KOP
+      enum:
+      - KOP
+      - OVR
+      - ULN
+      - NOB
+    purposes:
+      type: string
+      description: Ändamål och syfte ska sättas på respektive lån som går över till LP. I de fall där det inte specifiseras ska handläggar gör det innan överföring till SAP. Detta för att de ska bli rätt i statistiken ned i SAS.
+      enum:
+      - FKP
+      - FAF
+      - FKJ
+      - FBB
+      - FBI
+      - RTM
+    purposeDisplayText:
+      type: string
+      description: TBD
+      enum:
+      - Fastighetsköp - privatbostad
+      - Fastighetsköp - annan fastighet
+      - Fastighetsköp - jordbruk
+      - Finansiering befintlig bostad
+      - Finansiering befintlig bostad (omläggning internt)
+      - Ny/tillbyggnad/renovering mjölkstall
+    companyEconomyId:
+      type: string
+      description: Type definition for company economy
+      format: uuid
+      example: 32084646-d030-4c51-a316-b1342c3551ab
+    budgetId:
+      type: string
+      description: Type definition for company budget
+      format: uuid
+      example: 32084646-d030-4c51-a316-b1342c3551dc
+    kycId:
+      type: string
+      description: TBD
+      format: uuid
+      example: 9bca3a55-2458-41d5-9420-f12bdcd0c809
+    applicantType:
+      required:
+      - applicantId
+      - customerId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        applicantId:
+          $ref: '#/components/schemas/applicantId'
+        applicantName:
+          $ref: '#/components/schemas/applicantName'
+        applicantAddress:
+          $ref: '#/components/schemas/applicantAddress'
+        applicantPostAddress:
+          $ref: '#/components/schemas/applicantPostAddress'
+        role:
+          $ref: '#/components/schemas/applicantRole'
+        contactInformation:
+          $ref: '#/components/schemas/ContactInformationType'
+        applicantEmployeed:
+          $ref: '#/components/schemas/applicantEmployeed'
+        member:
+          $ref: '#/components/schemas/applicantMember'
+        notifiedBySms:
+          $ref: '#/components/schemas/applicantBySms'
+        notifiedByeMail:
+          $ref: '#/components/schemas/applicantByeMail'
+      description: Type of applicant instance
+    Applicant:
+      $ref: '#/components/schemas/applicantType'
+    Applicants:
+      type: array
+      description: List of applicantType
+      items:
+        $ref: '#/components/schemas/applicantType'
+    ContactInformationType:
+      type: object
+      properties:
+        eMail:
+          $ref: '#/components/schemas/applicantEmail'
+        mobileNumber:
+          $ref: '#/components/schemas/applicantMobileNumber'
+      description: TBD
+    companyType:
+      required:
+      - companyId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        companyId:
+          $ref: '#/components/schemas/companyId'
+        orgNumber:
+          $ref: '#/components/schemas/orgNumber'
+        companyName:
+          $ref: '#/components/schemas/companyName'
+        created:
+          $ref: '#/components/schemas/companyCreated'
+      description: Type of company instance
+    Company:
+      $ref: '#/components/schemas/companyType'
+    Companies:
+      type: array
+      description: List of companyType
+      items:
+        $ref: '#/components/schemas/companyType'
+    householdType:
+      required:
+      - householdId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerIds:
+          $ref: '#/components/schemas/customerIds'
+        householdId:
+          $ref: '#/components/schemas/householdId'
+        numberOfChildsAtHome:
+          $ref: '#/components/schemas/numberOfChildsAtHome'
+        numberOfCars:
+          $ref: '#/components/schemas/numberOfCars'
+        childMaintenaceCost:
+          $ref: '#/components/schemas/childMaintenanceCost'
+      description: Household should be loosely coupled in the model. We have to support many customerId in a household, this is done by adding customerId to the array customerIds.
+    Household:
+      $ref: '#/components/schemas/householdType'
+    Households:
+      type: array
+      description: return all available households for a customer
+      items:
+        $ref: '#/components/schemas/householdType'
+    loanType:
+      required:
+      - loanId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        loanId:
+          $ref: '#/components/schemas/loanId'
+        loanNumber:
+          $ref: '#/components/schemas/loanNumber'
+        loanAmount:
+          $ref: '#/components/schemas/loanAmount'
+        numberOfLoans:
+          $ref: '#/components/schemas/numberOfLoans'
+        purposeOfLoan:
+          $ref: '#/components/schemas/purposes'
+      description: This represent the customer loan structure
+    Loan:
+      $ref: '#/components/schemas/loanType'
+    Loans:
+      type: array
+      description: TBD
+      items:
+        $ref: '#/components/schemas/loanType'
+    extloanType:
+      required:
+      - customerId
+      - extloanId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        extloanId:
+          $ref: '#/components/schemas/extloanId'
+        extCreditInstitut:
+          $ref: '#/components/schemas/extCreditInstitut'
+        extloanClearing:
+          $ref: '#/components/schemas/extloanClearing'
+        extloanNumber:
+          $ref: '#/components/schemas/extloanNumber'
+      description: Externa lån kunden har i andra kreditinstitut, detta exkluderar LH-lån
+    ExtLoan:
+      $ref: '#/components/schemas/extloanType'
+    ExtLoans:
+      type: array
+      description: Type definition for external loans
+      items:
+        $ref: '#/components/schemas/extloanType'
+    collateralType:
+      required:
+      - collateralId
+      - customerId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        collateralId:
+          $ref: '#/components/schemas/collateralId'
+        collateralName:
+          $ref: '#/components/schemas/collateralName'
+        collateralMunicipality:
+          $ref: '#/components/schemas/collateralMunicipality'
+        collateralStreet:
+          $ref: '#/components/schemas/collateralStreet'
+      description: Säkerheter för lånet, om köp, även andra fastigheter kan användas som säkerhet för lånet
+    Collateral:
+      $ref: '#/components/schemas/collateralType'
+    Collaterals:
+      type: array
+      description: Array list of type collateralType
+      items:
+        $ref: '#/components/schemas/collateralType'
+    personalEconomyType:
+      required:
+      - customerId
+      - personalEconomyId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        personalEconomyId:
+          $ref: '#/components/schemas/personalEconomyId'
+        YearlyIncome:
+          $ref: '#/components/schemas/yearlyIncome'
+        Income:
+          $ref: '#/components/schemas/income'
+        TypeOfEmployeement:
+          $ref: '#/components/schemas/typeOfEmployeement'
+        Employeer:
+          $ref: '#/components/schemas/employeer'
+      description: TBD
+    PersonalEconomy:
+      $ref: '#/components/schemas/personalEconomyType'
+    PersonalEconomies:
+      type: array
+      description: -> TBD
+      items:
+        $ref: '#/components/schemas/personalEconomyType'
+    companyEconomyType:
+      required:
+      - companyEconomyId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        companyEconomyId:
+          $ref: '#/components/schemas/companyEconomyId'
+      description: Type definition for company economy
+    CompanyEconomy:
+      $ref: '#/components/schemas/companyEconomyType'
+    CompanyEconomies:
+      type: array
+      description: -> Type definition for company economies, returns array of CompanyEconomies
+      items:
+        $ref: '#/components/schemas/companyEconomyType'
+    budgetType:
+      required:
+      - budgetId
+      - companyId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        companyId:
+          $ref: '#/components/schemas/companyId'
+        companyEconomyId:
+          $ref: '#/components/schemas/budgetId'
+      description: Type definition for companyBudget
+    Budget:
+      $ref: '#/components/schemas/budgetType'
+    Budgets:
+      type: array
+      description: Return an array of type budgetType
+      items:
+        $ref: '#/components/schemas/budgetType'
+    processType:
+      required:
+      - customerId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+      description: TBD
+    Process:
+      $ref: '#/components/schemas/processType'
+    Processes:
+      type: array
+      description: Return a list of type processType
+      items:
+        $ref: '#/components/schemas/processType'
+    kycInformationType:
+      required:
+      - customerId
+      - processId
+      type: object
+      properties:
+        processId:
+          $ref: '#/components/schemas/processId'
+        customerId:
+          $ref: '#/components/schemas/customerId'
+        kycId:
+          $ref: '#/components/schemas/kycId'
+      description: KYC-Information
+    KycInformation:
+      $ref: '#/components/schemas/kycInformationType'
+    KycInformations:
+      type: array
+      description: Return a list of type kycInformationType
+      items:
+        $ref: '#/components/schemas/kycInformationType'
+  parameters:
+    processId:
+      name: processId
+      in: path
+      description: unique identity in Activiti framework
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/processId'
+    caseId:
+      name: caseId
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/caseId'
+    caseIdStatus:
+      name: caseIdStatus
+      in: path
+      description: set status in Loan Process for this caseId
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/caseIdStatus'
+    customerId:
+      name: customerId
+      in: path
+      description: customerId is swedish ssn or corporate organisation number
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/customerId'
+    companyId:
+      name: companyId
+      in: path
+      description: companyId is swedish ssn or corporate organisation number
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/companyId'
+    householdId:
+      name: householdId
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/householdId'
+    loanId:
+      name: loanId
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/loanId'
+    collateralId:
+      name: collateralId
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/collateralId'
+    extloanId:
+      name: extloanId
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/extloanId'
+    personalEconomyId:
+      name: personalEconomyId
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/personalEconomyId'
+    companyEconomyId:
+      name: companyEconomyId
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/companyEconomyId'
+    kycId:
+      name: kycId
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/kycInformationType'
+  requestBodies:
+    updateApplicant:
+      description: Update a specific applicant in the Activiti framework
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/applicantType'
+      required: true
+    updateCompany:
+      description: Update a specific company in the Activiti framework
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/companyType'
+      required: true
+    updateHousehold:
+      description: Update a specific household in the Activiti framework
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/householdType'
+      required: true
+    updateLoan:
+      description: Update a specific loan on a customer
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/loanType'
+      required: true
+    updateCollateral:
+      description: Update a specific collateral on a customer
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/collateralType'
+      required: true
+    updateExtLoan:
+      description: Update a specific external loan on a cusomter
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/extloanType'
+      required: true
+    updatePersonalEconomy:
+      description: Update personal economy on a customer
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/personalEconomyType'
+      required: true
+    updateCompanyEconomy:
+      description: TBD
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/companyEconomyType'
+      required: true
+    updateBudget:
+      description: Update a budget on a specific company
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/budgetType'
+      required: true
+  headers:
+    X-Request-ID:
+      description: ID of the request, unique to the call, as determined by the initiating party.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: uuid
+      example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
