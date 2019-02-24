@@ -51,9 +51,6 @@ paths:
           description: The requested task was not found
         500:
           description: Page not found
-      security:
-      - {}
-      - BearerAuthOAuth: []
   /v1/deleteProcess/{processId}:
     post:
       tags:
