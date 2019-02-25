@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
   title: Selma SME Light
   description: |-
@@ -610,8 +610,8 @@ paths:
     post:
       tags:
       - deleteHouseholdMember
-      summary: TBD
-      description: TBD
+      summary: Remove a applicant from a specific houshold
+      description: Will remove {customerId} from the array customerIds in Household
       operationId: deleteHouseholdMember
       parameters:
       - name: processId
@@ -657,8 +657,8 @@ paths:
     post:
       tags:
       - addHouseholdMember
-      summary: TBD
-      description: TBD
+      summary: Add applicant to a specific household
+      description: Will add {customerId} to the array customerIds in Household
       operationId: addHouseholdMember
       parameters:
       - name: processId
@@ -1859,12 +1859,53 @@ paths:
           description: Invalid page
         500:
           description: Page not found
+  /v1/submitApplication/{processId}/{submitApplication}:
+    post:
+      tags:
+      - submitApplication
+      summary: Submit Application to Landshypotek and handling by a officer
+      description: TBD
+      operationId: submitApplication
+      parameters:
+      - name: processId
+        in: path
+        description: unique identity in Activiti framework
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/processId'
+      - name: submitApplication
+        in: path
+        description: TBD
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/submitApplication'
+      responses:
+        200:
+          description: Successful
+        401:
+          description: Access token is missing or invalid
+        403:
+          description: Access forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page not found
 components:
   schemas:
     caseId:
       type: string
       description: reserved caseId in Loan Process
       example: "106100"
+    submitApplication:
+      type: boolean
+      description: Jag försäkrar att lämnade uppgifter är korrekta. Denna måste vara satt till true, annars kan inte ansökan skickas in till LP. Sökande ska klicka i detta val. Om vi tycker att sökande behöver fylla i mer för att skicka in ansökan ska denna inte gå att sätta till true.
+      enum:
+      - true
+      - false
     caseIdStatus:
       type: string
       description: Set status on the caseid
@@ -1927,7 +1968,7 @@ components:
       example: EMPLOYEED
     applicantLPEmployment:
       type: string
-      description: employment mapping to Loan Process
+      description: employment mapping to Loan Process PERMANENT - Anställd, tills-vidare-anställd TEMPORARY - Tidbegränsad anställning PROBATIONARY - Provanställning UNEMPLOYMENT_INSURANCE - Arbetslöshetskassa SELF_EMPLOYED - Eget företag STUDENT_AID - Studiestöd PENSION - Inkomst av pension
       example: PERMANENT
       enum:
       - PERMANENT
@@ -2012,6 +2053,18 @@ components:
       type: string
       description: Street address of the collateral
       example: Bergsgatan 12
+    useAsCollateral:
+      type: boolean
+      description: Use this collateral as security in this application
+      enum:
+      - true
+      - false
+    buyCollateral:
+      type: boolean
+      description: Applicant has intention to by this collateral
+      enum:
+      - true
+      - false
     extloanId:
       type: string
       description: Type definitions for external loans
@@ -2029,6 +2082,12 @@ components:
       type: string
       description: Clearing number
       example: "5270"
+    extRedeemLoan:
+      type: boolean
+      description: Redeen loans - Lösa lånet i annan bank
+      enum:
+      - true
+      - false
     personalEconomyId:
       type: string
       description: Type definitions for personal economy
@@ -2102,7 +2161,7 @@ components:
       description: Jag är medveten om att Landshypotek Bank behandlar mina personuppgifter i och med ansökan och att jag kan läsa mer om Landshypotek Banks personuppgiftsbehandling.
     kycUCAware:
       type: boolean
-      description: Jag är medveten om att de uppgifter jag lämnar och resultatet av kreditansökan även visas för medsökande, om en sådan löggs till senare i ansökan. Om jag äger andra fastigheter, som banken hämtar uppgifter om från externa källor, visas även de uppgifterna för medsökande.
+      description: Jag är medveten om att de uppgifter jag lämnar och resultatet av kreditansökan även visas för medsökande, om en sådan läggs till senare i ansökan. Om jag äger andra fastigheter, som banken hämtar uppgifter om från externa källor, visas även de uppgifterna för medsökande.
     kycPublicFunction:
       type: boolean
       description: Innehar eller har du de 18 senaste månaderna innehaft en viktig offentlig funnktion?
@@ -2253,6 +2312,8 @@ components:
           $ref: '#/components/schemas/extloanClearing'
         extloanNumber:
           $ref: '#/components/schemas/extloanNumber'
+        extRedeemLoan:
+          $ref: '#/components/schemas/extRedeemLoan'
       description: Externa lån kunden har i andra kreditinstitut, detta exkluderar LH-lån
     ExtLoan:
       $ref: '#/components/schemas/extLoanType'
@@ -2280,6 +2341,10 @@ components:
           $ref: '#/components/schemas/collateralMunicipality'
         collateralStreet:
           $ref: '#/components/schemas/collateralStreet'
+        useAsCollateral:
+          $ref: '#/components/schemas/useAsCollateral'
+        buyCollateral:
+          $ref: '#/components/schemas/buyCollateral'
       description: Säkerheter för lånet, om köp, även andra fastigheter kan användas som säkerhet för lånet
     Collateral:
       $ref: '#/components/schemas/collateralType'
@@ -2524,6 +2589,15 @@ components:
       explode: false
       schema:
         $ref: '#/components/schemas/kycId'
+    submitApplication:
+      name: submitApplication
+      in: path
+      description: TBD
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/submitApplication'
   requestBodies:
     updateApplicant:
       description: Update a specific applicant in the Activiti framework
