@@ -48,7 +48,7 @@ paths:
         403:
           description: Access forbidden
         404:
-          description: The requested task was not found
+          description: Invalid page
         500:
           description: Page not found
   /v1/deleteProcess/{processId}:
@@ -73,7 +73,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/200OK'
+                $ref: '#/components/responses/200OK'
         401:
           description: Access token is missing or invalid
         403:
@@ -81,7 +81,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/reserveCaseId/{processId}/{customerId}:
     post:
       tags:
@@ -120,7 +120,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}:
     post:
       tags:
@@ -159,7 +159,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/200OK'
+                $ref: '#/components/responses/200OK'
         401:
           description: Access token is missing or invalid
         403:
@@ -167,7 +167,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Applicant/{processId}/{customerId}:
     get:
       tags:
@@ -204,7 +204,7 @@ paths:
         403:
           description: Access forbidden
         404:
-          description: The requested task was not found
+          description: Invalid page
         500:
           description: Page not found
   /v1/Applicants/{processId}:
@@ -235,9 +235,9 @@ paths:
         403:
           description: Access forbidden
         404:
-          description: The requested task was not found
+          description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updateApplicant/{processId}/{customerId}:
     post:
       tags:
@@ -278,7 +278,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteApplicant/{processId}/{customerId}:
     post:
       tags:
@@ -313,7 +313,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Company/{processId}/{companyId}:
     get:
       tags:
@@ -352,7 +352,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Companies/{processId}:
     get:
       tags:
@@ -383,7 +383,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updateCompany/{processId}/{companyId}:
     post:
       tags:
@@ -424,7 +424,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteCompany/{processId}/{companyId}:
     post:
       tags:
@@ -459,7 +459,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Household/{processId}/{householdId}:
     get:
       tags:
@@ -498,7 +498,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Households/{processId}:
     get:
       tags:
@@ -529,7 +529,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updateHousehold/{processId}/{householdId}:
     post:
       tags:
@@ -570,7 +570,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteHousehold/{processId}/{householdId}:
     post:
       tags:
@@ -605,7 +605,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteHouseholdMember/{processId}/{householdId}/{customerId}:
     post:
       tags:
@@ -652,7 +652,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/addHouseholdMember/{processId}/{householdId}/{customerId}:
     post:
       tags:
@@ -699,7 +699,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Collateral/{processId}/{customerId}/{collateralId}:
     get:
       tags:
@@ -746,7 +746,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Collaterals/{processId}/{customerId}:
     get:
       tags:
@@ -785,7 +785,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updateCollateral/{processId}/{customerId}/{collateralId}:
     post:
       tags:
@@ -834,7 +834,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteCollateral/{processId}/{customerId}/{collateralId}:
     post:
       tags:
@@ -877,7 +877,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Loan/{processId}/{loanId}:
     get:
       tags:
@@ -916,7 +916,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Loans/{processId}:
     get:
       tags:
@@ -947,7 +947,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updateLoan/{processId}/{loanId}:
     post:
       tags:
@@ -988,7 +988,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteLoan/{processId}/{loanId}:
     post:
       tags:
@@ -1023,7 +1023,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/ExtLoan/{processId}/{customerId}/{extloanId}:
     get:
       tags:
@@ -1070,7 +1070,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/ExtLoans/{processId}/{customerId}:
     get:
       tags:
@@ -1109,7 +1109,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updateExtLoan/{processId}/{customerId}/{extloanId}:
     post:
       tags:
@@ -1158,7 +1158,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteExtLoan/{processId}/{customerId}/{extloanId}:
     post:
       tags:
@@ -1201,7 +1201,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
     get:
       tags:
@@ -1248,7 +1248,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/PersonalEconomies/{processId}/{customerId}:
     get:
       tags:
@@ -1287,7 +1287,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updatePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
     post:
       tags:
@@ -1336,7 +1336,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deletePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
     post:
       tags:
@@ -1379,7 +1379,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/CompanyEconomy/{processId}/{companyEconomyId}:
     get:
       tags:
@@ -1418,7 +1418,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/CompanyEconomies/{processId}/{companyId}:
     get:
       tags:
@@ -1457,7 +1457,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updateCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
     post:
       tags:
@@ -1506,7 +1506,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
     post:
       tags:
@@ -1549,7 +1549,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/Budgets/{processId}/{companyId}:
     get:
       tags:
@@ -1588,7 +1588,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updateBudget/{processId}/{companyId}/{companyEconomyId}:
     post:
       tags:
@@ -1637,7 +1637,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteBudget/{processId}/{companyId}/{companyEconomyId}:
     post:
       tags:
@@ -1680,7 +1680,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/KycInformations/{processId}/{customerId}:
     get:
       tags:
@@ -1719,7 +1719,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/KycInformation/{processId}/{customerId}/{kycId}:
     get:
       tags:
@@ -1766,7 +1766,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/updateKycInformation/{processId}/{customerId}/{kycId}:
     post:
       tags:
@@ -1815,7 +1815,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
   /v1/deleteKycInformation/{processId}/{companyId}/{kycId}:
     post:
       tags:
@@ -1858,7 +1858,7 @@ paths:
         404:
           description: Invalid page
         500:
-          description: Page Not found
+          description: Page not found
 components:
   schemas:
     caseId:
@@ -1875,10 +1875,6 @@ components:
       - CLOSEDBYOFFICER
       - CLOSEDBYTHINNING
       - READYFOROFFICER
-    200OK:
-      type: string
-      description: Successful
-      example: "200"
     processId:
       type: string
       description: Activiti framework unique identification
@@ -2399,6 +2395,12 @@ components:
       description: Access token is missing or invalid
     ForbiddenError:
       description: Access forbidden
+    200OK:
+      description: Successful
+    InvalidPage:
+      description: Invalid page
+    PageNotFound:
+      description: Page not found
   parameters:
     processId:
       name: processId
