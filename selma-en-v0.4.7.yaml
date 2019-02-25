@@ -1925,6 +1925,18 @@ components:
       type: string
       description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer
       example: EMPLOYEED
+    applicantLPEmployment:
+      type: string
+      description: employment mapping to Loan Process
+      example: PERMANENT
+      enum:
+      - PERMANENT
+      - TEMPORARY
+      - PROBATIONARY
+      - UNEMPLOYMENT_INSURANCE
+      - SELF_EMPLOYED
+      - STUDENT_AID
+      - PENSION
     applicantBySms:
       type: boolean
       description: Applicant want to be notified by sms (true/false)
@@ -2122,6 +2134,8 @@ components:
           $ref: '#/components/schemas/ContactInformationType'
         applicantEmployeed:
           $ref: '#/components/schemas/applicantEmployeed'
+        applicantLPEmployment:
+          $ref: '#/components/schemas/applicantLPEmployment'
         member:
           $ref: '#/components/schemas/applicantMember'
         notifiedBySms:
