@@ -137,19 +137,19 @@ paths:
       parameters:
         - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Processes'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ##################################################
@@ -170,20 +170,20 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/customerUpdate'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 # This has to be defined in a different way
                 $ref: '#/components/responses/200OK'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ##################################################
@@ -203,19 +203,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/caseId'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ##################################################
@@ -233,20 +233,20 @@ paths:
         - $ref: '#/components/parameters/caseId'
         - $ref: '#/components/parameters/caseIdStatus'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 # This has to be defined in a different way
                 $ref: '#/components/responses/200OK'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ##################################################
@@ -264,19 +264,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Applicant'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ####################################################################
@@ -293,19 +293,19 @@ paths:
         # parameters required for getApplicants request
         - $ref: '#/components/parameters/processId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Applicants'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###########################################
@@ -326,19 +326,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updateApplicant'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Applicant'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ############################################
@@ -359,15 +359,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/applicantUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ####################################################
@@ -386,19 +386,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/companyId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Company'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   #####################################################################
@@ -415,19 +415,19 @@ paths:
         # parameters required for getCompanies request
         - $ref: '#/components/parameters/processId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Companies'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ########################################################
@@ -448,19 +448,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updateCompany'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Company'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ########################################################
@@ -480,15 +480,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/customerUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ##################################################
@@ -507,19 +507,19 @@ paths:
         # - $ref: '#/components/parameters/customerId'
         - $ref: '#/components/parameters/householdId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Household'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   #####################################################################################
@@ -537,19 +537,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         # - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Households'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###########################################
@@ -570,19 +570,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updateHousehold'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Household'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ############################################
@@ -604,15 +604,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/householdUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   #################################################################
@@ -630,19 +630,19 @@ paths:
         - $ref: '#/components/parameters/householdId'
         - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Household'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ##################################################################
@@ -660,19 +660,19 @@ paths:
         - $ref: '#/components/parameters/householdId'
         - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Household'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
       
   ##################################################
@@ -691,19 +691,19 @@ paths:
         - $ref: '#/components/parameters/customerId'
         - $ref: '#/components/parameters/collateralId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collateral'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ######################################################################################
@@ -721,23 +721,23 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collaterals'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###########################################
-  # Update of a specific household
+  # Update of a specific Collateral
   ###########################################
   /v1/updateCollateral/{processId}/{customerId}/{collateralId}:
     post:
@@ -754,19 +754,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updateCollateral'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collateral'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ############################################
@@ -788,15 +788,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/collateralUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ##################################################
@@ -815,19 +815,19 @@ paths:
         # - $ref: '#/components/parameters/customerId'
         - $ref: '#/components/parameters/loanId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Loan'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ################################################################################
@@ -845,19 +845,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         # - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Loans'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###########################################
@@ -879,19 +879,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updateLoan'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Loan'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ############################################
@@ -913,15 +913,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/householdUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ##################################################
@@ -940,19 +940,19 @@ paths:
         - $ref: '#/components/parameters/customerId'
         - $ref: '#/components/parameters/extloanId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExtLoan'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ################################################################################
@@ -970,19 +970,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExtLoans'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###########################################
@@ -1004,19 +1004,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updateExtLoan'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExtLoan'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ############################################
@@ -1038,15 +1038,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/extloanUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###############################################
@@ -1065,19 +1065,19 @@ paths:
         - $ref: '#/components/parameters/customerId'
         - $ref: '#/components/parameters/personalEconomyId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PersonalEconomy'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ################################################################################
@@ -1096,19 +1096,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PersonalEconomies'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###########################################
@@ -1130,19 +1130,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updatePersonalEconomy'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PersonalEconomy'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ############################################
@@ -1164,15 +1164,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/personalEconomyUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###############################################
@@ -1190,19 +1190,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/companyEconomyId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyEconomy'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ################################################################################
@@ -1221,19 +1221,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/companyId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyEconomies'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###########################################
@@ -1254,19 +1254,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updateCompanyEconomy'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyEconomy'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ############################################
@@ -1288,15 +1288,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/companyEconomyUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ##################################################################################
@@ -1314,19 +1314,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/companyId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Budgets'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ###########################################
@@ -1348,19 +1348,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updateBudget'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Budget'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ############################################
@@ -1382,15 +1382,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/budgetUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   #############################################
@@ -1408,19 +1408,19 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/customerId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/KycInformations'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ####################################################
@@ -1439,19 +1439,19 @@ paths:
         - $ref: '#/components/parameters/customerId'
         - $ref: '#/components/parameters/kycId'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/KycInformation'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   #
@@ -1474,19 +1474,19 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/updateKycInformation'
       responses:
-        '200':
+        200:
           description: Successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/KycInformation'
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   ############################################
@@ -1508,15 +1508,15 @@ paths:
       #requestBody:
       #  $ref: '#/components/requestBodies/kycInformationUpdate'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
   #################################################
@@ -1533,15 +1533,15 @@ paths:
         - $ref: '#/components/parameters/processId'
         - $ref: '#/components/parameters/submitApplication'
       responses:
-        '200':
+        200:
           description: Successful
-        '401':
+        401:
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
+        403:
           $ref: '#/components/responses/ForbiddenError'
-        '404':
+        404:
           $ref: '#/components/responses/InvalidPage'
-        '500':
+        500:
           $ref: '#/components/responses/PageNotFound'
   #
 #####################################################
