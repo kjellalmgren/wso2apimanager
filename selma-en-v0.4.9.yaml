@@ -49,6 +49,8 @@ info:
   # 2019-02-27 0.4.8 kal Changed Processes to return process createdDate in Activiti
   # 2019-02-27 0.4.9 kal Downgraded to swagger 2.0 from Open Api 3.0.0
   #                      added consumes: Application/json in all methods
+  #                      moved parameters to swagger 2.0 parameters: section
+  #                      added CaseIdStatus parameter to reserveCaseId
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -242,7 +244,7 @@ paths:
   # We should have a discussion if we should use
   # customerId as a parameter in this method
   ##################################################
-  /v1/reserveCaseId/{processId}/{customerId}:
+  /v1/reserveCaseId/{processId}/{customerId}/{caseIdStatus}:
     post:
       tags:
       - reserveCaseId
@@ -258,6 +260,7 @@ paths:
       parameters:
         - $ref: '#/parameters/processId'
         - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/caseIdStatus'
       responses:
         200:
           description: Successful
