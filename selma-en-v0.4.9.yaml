@@ -48,6 +48,7 @@ info:
   #                      submitApplication has been added
   # 2019-02-27 0.4.8 kal Changed Processes to return process createdDate in Activiti
   # 2019-02-27 0.4.9 kal Downgraded to swagger 2.0 from Open Api 3.0.0
+  #                      added consumes: Application/json in all methods
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -139,7 +140,7 @@ security:
     - read
     - write
 paths:
-  /example:
+  /v1/example:
     # In this operation we do not apply the security, because it was applied globally above.
     # The security will be applied to this operation for that reason.
     get:
@@ -148,7 +149,7 @@ paths:
       responses:
         200:
           description: OK
-  /ping:
+  /v1/ping:
     get:
       summary: Server heartbeat operation
       description: This operation shows how to override the global security defined above, as we want to open it up for all users.
@@ -168,7 +169,10 @@ paths:
       summary: get a list of active processes for a customerId
       description: Return a list of active applications for a customer
       operationId: getProcesses
+      # The method will handle the following MIME/Types
       produces:
+      - application/json
+      consumes:
       - application/json
       parameters:
         - in: path
@@ -199,7 +203,10 @@ paths:
       summary: Delete a specific processId in Activiti
       description: Will remove evry customerId under a processId in Activiti framework. All Applicants in a credit case will be deleted
       operationId: deleteProcess
+      # The method will handle the following MIME/Types
       produces:
+      - application/json
+      consumes:
       - application/json
       parameters:
         - in: path
@@ -242,7 +249,10 @@ paths:
       description: >-
         Reserve a CaseId in Loan Process to be able to use attachment i DM
       operationId: reserveCaseId
+      # The method will handle the following MIME/Types
       produces:
+      - application/json
+      consumes:
       - application/json
       parameters:
         - name: processId
@@ -277,6 +287,11 @@ paths:
       summary: set status on the reserved caseId
       description: When we create/reserve a caseId in LP we also have to set the status
       operationId: setCaseIdStatus
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         - name: processId
           in: path
@@ -325,6 +340,11 @@ paths:
       summary: Get a specific applicant by processId, customerId
       description: Get a specific applicant from the process layer
       operationId: getCustomer
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getCustomer request
         - name: processId
@@ -362,6 +382,11 @@ paths:
       summary: get a list of available applicants
       description: Get a list of available applicants by ProcessId....
       operationId: getApplicants
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
          # parameters required for getCustomer request
         - name: processId
@@ -396,6 +421,11 @@ paths:
       description: >-
         TBD
       operationId: updateApplicant
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a applicant in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -440,6 +470,11 @@ paths:
       description: >-
         TBD
       operationId: deleteApplicant
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a customer in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -478,6 +513,11 @@ paths:
       summary: Get a specific company by ProcessId, companyId
       description: Get a specific company from the process layer
       operationId: getCompany
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getCompany request
         #- $ref: '#/components/parameters/processId'
@@ -516,6 +556,11 @@ paths:
       summary: get a list of available companies
       description: Get a list of available companies by ProcessId....
       operationId: getCompanies
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getCompanies request
         #- $ref: '#/components/parameters/processId'
@@ -549,6 +594,11 @@ paths:
       description: >-
         TBD
       operationId: updateCompany
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a customer in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -592,6 +642,11 @@ paths:
       summary: Delete a specific company in Activiti
       description: descripition
       operationId: deleteCompany
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a customer in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -628,6 +683,11 @@ paths:
       summary: Get a specific household by processId
       description: Get a specific household from the process layer
       operationId: getHousehold
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getCustomer request
         #- $ref: '#/components/parameters/processId'
@@ -666,6 +726,11 @@ paths:
       summary: get a list of available households
       description: Get a list of available households by ProcessId....
       operationId: getHouseholds
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getHouseholds request
         #- $ref: '#/components/parameters/processId'
@@ -699,6 +764,11 @@ paths:
       description: >-
         TBD
       operationId: updateHousehold
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a household in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -738,6 +808,11 @@ paths:
       description: >-
         TBD
       operationId: deleteHousehold
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a household in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -776,6 +851,11 @@ paths:
       summary: Remove a applicant from a specific houshold
       description: Will remove {customerId} from the array customerIds in Household 
       operationId: deleteHouseholdMember
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/householdId'
@@ -818,6 +898,11 @@ paths:
       summary: Add applicant to a specific household
       description: Will add {customerId} to the array customerIds in Household
       operationId: addHouseholdMember
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/householdId'
@@ -860,6 +945,11 @@ paths:
       summary: Get a specific collateral by processId, customerId and collateralId
       description: Get a specific colleteral from the process layer
       operationId: getColleteral
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getColleteral request
         #- $ref: '#/components/parameters/processId'
@@ -903,6 +993,11 @@ paths:
       summary: get a list of available collaterals
       description: Get a list of available collaterals by ProcessId and customerId...
       operationId: getCollaterals
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getCollaterals request
         #- $ref: '#/components/parameters/processId'
@@ -940,6 +1035,11 @@ paths:
       summary: update a specific collateral in Activiti
       description: descripition
       operationId: updateCollateral
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a colleteral in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -989,6 +1089,11 @@ paths:
       description: >-
         TBD
       operationId: deleteCollateral
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a colleteral in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1030,6 +1135,11 @@ paths:
       summary: Get a specific loan by processId
       description: Get a specific loan from customerId and processId layer
       operationId: getLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getCustomer request
         #- $ref: '#/components/parameters/processId'
@@ -1068,6 +1178,11 @@ paths:
       summary: get a list of available loans on processId
       description: Get a list of available loans by ProcessId...
       operationId: getLoans
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getHouseholds request
         #- $ref: '#/components/parameters/processId'
@@ -1101,6 +1216,11 @@ paths:
       description: >-
         TBD
       operationId: updateLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a customer in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1145,6 +1265,11 @@ paths:
       description: >-
         TBD
       operationId: deleteLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a loan in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1181,6 +1306,11 @@ paths:
       summary: Get a specific extloan by processId, customerId
       description: Get a specific extloan from the process layer
       operationId: getExtLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getExtLoan request
         #- $ref: '#/components/parameters/processId'
@@ -1224,6 +1354,11 @@ paths:
       summary: get a list of available extloans
       description: Get a list of available extloans by ProcessId and customerId....
       operationId: getExtLoans
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getExtLoans request
         #- $ref: '#/components/parameters/processId'
@@ -1262,6 +1397,11 @@ paths:
       description: >-
         TBD
       operationId: updateExtLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a extLoan in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1310,6 +1450,11 @@ paths:
       description: >-
         TBD
       operationId: deleteExtLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a loan in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1351,6 +1496,11 @@ paths:
       summary: Get a specific PersonalEconomy by processId, customerId
       description: Get a specific PersonalEconomy from the process layer
       operationId: getPersonalEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getPersonalEconomy request
         #- $ref: '#/components/parameters/processId'
@@ -1395,6 +1545,11 @@ paths:
       summary: get a list of available PersonalEconomies
       description: Get a list of available PersonalEconomies by ProcessId and customerId....
       operationId: getPersonalEconomies
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getPersonalEconomies request
         #- $ref: '#/components/parameters/processId'
@@ -1433,6 +1588,11 @@ paths:
       description: >-
         TBD
       operationId: updatePersonalEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a PersonalEconomy in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1477,6 +1637,11 @@ paths:
       description: >-
         TBD
       operationId: deletePersonalEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a loan in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1518,6 +1683,11 @@ paths:
       summary: Get a specific CompanyEconomy by processId
       description: Get a specific CompanyEconomy from the process layer
       operationId: getCompanyEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getCompanyEconomy request
         #- $ref: '#/components/parameters/processId'
@@ -1556,6 +1726,11 @@ paths:
       summary: get a list of available CompanyEconomies
       description: Get a list of available CompanyEconomies by ProcessId and companyEconomyId
       operationId: getCompanyEconomies
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getCompanylEconomies request
         #- $ref: '#/components/parameters/processId'
@@ -1593,6 +1768,11 @@ paths:
       summary: update a specific CompanyEconomy in Activiti
       description: Update economy on a specific company
       operationId: updateCompanyEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a CompanyEconomy in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1643,6 +1823,11 @@ paths:
       description: >-
         TBD
       operationId: deleteCompanyEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a loan in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1685,6 +1870,11 @@ paths:
       summary: get a list of available budgets
       description: Get a list of available Budgets
       operationId: getBudgets
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getBudgets request
         #- $ref: '#/components/parameters/processId'
@@ -1724,6 +1914,11 @@ paths:
       description: >-
         TBD
       operationId: updateBudget
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a Budget in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1769,6 +1964,11 @@ paths:
       description: >-
         TBD
       operationId: deleteBudget
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a budget in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1811,6 +2011,11 @@ paths:
       summary: get a list of available KycInformations
       description: Get a list of available KycInformations
       operationId: getKycInformations
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getBudgets request
         #- $ref: '#/components/parameters/processId'
@@ -1848,6 +2053,11 @@ paths:
       summary: get a list of available KycInformations
       description: Get a list of available KycInformations
       operationId: getKycInformation
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         # parameters required for getBudgets request
         #- $ref: '#/components/parameters/processId'
@@ -1893,6 +2103,11 @@ paths:
       description: >-
         TBD
       operationId: updateKycInformation
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to update a Budget in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1942,6 +2157,11 @@ paths:
       description: >-
         TBD
       operationId: deleteKycInformation
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
       # required parameters to delete a budget in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -1983,6 +2203,11 @@ paths:
       summary: Submit Application to Landshypotek and handling by a officer
       description: TBD
       operationId: submitApplication
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
       parameters:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/submitApplication'
