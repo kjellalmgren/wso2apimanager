@@ -76,13 +76,12 @@ info:
   
     **Processes**<br>
     **Processes/Process**<br>
-    **BusinessArea**TBD<br>
     **Security/oauth2**<br>
     **ApplicationData**<br>
     **Loans/Loan**<br>
     **Applicant/ELoans/ELoan**<br>
     **Applicant/PersonalEconomies/PersonalEconomy**<br>
-    **Applicant/ApplicantInformation**                          (TBD)<br>
+    **Applicant/ApplicantInformation**
     **Companies/Budgets/Budget**<br>
     **Companies/CompanyEconomies/CompanyEconomy**<br>
     **Companies**/**Collaterals**/**Colleteral**<br><br>
@@ -91,8 +90,8 @@ info:
     
     **Households**<br>
     **Households/Household**<br>
-    **Households/Hosueold/householdMember**<br>
-    **Households/Hosuehold/Cars/Car**<br>
+    **Households/Houseold/householdMember**<br>
+    **Households/Household/Cars/Car**<br>
     **Households/Household/Childs/Child**<br>
     **KycInformations**<br>
     **KycInformations/KycInformation**<br><br>
@@ -131,6 +130,10 @@ securityDefinitions:
     scopes:
       write: allows modifying resources
       read: allows reading resources
+  apiKeyAuth:
+    type: apiKey
+    name: api_key
+    in: header
 
 # Here we apply the security flow called 'application' globally to all the opeartions in the spec. 
 # This security scheme is defined above in the 'securityDefinitions' section.
@@ -149,6 +152,9 @@ paths:
       responses:
         200:
           description: OK
+  ##############################################################
+  # Ping service for health check
+  ##############################################################
   /v1/ping:
     get:
       summary: Server heartbeat operation
@@ -156,6 +162,8 @@ paths:
       # We want to require no security schemes and override the globally define security scheme.
       # To do that, we simply provide an empty array to the 'security' property.
       security: [ ]
+      produces:
+      - application/json
       responses:
         200:
           description: OK
@@ -175,10 +183,7 @@ paths:
       consumes:
       - application/json
       parameters:
-        - in: path
-          name: customerId
-          required: true
-          type: string
+        - $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -209,11 +214,7 @@ paths:
       consumes:
       - application/json
       parameters:
-        - in: path
-          name: processId
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
       responses:
         200:
           description: Successful
@@ -255,14 +256,8 @@ paths:
       consumes:
       - application/json
       parameters:
-        - name: processId
-          in: path
-          required: true
-          type: string
-        - name: customerId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -293,24 +288,10 @@ paths:
       consumes:
       - application/json
       parameters:
-        - name: processId
-          in: path
-          required: true
-          type: string
-        - name: caseId
-          in: path
-          required: true
-          type: string
-        - name: caseIdStatus
-          type: string
-          enum:
-          - CLOSEDBYAPPLICANT   # Kund har aktivt avböjt ansökan
-          - STARTEDBYAPPLICANT  # Kund har startat en ansökan
-          - CLOSEDBYOFFICER     # av handläggare
-          - CLOSEDBYTHINNING    # Gallring?
-          - READYFOROFFICER     # Applicant has submitted the application
-          required: true
-          in: path
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/caseId'
+        - $ref: '#/parameters/caseIdStatus'
+        # open API 3.0 or greater
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/caseId'
         #- $ref: '#/components/parameters/caseIdStatus'
@@ -346,18 +327,9 @@ paths:
       consumes:
       - application/json
       parameters:
-        # parameters required for getCustomer request
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        # parameters required for getApplicant
       responses:
         200:
           description: Successful
@@ -388,13 +360,8 @@ paths:
       consumes:
       - application/json
       parameters:
-         # parameters required for getCustomer request
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
         # parameters required for getApplicants request
+        - $ref: '#/parameters/processId'
         #- $ref: '#/components/parameters/processId'
       responses:
         200:
@@ -430,15 +397,8 @@ paths:
       # required parameters to update a applicant in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
         - name: applicant
           in: body
           schema:
@@ -476,18 +436,11 @@ paths:
       consumes:
       - application/json
       parameters:
-      # required parameters to delete a customer in Activiti
+        # required parameters to delete a customer in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -522,16 +475,8 @@ paths:
         # parameters required for getCompany request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
       responses:
         200:
           description: Successful
@@ -564,11 +509,7 @@ paths:
       parameters:
         # parameters required for getCompanies request
         #- $ref: '#/components/parameters/processId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
       responses:
         200:
           description: Successful
@@ -603,16 +544,8 @@ paths:
       # required parameters to update a customer in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
         - name: company
           in: body
           required: true
@@ -651,16 +584,8 @@ paths:
       # required parameters to delete a customer in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
       responses:
         200:
           description: Successful
@@ -692,16 +617,8 @@ paths:
         # parameters required for getCustomer request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/householdId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: householdId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
       responses:
         200:
           description: Successful
@@ -734,11 +651,7 @@ paths:
       parameters:
         # parameters required for getHouseholds request
         #- $ref: '#/components/parameters/processId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
       responses:
         200:
           description: Successful
@@ -773,16 +686,8 @@ paths:
       # required parameters to update a household in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/householdId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: householdId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
       responses:
         200:
           description: Successful
@@ -814,19 +719,11 @@ paths:
       consumes:
       - application/json
       parameters:
-      # required parameters to delete a household in Activiti
+        # required parameters to delete a household in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/householdId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: householdId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
       responses:
         200:
           description: Successful
@@ -860,20 +757,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/householdId'
         #- $ref: '#/components/parameters/customerId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: householdId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
+        - $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -907,20 +793,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/householdId'
         #- $ref: '#/components/parameters/customerId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: householdId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
+        - $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -955,20 +830,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/collateralId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: collateralId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/collateralId'
       responses:
         200:
           description: Successful
@@ -1002,15 +866,8 @@ paths:
         # parameters required for getCollaterals request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -1045,20 +902,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/collateralId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: collateralId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/collateralId'
         - name: collateral
           in: body
           required: true
@@ -1144,16 +990,8 @@ paths:
         # parameters required for getCustomer request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/loanId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: loanId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/loanId'
       responses:
         200:
           description: Successful
@@ -1186,11 +1024,7 @@ paths:
       parameters:
         # parameters required for getHouseholds request
         #- $ref: '#/components/parameters/processId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
       responses:
         200:
           description: Successful
@@ -1225,16 +1059,8 @@ paths:
       # required parameters to update a customer in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/loanId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: loanId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/loanId'
         - name: loan
           in: body
           required: true
@@ -1274,16 +1100,8 @@ paths:
       # required parameters to delete a loan in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/loanId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: loanId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/loanId'
       responses:
         200:
           description: Successful
@@ -1316,20 +1134,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/extloanId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: extloanId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/extloanId'
       responses:
         200:
           description: Successful
@@ -1363,15 +1170,8 @@ paths:
         # parameters required for getExtLoans request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -1407,20 +1207,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/extloanId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: extloanId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/extloanId'
         - name: extloan
           in: body
           schema:
@@ -1460,20 +1249,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/extloanId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: extloanId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/extloanId'
       responses:
         200:
           description: Successful
@@ -1506,20 +1284,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/personalEconomyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: personalEconomyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/personalEconomyId'
       responses:
         200:
           description: Successful
@@ -1554,15 +1321,8 @@ paths:
         # parameters required for getPersonalEconomies request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -1598,20 +1358,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/personalEconomyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: personalEconomyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/personalEconomyId'
       responses:
         200:
           description: Successful
@@ -1647,20 +1396,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/personalEconomyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: personalEconomyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/personalEconomyId'
       responses:
         200:
           description: Successful
@@ -1692,15 +1430,8 @@ paths:
         # parameters required for getCompanyEconomy request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyEconomyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyEconomyId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyEconomyId'
       responses:
         200:
           description: Successful
@@ -1735,15 +1466,8 @@ paths:
         # parameters required for getCompanylEconomies request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
       responses:
         200:
           description: Successful
@@ -1778,21 +1502,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
         #- $ref: '#/components/parameters/companyEconomyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyEconomyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/companyEconomyId'
         - name: companyeconomy
           in: body
           required: true
@@ -1833,21 +1545,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
         #- $ref: '#/components/parameters/companyEconomyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyEconomyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/companyEconomyId'
       responses:
         200:
           description: Successful
@@ -1879,16 +1579,8 @@ paths:
         # parameters required for getBudgets request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
       responses:
         200:
           description: Successful
@@ -1924,21 +1616,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
         #- $ref: '#/components/parameters/companyEconomyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyEconomyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/companyEconomyId'
       responses:
         200:
           description: Successful
@@ -1974,21 +1654,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
         #- $ref: '#/components/parameters/companyEconomyId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyEconomyId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/companyEconomyId'
       responses:
         200:
           description: Successful
@@ -2020,15 +1688,8 @@ paths:
         # parameters required for getBudgets request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -2063,20 +1724,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/kycId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: kycId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/kycId'
       responses:
         200:
           description: Successful
@@ -2113,20 +1763,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/kycId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: kycId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/kycId'
         - name: kycinformation
           in: body
           required: true
@@ -2167,20 +1806,9 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
         #- $ref: '#/components/parameters/kycId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: companyId
-          in: path
-          required: true
-          type: string
-        - name: kycId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/kycId'
       responses:
         200:
           description: Successful
@@ -2211,18 +1839,8 @@ paths:
       parameters:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/submitApplication'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: submitApplication
-          in: path
-          required: true
-          type: boolean
-          enum:
-          - true
-          - false
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/submitApplication'
       responses:
         200:
           description: Successful
@@ -2267,6 +1885,7 @@ definitions:
     example: '9a65d28a-46bb-4442-b96d-6a09fda6b18b'
   processCreatedDate:
     description: Activiti, processId created date
+    example: '2019-02-28'
   customerIds:
     type: array
     description: This holds a array of one to many Applicant/make/maka in a household
@@ -2280,34 +1899,38 @@ definitions:
     type: string
     description: unique id for each applicant in the credit case
     format: uuid
-    example: 12ab301d-b0ae-46ba-ac99-ff7389fe356e
+    example: '12ab301d-b0ae-46ba-ac99-ff7389fe356e'
   applicantName:
     type: string
     description: Full name of the customer/applicant
-    example: Anna Andersson
+    example: 'Anna Andersson'
   applicantAddress:
     type: string
     description: Street address of Applicant
-    example: Trossvägen 1
+    example: 'Trossvägen 1'
   applicantPostAddress:
     type: string
     description: Postal number and postal city
-    example: 181 66 Lidingö
+    example: '181 66 Lidingö'
   applicantRole:
     type: string
-    description: Huvudlåntagare or Medlåntagare i SAP (behöver vi hantera detta?)
-    example: Huvudlåntagare/medlåntagare in SAP
+    description: Huvudlåntagare eller Medlåntagare i SAP (behöver vi hantera detta?)
+    example: 'Huvudlåntagare/medlåntagare in SAP'
   applicantEmail:
     type: string
     description: applicant enter email for notification
-    example: kjell.almgren@landshypotek.se
+    example: 'kjell.almgren@landshypotek.se'
   applicantMobileNumber:
     type: string
     description: applicant entered mobile number for notification
-    example: "0733981482"
+    example: '0733981482'
   applicantMember:
     type: boolean
     description: Member in Landshypotek Ekonomiska förening (true/false)
+    enum:
+    - true
+    - false
+    example: true
   applicantEmployeed:
     type: string
     description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer
@@ -2334,46 +1957,46 @@ definitions:
     type: string
     description: generated guid in the model
     format: uuid
-    example: 02d6a03e-5895-4077-98f7-7a5c192868b7
+    example: '02d6a03e-5895-4077-98f7-7a5c192868b7'
   orgNumber:
     type: string
     description: Organisation number from external service, swedish ssn (UC or SAP for existing companies)
-    example: 19550101-1010
+    example: '19550101-1010'
   companyName:
     type: string
     description: Full name of the company from external services or BusinessName in SAP
-    example: Anna Andersson Mjölkproduktion
+    example: 'Anna Andersson Mjölkproduktion'
   companyCreated:
     type: string
     description: 'date when company was established, from external service or existing
       customer in SAP '
-    example: 2012-01-01
+    example: '2012-01-01'
   householdId:
     type: string
     description: Hosuehold identity key
     format: uuid
-    example: 02d6a03e-5895-4077-98f7-7a5c192878b8
+    example: '02d6a03e-5895-4077-98f7-7a5c192878b8'
   numberOfChildsAtHome:
     type: string
     description: Number of child in this household
-    example: "2"
+    example: '2'
   numberOfCars:
     type: string
     description: number of cars in this houshold (Will probably be removed for SME-companies)
-    example: "2"
+    example: '2'
   childMaintenanceCost:
     type: string
     description: Underhållskostnad för barn i annat hushåll Underhållskostander barn
-    example: 2 000 SEK
+    example: '2 000 SEK'
   loanId:
     type: string
     description: Loan identity
     format: uuid
-    example: 08f55e2f-e947-48f4-89d2-d31af2fc28d6
+    example: '08f55e2f-e947-48f4-89d2-d31af2fc28d6'
   loanNumber:
     type: string
     description: This will only be a temporary loanNumber, when can we reserve a loan number in SAP
-    example: "9397000010"
+    example: '9397000010'
   loanAmount:
     type: string
     description: Applicants want to loan this amount
@@ -2381,84 +2004,87 @@ definitions:
   numberOfLoans:
     type: string
     description: Customer want to split this loan into 2 loans
-    example: "2"
+    example: '2'
   collateralId:
     type: string
     description: Collateral identity
     format: uuid
-    example: 82faaa1a-42f7-4d87-aecf-96c450a0ce59
+    example: '82faaa1a-42f7-4d87-aecf-96c450a0ce59'
   collateralName:
     type: string
     description: Fastighetbeteckning
-    example: SKOGEN 4:3
+    example: 'SKOGEN 4:3'
   collateralMunicipality:
     type: string
     description: Kommun där fastigheten och/eller säkerheten finns registrerad
-    example: Katrineholm
+    example: 'Katrineholm'
   collateralStreet:
     type: string
     description: Street address of the collateral
-    example: Bergsgatan 12
+    example: 'Bergsgatan 12'
   useAsCollateral:
     type: boolean
     description: Use this collateral as security in this application
     enum:
     - true
     - false
+    example: false
   buyCollateral:
     type: boolean
     description: Applicant has intention to by this collateral
     enum:
     - true
     - false
+    example: true
   extloanId:
     type: string
     description: Type definitions for external loans
     format: uuid
-    example: 3164d347-e173-4c4f-8839-26d32716e5bf
+    example: '3164d347-e173-4c4f-8839-26d32716e5bf'
   extCreditInstitut:
     type: string
     description: Kreditinstitut, Bank
-    example: SEB
+    example: 'SEB'
   extloanNumber:
     type: string
     description: Loan originator
-    example: "0028600"
+    example: '0028600'
   extloanClearing:
     type: string
     description: Clearing number
-    example: "5270"
+    example: '5270'
   extRedeemLoan:
     type: boolean
-    description: Redeen loans - Lösa lånet i annan bank
+    description: Redeem loans - Lösa lånet i annan bank
     enum:
     - true
     - false
+    example: true
   personalEconomyId:
     type: string
     description: Type definitions for personal economy
     format: uuid
-    example: b0c0edaa-3d75-4364-9179-1ecc8d9198d0
+    example: 'b0c0edaa-3d75-4364-9179-1ecc8d9198d0'
   yearlyIncome:
     type: string
     description: TBD
-    example: 340 000 SEK
+    example: '340 000 SEK'
   income:
     type: string
-    description: TBD
-    example: 40 000 SEK
+    description: Angiven inkomst
+    example: '40 000 SEK'
   typeOfEmployeement:
     type: string
-    description: TBD
-    example: Tillsvidare
+    description: TBD Förmodligen ska vi göra en enum här
+    example: 'Tillsvidare'
   employeer:
     type: string
     description: -> TBD
-    example: Skatteverket
+    example: 'Skatteverket'
   mainPurposes:
     type: string
     description: Ändamål och syfte (TBD)
-    example: KOP
+    example: 'KOP'
     enum:
     - KOP
     - OVR
@@ -2488,32 +2114,52 @@ definitions:
     type: string
     description: Type definition for company economy
     format: uuid
-    example: 32084646-d030-4c51-a316-b1342c3551ab
+    example: '32084646-d030-4c51-a316-b1342c3551ab'
   budgetId:
     type: string
     description: Type definition for company budget
     format: uuid
-    example: 32084646-d030-4c51-a316-b1342c3551dc
+    example: '32084646-d030-4c51-a316-b1342c3551dc'
   kycId:
     type: string
     description: Kyc-identity key
     format: uuid
-    example: 9bca3a55-2458-41d5-9420-f12bdcd0c809
+    example: '9bca3a55-2458-41d5-9420-f12bdcd0c809'
   kycAcceptUC:
     type: boolean
     description: Jag är medveten om att Landshypotek Bank inhämtar en kreditupplysning på mig och att det sker när jag går vidare från denna sida i nästa steg i ansökan.
+    enum:
+    - true
+    - false
+    example: false
   kycAcceptGDPR:
     type: boolean
     description: Jag är medveten om att Landshypotek Bank behandlar mina personuppgifter i och med ansökan och att jag kan läsa mer om Landshypotek Banks personuppgiftsbehandling.
+    enum:
+    - true
+    - false
+    example: false
   kycUCAware:
     type: boolean
     description: Jag är medveten om att de uppgifter jag lämnar och resultatet av kreditansökan även visas för medsökande, om en sådan läggs till senare i ansökan. Om jag äger andra fastigheter, som banken hämtar uppgifter om från externa källor, visas även de uppgifterna för medsökande.
+    enum:
+    - true
+    - false
+    example: false
   kycPublicFunction:
     type: boolean
     description: Innehar eller har du de 18 senaste månaderna innehaft en viktig offentlig funnktion?
+    enum:
+    - true
+    - false
+    example: false
   kycRelatedPublicFunction:
     type: boolean
     description: Är du familjemedblem eller medarbetare till en person som har, eller som under de senaste 18 månaderna innehaft en viktig offentlig funktion?
+    enum:
+    - true
+    - false
+    example: false
   #
   #################################################################
   # START Response definitions
@@ -2838,8 +2484,101 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/kycInformationType'
-  ####################################################################################
-  ####################################################################################
-  # END Type definitions
-  ####################################################################################
-  ####################################################################################
+####################################################################################
+####################################################################################
+# END Type definitions
+####################################################################################
+####################################################################################
+# Parameters
+####################################################################################
+####################################################################################
+parameters:
+  customerId:
+    name: customerId
+    in: path
+    required: true
+    type: string
+  processId:
+    name: processId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  caseId:
+    name: caseId
+    in: path
+    required: true
+    type: string
+  caseIdStatus:
+    name: caseIdStatus
+    in: path
+    type: string
+    enum:
+      - CLOSEDBYAPPLICANT   # Kund har aktivt avböjt ansökan
+      - STARTEDBYAPPLICANT  # Kund har startat en ansökan
+      - CLOSEDBYOFFICER     # av handläggare
+      - CLOSEDBYTHINNING    # Gallring?
+      - READYFOROFFICER     # Applicant has submitted the application
+    required: true
+  companyId:
+    name: companyId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  householdId:
+    name: householdId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  collateralId:
+    name: collateralId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  loanId:
+    name: loanId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  extloanId:
+    name: extloanId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  personalEconomyId:
+    name: personalEconomyId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  companyEconomyId:
+    name: companyEconomyId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  kycId:
+    name: kycId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  submitApplication:
+    name: submitApplication
+    in: path
+    required: true
+    type: boolean
+    enum:
+    - true
+    - false
+    
+####################################################################################
+####################################################################################
+# END Parameters
+####################################################################################
+####################################################################################
