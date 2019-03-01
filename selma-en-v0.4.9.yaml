@@ -100,7 +100,7 @@ info:
     When customer logg-in to Selma-EN, we will create a processId with apllicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
     All update-methods should act as a add-method if e.g.Applicant does not exist
     
-  termsOfService: terms
+  termsOfService: 'http://www.landshypotek.se/sme/terms'
   license:
     name: MIT
     url: http://opensource.org/licenses/MIT
@@ -250,7 +250,8 @@ paths:
       - reserveCaseId
       summary: Reserve a CaseId in Loan Process
       description: >-
-        Reserve a CaseId in Loan Process to be able to use attachment i DM
+        Reserve a CaseId in Loan Process to be able to use attachment i DM. In this case parameter
+        caseIdStatus should be set to enumeration of STARTEDBYAPPLICANT
       operationId: reserveCaseId
       # The method will handle the following MIME/Types
       produces:
@@ -312,7 +313,6 @@ paths:
           $ref: '#/definitions/InvalidPage'
         500:
           $ref: '#/definitions/PageNotFound'
-  #
   #
   ##################################################
   # get a specific Applicant
@@ -1871,6 +1871,7 @@ definitions:
     enum:
     - true
     - false
+    example: true
   caseIdStatus:
     type: string
     description: Set status on the caseid
@@ -1888,7 +1889,7 @@ definitions:
     example: '9a65d28a-46bb-4442-b96d-6a09fda6b18b'
   processCreatedDate:
     description: Activiti, processId created date
-    example: '2019-02-28'
+    example: '2019-03-01'
   customerIds:
     type: array
     description: This holds a array of one to many Applicant/make/maka in a household
@@ -1897,7 +1898,7 @@ definitions:
   customerId:
     type: string
     description: customerId is swedish ssn or corporate organisation number
-    example: '197001010101'
+    example: '19640120-3887' # Anna Andersson
   applicantId:
     type: string
     description: unique id for each applicant in the credit case
@@ -1910,11 +1911,11 @@ definitions:
   applicantAddress:
     type: string
     description: Street address of Applicant
-    example: 'Trossvägen 1'
+    example: 'Stora vägen 1'
   applicantPostAddress:
     type: string
     description: Postal number and postal city
-    example: '181 66 Lidingö'
+    example: '420 20 Katrineholm'
   applicantRole:
     type: string
     description: Huvudlåntagare eller Medlåntagare i SAP (behöver vi hantera detta?)
@@ -1922,11 +1923,11 @@ definitions:
   applicantEmail:
     type: string
     description: applicant enter email for notification
-    example: 'kjell.almgren@landshypotek.se'
+    example: 'anna.andersson@gmail.com'
   applicantMobileNumber:
     type: string
     description: applicant entered mobile number for notification
-    example: '0733981482'
+    example: '07344455666'
   applicantMember:
     type: boolean
     description: Member in Landshypotek Ekonomiska förening (true/false)
@@ -1941,15 +1942,15 @@ definitions:
   applicantLPEmployment:
     type: string
     description: employment mapping to Loan Process PERMANENT - Anställd, tills-vidare-anställd TEMPORARY - Tidbegränsad anställning PROBATIONARY - Provanställning UNEMPLOYMENT_INSURANCE - Arbetslöshetskassa SELF_EMPLOYED - Eget företag STUDENT_AID - Studiestöd PENSION - Inkomst av pension
-    example: PERMANENT
+    example: 'PERMANENT'
     enum:
-    - PERMANENT
-    - TEMPORARY
-    - PROBATIONARY
-    - UNEMPLOYMENT_INSURANCE
-    - SELF_EMPLOYED
-    - STUDENT_AID
-    - PENSION
+    - 'PERMANENT'
+    - 'TEMPORARY'
+    - 'PROBATIONARY'
+    - 'UNEMPLOYMENT_INSURANCE'
+    - 'SELF_EMPLOYED'
+    - 'STUDENT_AID'
+    - 'PENSION'
   applicantBySms:
     type: boolean
     description: Applicant want to be notified by sms (true/false)
@@ -2183,6 +2184,7 @@ definitions:
   #################################################################
   #################################################################
   applicantType:
+    description: Type of applicant instance
     required:
     - applicantId
     - customerId
@@ -2215,7 +2217,6 @@ definitions:
         $ref: '#/definitions/applicantBySms'
       notifiedByeMail:
         $ref: '#/definitions/applicantByeMail'
-    description: Type of applicant instance
   Applicant:
     $ref: '#/definitions/applicantType'
   Applicants:
@@ -2232,6 +2233,7 @@ definitions:
         $ref: '#/definitions/applicantMobileNumber'
     description: Contact information definitions
   companyType:
+    description: Type of company instance
     required:
     - companyId
     - processId
@@ -2247,7 +2249,6 @@ definitions:
         $ref: '#/definitions/companyName'
       created:
         $ref: '#/definitions/companyCreated'
-    description: Type of company instance
   Company:
     $ref: '#/definitions/companyType'
   Companies:
@@ -2256,6 +2257,7 @@ definitions:
     items:
       $ref: '#/definitions/companyType'
   householdType:
+    description: Household should be loosely coupled in the model. We have to support many customerId in a household, this is done by adding customerId to the array customerIds.
     required:
     - householdId
     - processId
@@ -2273,7 +2275,6 @@ definitions:
         $ref: '#/definitions/numberOfCars'
       childMaintenaceCost:
         $ref: '#/definitions/childMaintenanceCost'
-    description: Household should be loosely coupled in the model. We have to support many customerId in a household, this is done by adding customerId to the array customerIds.
   Household:
     $ref: '#/definitions/householdType'
   Households:
@@ -2282,6 +2283,7 @@ definitions:
     items:
       $ref: '#/definitions/householdType'
   loanType:
+    description: This represent the customer loan structure
     required:
     - loanId
     - processId
@@ -2299,7 +2301,6 @@ definitions:
         $ref: '#/definitions/numberOfLoans'
       purposeOfLoan:
         $ref: '#/definitions/purposes'
-    description: This represent the customer loan structure
   Loan:
     $ref: '#/definitions/loanType'
   Loans:
@@ -2308,6 +2309,7 @@ definitions:
     items:
       $ref: '#/definitions/loanType'
   extLoanType:
+    description: Externa lån kunden har i andra kreditinstitut, detta exkluderar LH-lån
     required:
     - customerId
     - extloanId
@@ -2328,7 +2330,6 @@ definitions:
         $ref: '#/definitions/extloanNumber'
       extRedeemLoan:
         $ref: '#/definitions/extRedeemLoan'
-    description: Externa lån kunden har i andra kreditinstitut, detta exkluderar LH-lån
   ExtLoan:
     $ref: '#/definitions/extLoanType'
   ExtLoans:
@@ -2369,7 +2370,7 @@ definitions:
     items:
       $ref: '#/definitions/collateralType'
   personalEconomyType:
-    description: TBD
+    description: personal economy for KALP us
     required:
     - customerId
     - personalEconomyId
@@ -2433,8 +2434,8 @@ definitions:
   Budget:
     $ref: '#/definitions/budgetType'
   Budgets:
-    type: array
     description: Return an array of type budgetType
+    type: array
     items:
       $ref: '#/definitions/budgetType'
   processType:
@@ -2453,8 +2454,8 @@ definitions:
   Process:
     $ref: '#/definitions/processType'
   Processes:
-    type: array
     description: Return a list of type processType
+    type: array
     items:
       $ref: '#/definitions/processType'
   kycInformationType:
