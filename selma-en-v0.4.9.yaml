@@ -51,6 +51,9 @@ info:
   #                      added consumes: Application/json in all methods
   #                      moved parameters to swagger 2.0 parameters: section
   #                      added CaseIdStatus parameter to reserveCaseId
+  #                      extloanAmount has been added to extLoanType
+  #                      householdMemberType has been changed
+  #                      employeedFromYear has been added to PersonalEconomyType
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -744,12 +747,12 @@ paths:
   #################################################################
   # deleteHouseholdMember
   #################################################################
-  /v1/deleteHouseholdMember/{processId}/{householdId}/{customerId}:
+  /v1/deleteHouseholdMember/{processId}/{householdId}/{householdMember}:
     post:
       tags:
         - deleteHouseholdMember
       summary: Remove a applicant from a specific houshold
-      description: Will remove {customerId} from the array customerIds in Household 
+      description: Will remove {householdMeber} from the array householdMembers in Household 
       operationId: deleteHouseholdMember
       # The method will handle the following MIME/Types
       produces:
@@ -759,10 +762,10 @@ paths:
       parameters:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/householdId'
-        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/householdMember'
         - $ref: '#/parameters/processId'
         - $ref: '#/parameters/householdId'
-        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/householdMember'
       responses:
         200:
           description: Successful
@@ -780,12 +783,12 @@ paths:
   ##################################################################
   # addHouseholdMember
   ##################################################################
-  /v1/addHouseholdMember/{processId}/{householdId}/{customerId}:
+  /v1/addHouseholdMember/{processId}/{householdId}/{householdMember}:
     post:
       tags:
         - addHouseholdMember
       summary: Add applicant to a specific household
-      description: Will add {customerId} to the array customerIds in Household
+      description: Will add {householdMember} to the array householdMembers in Household
       operationId: addHouseholdMember
       # The method will handle the following MIME/Types
       produces:
@@ -795,10 +798,10 @@ paths:
       parameters:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/householdId'
-        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/householdMember'
         - $ref: '#/parameters/processId'
         - $ref: '#/parameters/householdId'
-        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/householdMember'
       responses:
         200:
           description: Successful
@@ -1890,11 +1893,15 @@ definitions:
   processCreatedDate:
     description: Activiti, processId created date
     example: '2019-03-01'
-  customerIds:
-    type: array
+  householdMember:
+    description: Member in a household
+    type: string
+    example: '19640120-3887' # Anna Andersson
+  householdMembers:
     description: This holds a array of one to many Applicant/make/maka in a household
+    type: array
     items:
-      $ref: '#/definitions/customerId'
+      $ref: '#/definitions/householdMember'
   customerId:
     type: string
     description: customerId is swedish ssn or corporate organisation number
@@ -2057,6 +2064,10 @@ definitions:
     type: string
     description: Clearing number
     example: '5270'
+  extloanAmount:
+    description: externa loan, amount
+    type: string
+    example: '200 000SEK'
   extRedeemLoan:
     type: boolean
     description: Redeem loans - Lösa lånet i annan bank
@@ -2071,11 +2082,11 @@ definitions:
     example: 'b0c0edaa-3d75-4364-9179-1ecc8d9198d0'
   yearlyIncome:
     type: string
-    description: TBD
+    description: Årlig inkomst från näringsverksamhet
     example: '340 000 SEK'
   income:
     type: string
-    description: Angiven inkomst
+    description: Angiven inkomst av tjänst
     example: '40 000 SEK'
   typeOfEmployeement:
     type: string
@@ -2083,8 +2094,12 @@ definitions:
     example: 'Tillsvidare'
   employeer:
     type: string
-    description: -> TBD
+    description: -> Arbetsgivare
     example: 'Skatteverket'
+  employeedFromYear:
+    type: string
+    description: Anställd sedan år
+    example: '2009'
   mainPurposes:
     type: string
     description: Ändamål och syfte (TBD)
@@ -2225,13 +2240,13 @@ definitions:
     items:
       $ref: '#/definitions/applicantType'
   ContactInformationType:
+    description: Contact information definitions
     type: object
     properties:
       eMail:
         $ref: '#/definitions/applicantEmail'
       mobileNumber:
         $ref: '#/definitions/applicantMobileNumber'
-    description: Contact information definitions
   companyType:
     description: Type of company instance
     required:
@@ -2256,6 +2271,12 @@ definitions:
     description: List of companyType
     items:
       $ref: '#/definitions/companyType'
+  householdMemberType:
+    description: Member in a household
+    type: object
+    properties:
+      householdMember:
+        $ref: '#/definitions/householdMember'
   householdType:
     description: Household should be loosely coupled in the model. We have to support many customerId in a household, this is done by adding customerId to the array customerIds.
     required:
@@ -2265,8 +2286,8 @@ definitions:
     properties:
       processId:
         $ref: '#/definitions/processId'
-      customerIds:
-        $ref: '#/definitions/customerIds'
+      householdMembers:
+        $ref: '#/definitions/householdMemberType'
       householdId:
         $ref: '#/definitions/householdId'
       numberOfChildsAtHome:
@@ -2328,6 +2349,8 @@ definitions:
         $ref: '#/definitions/extloanClearing'
       extloanNumber:
         $ref: '#/definitions/extloanNumber'
+      extloanAmount:
+        $ref: '#/definitions/extloanAmount'
       extRedeemLoan:
         $ref: '#/definitions/extRedeemLoan'
   ExtLoan:
@@ -2340,8 +2363,6 @@ definitions:
   collateralType:
     description: Säkerheter för lånet, om köp, även andra fastigheter kan användas som säkerhet för lånet
     required:
-    - collateralId
-    - customerId
     - processId
     type: object
     properties:
@@ -2361,7 +2382,6 @@ definitions:
         $ref: '#/definitions/useAsCollateral'
       buyCollateral:
         $ref: '#/definitions/buyCollateral'
-    
   Collateral:
     $ref: '#/definitions/collateralType'
   Collaterals:
@@ -2391,29 +2411,34 @@ definitions:
         $ref: '#/definitions/typeOfEmployeement'
       Employeer:
         $ref: '#/definitions/employeer'
+      employeedFromYear:
+        $ref: '#/definitions/employeedFromYear'
   PersonalEconomy:
     $ref: '#/definitions/personalEconomyType'
   PersonalEconomies:
     type: array
-    description: -> TBD
+    description: -> Get a list of PersonalEconomyType
     items:
       $ref: '#/definitions/personalEconomyType'
   companyEconomyType:
     description: Type definition for company economy
     required:
-    - companyEconomyId
     - processId
+    - companyId
+    - companyEconomyId
     type: object
     properties:
       processId:
         $ref: '#/definitions/processId'
+      companyId:
+        $ref: '#/definitions/companyId'
       companyEconomyId:
         $ref: '#/definitions/companyEconomyId'
   CompanyEconomy:
     $ref: '#/definitions/companyEconomyType'
   CompanyEconomies:
     type: array
-    description: -> Type definition for company economies, returns array of CompanyEconomies
+    description: -> Type definition for company economies, returns array of CompanyEconomyType
     items:
       $ref: '#/definitions/companyEconomyType'
   budgetType:
@@ -2536,6 +2561,11 @@ parameters:
     required: true
     type: string
     format: uuid
+  householdMember:
+    name: householdMember
+    in: path
+    required: true
+    type: string
   collateralId:
     name: collateralId
     in: path
