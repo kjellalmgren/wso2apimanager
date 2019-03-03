@@ -1,0 +1,2766 @@
+swagger: '2.0'
+info:
+  version: '0.5.0'
+  ############################################################################################
+  # 2019-02-10 0.2.0 kal Initial version
+  # 2019-02-10 0.2.1 kal Minor changes
+  # 2019-02-11 0.2.2 kal getCustomer, getCustomers
+  # 2019-02-12 0.2.3 kal updateCustomer, deleteCustomer
+  # 2019-02-12 0.2.4 kal getCompany, getCompanies
+  # 2019-02-12 0.2.5 kal updateCompany, deleteCompany
+  # 2019-02-12 0.2.6 kal Added eMail and mobile number to customerType
+  # 2019-02-12 0.2.7 kal Added household object
+  # 2019-02-12 0.2.8 kal Added loan object
+  # 2019-02-13 0.2.9 kal Added colleteral object
+  # 2019-02-13 0.3.0 kal Added external loans
+  # 2019-02-13 0.3.1 kal future functionality and documentation
+  # 2019-02-13 0.3.2 kal Add element in customerTypes
+  # 2019-02-13 0.3.3 kal Added PersonalEconomies
+  # 2019-02-13 0.3.4 kal Fixed bugg, only return 200 OK when delete is executed
+  # 2019-02-13 0.3.5 kal Removed customerId from Loan, it will only be connected PrcoessId
+  # 2019-02-13 0.3.6 kal Added CompanyEconomy
+  # 2019-02-14 0.3.7 kal Added attribute element in many custom type definitions
+  # 2019-02-15 0.3.8 kal Add purposes, main purposes, purposes
+  # 2019-02-15 0.3.9 kal Minor changes, spelling and grammer, purposeDisplayText
+  # 2019-02-15 0.4.0 kal Changed purposes of loan, enum of purposes displayText
+  # 2019-02-18 0.4.1 kal Added budget object to the model
+  # 2019-02-18 0.4.2 kal Added interface on the process level
+  # 2019-02-18 0.4.3 kal Spelling error on collateral and collaterals object in the model
+  # 2019-02-19 0.4.4 kal Changed Customers/Customer to Applicants/Applicant, Loans has been
+  #                      removed from Customer and are direct under ProcessId,
+  #                      applicantMember (LHEK)
+  #                      memberInLHEK
+  #                      ContactInformationType
+  #                      Child care costs has been removed (ChildCareCosts)
+  # 2019-02-21 0.4.5 kal Househould has been changed, customer connection has been dropped
+  #                      setCaseIdStatus(..)
+  #                      reserveCaseId(..)
+  # 2019-02-22 0.4.6 kal HouseholdName har tagits bort från HouseholdType
+  #                      deleteHouseholdMember has been added
+  #                      applicantEmployeed has been added in applicantType
+  #                      KycInformation has been added to the model
+  #                      addHouseholdMember has been added
+  # 2019-02-24 0.4.7 kal add more elements to KycInformationType
+  #                      added responses under components
+  #                      applicantLPEmployment has been added to applicantType
+  #                      collateralType, we has added useAsCollateral and buyCollateral
+  #                      extRedeemLoan has been added to extLoanType
+  #                      submitApplication has been added
+  # 2019-02-27 0.4.8 kal Changed Processes to return process createdDate in Activiti
+  # 2019-02-27 0.4.9 kal Downgraded to swagger 2.0 from Open Api 3.0.0
+  #                      added consumes: Application/json in all methods
+  #                      moved parameters to swagger 2.0 parameters: section
+  #                      added CaseIdStatus parameter to reserveCaseId
+  #                      extloanAmount has been added to extLoanType
+  #                      householdMemberType has been changed
+  #                      employeedFromYear has been added to PersonalEconomyType
+  # 2019-03-03 0.5.0 kal yearOfEmployment has changed name in PersonalEconomyType
+  #                      {customerId} has been removed as paraters in KycInformations
+  #                      {customerId} has been removed as paraters in PersonalInformations
+  #                      {companyId} has been removed as paraters in CompanyInformations
+  #                      type: number, format: float has been changed where applicable
+  #                      Changed ChildType in households
+  #                      GetLoan has been added
+  #                      CollateralType, added taxedOwner, collateralCode
+  ###########################################################################################
+  # Errors definitions has not been defined in any responses
+  ###########################################################################################
+  # Future request
+  #   getAvailableProcessIds(customerId)
+  #     - will return all of user started applications
+  #     TBD - mybe we should only handle one processId for an applications
+  #     - Be able to delete an ProcessId (kund avslår ansökan)
+  #     - how do we handle status codes, is it at the Activiti-layer
+  #     - Add CompanyEconomy (budget) fixed in v0.3.6
+  #     - Add attachement
+  #   Add all Applicants with status on-going application to LIME to support customer service
+  # bugs:
+  #     Fixed in 0.3.4 Closed
+  #   - delete methods should NOT return the specific type, just 200 OK
+  #     Fixed in 0.3.5 Closed
+  #   - External loans have to be connected to prcoessId and CustomerId
+  #     Fixed in 0.3.5 Closed
+  #   - New loan should be connected to only ProcessId (sökt lån)
+  #     (changed Loan to be part of Customer)
+  #
+  ###########################################################################################
+  title: Selma SME Light Project
+  description: This definition is the API between customer SME-Gui and the persistence framework based on Activiti
+  
+    **Processes**<br>
+    **Processes/Process**<br>
+    **Security/oauth2**<br>
+    **ApplicationData**<br>
+    **Loans/Loan**<br>
+    **Applicant/ELoans/ELoan**<br>
+    **Applicant/PersonalEconomies/PersonalEconomy**<br>
+    **Applicant/ApplicantInformation**
+    **Companies/Budgets/Budget**<br>
+    **Companies/CompanyEconomies/CompanyEconomy**<br>
+    **Companies**/**Collaterals**/**Colleteral**<br><br>
+    
+    To be decided where this should be connected (Sökande/Medsökande)<br>
+    
+    **Households**<br>
+    **Households/Household**<br>
+    **Households/Houseold/householdMember**<br>
+    **Households/Household/Cars/Car**<br>
+    **Households/Household/Childs/Child**<br>
+    **KycInformations**<br>
+    **KycInformations/KycInformation**<br><br>
+    When customer logg-in to Selma-EN, we will create a processId with apllicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
+    All update-methods should act as a add-method if e.g.Applicant does not exist
+    
+  termsOfService: 'http://www.landshypotek.se/sme/terms'
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+  contact:
+    name: API v1 for SME initiative
+    url: api.landshypotek.se/v1/sme
+    email: developer@landshypotek.se
+host: 'localhost:8000'
+basePath: /
+tags:
+  - name: Selma SME(EN) API Definitions
+    description: Access layer to the process engine(Activiti)
+schemes:
+  - http
+  - https
+# Under securityDefinitions we declare which security schemes can be used.
+# These definitions do not affect to the operations, but can be applied
+# using the 'security' key at the global level or the operation level.
+# In this sample, we'll see how to apply the security definition globally,
+# and override it at the operation level.
+#
+# Note that for Application Flow, you must provide the Token URL.
+securityDefinitions:
+  application:
+    type: oauth2
+    # This should be updated to the Token URL of your OAuth provider.
+    tokenUrl: http://example.com/oauth/token
+    flow: application
+    scopes:
+      write: allows modifying resources
+      read: allows reading resources
+  apiKeyAuth:
+    type: apiKey
+    name: api_key
+    in: header
+
+# Here we apply the security flow called 'application' globally to all the opeartions in the spec. 
+# This security scheme is defined above in the 'securityDefinitions' section.
+# Global security can be overriden an operation level as seen in the example below
+security:
+  - application:
+    - read
+    - write
+paths:
+  /v1/example:
+    # In this operation we do not apply the security, because it was applied globally above.
+    # The security will be applied to this operation for that reason.
+    get:
+      summary: Server example operation
+      description: This is an example opeartion to show how security is applied to the call.
+      responses:
+        200:
+          description: OK
+  ##############################################################
+  # Ping service for health check
+  ##############################################################
+  /v1/ping:
+    get:
+      summary: Server heartbeat operation
+      description: This operation shows how to override the global security defined above, as we want to open it up for all users.
+      # We want to require no security schemes and override the globally define security scheme.
+      # To do that, we simply provide an empty array to the 'security' property.
+      security: [ ]
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+  ##############################################################
+  # Processes
+  ##############################################################
+  /v1/Processes/{customerId}:
+    get:
+      tags:
+      - getProcesses
+      summary: get a list of active processes for a customerId
+      description: Return a list of active applications for a customer
+      operationId: getProcesses
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/customerId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Processes'
+        401:
+          description: Access token is missing or invalid
+        403:
+          description: Access forbidden
+        404:
+          description: Invalid page
+        500:
+          description: Page not found
+  #
+  ####################################################
+  # DeleteProcess
+  ####################################################
+  /v1/deleteProcess/{processId}:
+    post:
+      tags:
+      - deleteProcess
+      summary: Delete a specific processId in Activiti
+      description: Will remove evry customerId under a processId in Activiti framework. All Applicants in a credit case will be deleted
+      operationId: deleteProcess
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/processId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/200OK'
+        401:
+          description: Access token is missing or invalid
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+        403:
+          description: Access forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenError'
+        404:
+          description: Invalid page
+          schema:
+           $ref: '#/definitions/InvalidPage'
+        500:
+          description: Page not found
+          schema:
+           $ref: '#/definitions/PageNotFound'
+  #
+  ##################################################
+  # reserveCaseId in Loan Process
+  # We should have a discussion if we should use
+  # customerId as a parameter in this method
+  ##################################################
+  /v1/reserveCaseId/{processId}/{customerId}/{caseIdStatus}:
+    post:
+      tags:
+      - reserveCaseId
+      summary: Reserve a CaseId in Loan Process
+      description: >-
+        Reserve a CaseId in Loan Process to be able to use attachment i DM. In this case parameter
+        caseIdStatus should be set to enumeration of STARTEDBYAPPLICANT
+      operationId: reserveCaseId
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/caseIdStatus'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/caseId'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ##################################################
+  # setCaseIdStatus
+  ##################################################
+  /v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}:
+    post:
+      tags:
+        - setCaseIdStatus
+      summary: set status on the reserved caseId
+      description: When we create/reserve a caseId in LP we also have to set the status
+      operationId: setCaseIdStatus
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/caseId'
+        - $ref: '#/parameters/caseIdStatus'
+        # open API 3.0 or greater
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/caseId'
+        #- $ref: '#/components/parameters/caseIdStatus'
+      responses:
+        200:
+          description: Successful
+          schema:
+            # This has to be defined in a different way
+            $ref: '#/definitions/200OK'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ##################################################
+  # get a specific Applicant
+  ##################################################
+  /v1/Applicant/{processId}/{customerId}:
+    get:
+      tags:
+        - getApplicant
+      summary: Get a specific applicant by processId, customerId
+      description: Get a specific applicant from the process layer
+      operationId: getCustomer
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        # parameters required for getApplicant
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Applicant'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ####################################################################
+  # Get a list of available applicant for a given processId in Activiti
+  ####################################################################
+  /v1/Applicants/{processId}:
+    get:
+      tags:
+        - getApplicants
+      summary: get a list of available applicants
+      description: Get a list of available applicants by ProcessId....
+      operationId: getApplicants
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getApplicants request
+        - $ref: '#/parameters/processId'
+        #- $ref: '#/components/parameters/processId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Applicants'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ###########################################
+  # Update of a specific Applicant
+  ###########################################
+  /v1/updateApplicant/{processId}/{customerId}:
+    post:
+      tags:
+        - updateApplicant
+      summary: update a specific applicant in Activiti
+      description: >-
+        TBD
+      operationId: updateApplicant
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a applicant in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - name: applicant
+          in: body
+          schema:
+            $ref: '#/definitions/Applicant'
+      #requestBody:
+      #  $ref: '#/definitions/Applicant'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Applicant'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ############################################
+  # Delete a specific applicant
+  ############################################
+  /v1/deleteApplicant/{processId}/{customerId}:
+    post:
+      tags:
+        - deleteApplicant
+      summary: Delete a specific applicant in Activiti
+      description: >-
+        TBD
+      operationId: deleteApplicant
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # required parameters to delete a customer in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/200OK'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ####################################################
+  # Company
+  ####################################################
+  # get a specific company
+  /v1/Company/{processId}/{companyId}:
+    get:
+      tags:
+        - getCompany
+      summary: Get a specific company by ProcessId, companyId
+      description: Get a specific company from the process layer
+      operationId: getCompany
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getCompany request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Company'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #####################################################################
+  # Get a list of available companies for a given processId in Activiti
+  #####################################################################
+  /v1/Companies/{processId}:
+    get:
+      tags:
+        - getCompanies
+      summary: get a list of available companies
+      description: Get a list of available companies by ProcessId....
+      operationId: getCompanies
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getCompanies request
+        #- $ref: '#/components/parameters/processId'
+        - $ref: '#/parameters/processId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Companies'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ########################################################
+  # Update of a specific company
+  ########################################################
+  /v1/updateCompany/{processId}/{companyId}:
+    post:
+      tags:
+        - updateCompany
+      summary: update a specific company in Activiti
+      description: >-
+        TBD
+      operationId: updateCompany
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a customer in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - name: company
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Company'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Company'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ########################################################
+  # Delete a specific company
+  ########################################################
+  /v1/deleteCompany/{processId}/{companyId}:
+    post:
+      tags:
+        - deleteCompany
+      summary: Delete a specific company in Activiti
+      description: descripition
+      operationId: deleteCompany
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to delete a customer in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+      responses:
+        200:
+          description: Successful
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ##################################################
+  # get a specific household
+  ##################################################
+  /v1/Household/{processId}/{householdId}:
+    get:
+      tags:
+        - getHousehold
+      summary: Get a specific household by processId
+      description: Get a specific household from the process layer
+      operationId: getHousehold
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getCustomer request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/householdId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Household'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #####################################################################################
+  # Get a list of available households for a given processId  in Activiti
+  #####################################################################################
+  /v1/Households/{processId}:
+    get:
+      tags:
+        - getHouseholds
+      summary: get a list of available households
+      description: Get a list of available households by ProcessId....
+      operationId: getHouseholds
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getHouseholds request
+        #- $ref: '#/components/parameters/processId'
+        - $ref: '#/parameters/processId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Households'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ###########################################
+  # Update of a specific household
+  ###########################################
+  /v1/updateHousehold/{processId}/{householdId}:
+    post:
+      tags:
+        - updateHousehold
+      summary: update a specific household in Activiti
+      description: >-
+        TBD
+      operationId: updateHousehold
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a household in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/householdId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Household'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ############################################
+  # Delete a specific household
+  ############################################
+  /v1/deleteHousehold/{processId}/{householdId}:
+    post:
+      tags:
+        - deleteHousehold
+      summary: Delete a specific household in Activiti
+      description: >-
+        TBD
+      operationId: deleteHousehold
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # required parameters to delete a household in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/householdId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/200OK'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  ##############################################################
+  # deleteChildInHousehold
+  ##############################################################
+  /v1/deleteChildInHousehold/{processId}/{householdId}/{childId}:
+    post:
+      tags:
+        - deleteChildInHousehold
+      summary: delete a specific child in household
+      description: TBD
+      operationId: deleteChildInHousehold
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
+        - $ref: '#/parameters/childId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/200OK'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #################################################################
+  # addChildInHousehold
+  #################################################################
+  /v1/addChildInHousehold/{processId}/{householdId}/{childId}:
+    post:
+      tags:
+        - addChildInHousehold
+      summary: add a child to the household
+      description: TBD
+      operationId: addChildInHousehold
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
+        - $ref: '#/parameters/childId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Child'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  ######################################################################
+  # deleteHouseholdMember
+  ######################################################################
+  /v1/deleteHouseholdMember/{processId}/{householdId}/{householdMember}:
+    post:
+      tags:
+        - deleteHouseholdMember
+      summary: Remove a applicant from a specific houshold
+      description: Will remove {householdMeber} from the array householdMembers in Household 
+      operationId: deleteHouseholdMember
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/householdId'
+        #- $ref: '#/components/parameters/householdMember'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
+        - $ref: '#/parameters/householdMember'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/200OK'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ##################################################################
+  # addHouseholdMember
+  ##################################################################
+  /v1/addHouseholdMember/{processId}/{householdId}/{householdMember}:
+    post:
+      tags:
+        - addHouseholdMember
+      summary: Add applicant to a specific household
+      description: Will add {householdMember} to the array householdMembers in Household
+      operationId: addHouseholdMember
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/householdId'
+        #- $ref: '#/components/parameters/householdMember'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/householdId'
+        - $ref: '#/parameters/householdMember'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/householdMember'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #######################################################
+  # get a specific colleteral
+  #######################################################
+  /v1/Collateral/{processId}/{customerId}/{collateralId}:
+    get:
+      tags:
+        - getCollateral
+      summary: Get a specific collateral by processId, customerId and collateralId
+      description: Get a specific colleteral from the process layer
+      operationId: getColleteral
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getColleteral request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/collateralId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/collateralId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Collateral'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ######################################################################################
+  # Get a list of available collaterals for a given processId and customerId in Activiti
+  ######################################################################################
+  /v1/Collaterals/{processId}/{customerId}:
+    get:
+      tags:
+        - getCollaterals
+      summary: get a list of available collaterals
+      description: Get a list of available collaterals by ProcessId and customerId...
+      operationId: getCollaterals
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getCollaterals request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Collaterals'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ############################################################
+  # Update of a specific household
+  ############################################################
+  /v1/updateCollateral/{processId}/{customerId}/{collateralId}:
+    post:
+      tags:
+        - updateCollateral
+      summary: update a specific collateral in Activiti
+      description: descripition
+      operationId: updateCollateral
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a colleteral in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/collateralId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/collateralId'
+        - name: collateral
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Collateral'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Collateral'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #############################################################
+  # Delete a specific colleteral
+  #############################################################
+  /v1/deleteCollateral/{processId}/{customerId}/{collateralId}:
+    post:
+      tags:
+        - deleteCollateral
+      summary: Delete a specific collateral in Activiti
+      description: >-
+        TBD
+      operationId: deleteCollateral
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to delete a colleteral in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/collateralId'
+        - name: processId
+          in: path
+          required: true
+          type: string
+          format: uuid
+        - name: customerId
+          in: path
+          required: true
+          type: string
+        - name: collateralId
+          in: path
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: Successful
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #############################################
+  # get a specific loan by processId and loanId
+  #############################################
+  /v1/Loan/{processId}/{loanId}:
+    get:
+      tags:
+        - getLoan
+      summary: Get a specific loan by processId
+      description: Get a specific loan from customerId and processId layer
+      operationId: getLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getCustomer request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/loanId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/loanId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Loan'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ################################################################################
+  # Get a list of available loans for a given processId and companyId in Activiti
+  ################################################################################
+  /v1/Loans/{processId}:
+    get:
+      tags:
+        - getLoans
+      summary: get a list of available loans on processId
+      description: Get a list of available loans by ProcessId...
+      operationId: getLoans
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getHouseholds request
+        #- $ref: '#/components/parameters/processId'
+        - $ref: '#/parameters/processId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Loans'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ###########################################
+  # Update of a specific loan
+  ###########################################
+  /v1/updateLoan/{processId}/{loanId}:
+    post:
+      tags:
+        - updateLoan
+      summary: update a specific loan in Activiti
+      description: >-
+        TBD
+      operationId: updateLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a customer in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/loanId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/loanId'
+        - name: loan
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Loan'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Loan'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ############################################
+  # Delete a specific loan
+  ############################################
+  /v1/deleteLoan/{processId}/{loanId}:
+    post:
+      tags:
+        - deleteLoan
+      summary: Delete a specific loan on a customer in Activiti
+      description: >-
+        TBD
+      operationId: deleteLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to delete a loan in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/loanId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/loanId'
+      responses:
+        200:
+          description: Successful
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ##################################################
+  # get a specific extloan
+  ##################################################
+  /v1/ExtLoan/{processId}/{customerId}/{extloanId}:
+    get:
+      tags:
+        - getExtLoan
+      summary: Get a specific extloan by processId, customerId
+      description: Get a specific extloan from the process layer
+      operationId: getExtLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getExtLoan request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/extloanId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/extloanId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/ExtLoan'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ################################################################################
+  # Get a list of available extloans for a given processId and customerId in Activiti
+  ################################################################################
+  /v1/ExtLoans/{processId}/{customerId}:
+    get:
+      tags:
+        - getExtLoans
+      summary: get a list of available extloans
+      description: Get a list of available extloans by ProcessId and customerId....
+      operationId: getExtLoans
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getExtLoans request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/ExtLoans'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #######################################################
+  # Update of a specific extloan
+  #######################################################
+  /v1/updateExtLoan/{processId}/{customerId}/{extloanId}:
+    post:
+      tags:
+        - updateExtLoan
+      summary: update a specific extloan in Activiti
+      description: >-
+        TBD
+      operationId: updateExtLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a extLoan in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/extloanId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/extloanId'
+        - name: extloan
+          in: body
+          schema:
+            $ref: '#/definitions/ExtLoan'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/ExtLoan'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #######################################################
+  # Delete a specific extloan
+  #######################################################
+  /v1/deleteExtLoan/{processId}/{customerId}/{extloanId}:
+    post:
+      tags:
+        - deleteExtLoan
+      summary: Delete a specific extloan in Activiti
+      description: >-
+        TBD
+      operationId: deleteExtLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to delete a loan in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/extloanId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/extloanId'
+      responses:
+        200:
+          description: Successful
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #################################################################
+  # PersonalEconomy
+  #################################################################
+  /v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
+    get:
+      tags:
+        - getPersonalEconomy
+      summary: Get a specific PersonalEconomy by processId, customerId
+      description: Get a specific PersonalEconomy from the process layer
+      operationId: getPersonalEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getPersonalEconomy request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/personalEconomyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/personalEconomyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/PersonalEconomy'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ################################################################################
+  # Get a list of available PersonalEconomies for a given processId and customerId
+  # in Activiti
+  ################################################################################
+  /v1/PersonalEconomies/{processId}:
+    get:
+      tags:
+        - getPersonalEconomies
+      summary: get a list of available PersonalEconomies
+      description: Get a list of available PersonalEconomies by ProcessId and customerId....
+      operationId: getPersonalEconomies
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getPersonalEconomies request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/parameters/processId'
+        #- $ref: '#/parameters/customerId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/PersonalEconomies'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #######################################################################
+  # Update of a specific PersonalEconomy
+  #######################################################################
+  /v1/updatePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
+    post:
+      tags:
+        - updatePersonalEconomy
+      summary: update a specific PersonalEconomy in Activiti
+      description: >-
+        TBD
+      operationId: updatePersonalEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a PersonalEconomy in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/personalEconomyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/personalEconomyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/PersonalEconomy'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ######################################################################
+  # Delete a specific PersonalEconomy
+  ######################################################################
+  /v1/deletePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
+    post:
+      tags:
+        - deletePersonalEconomy
+      summary: Delete a specific PersonalEconomy in Activiti
+      description: >-
+        TBD
+      operationId: deletePersonalEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to delete a loan in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/personalEconomyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/personalEconomyId'
+      responses:
+        200:
+          description: Successful
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ###############################################
+  # CompanyEconomy
+  ###############################################
+  /v1/CompanyEconomy/{processId}/{companyEconomyId}:
+    get:
+      tags:
+        - getCompanyEconomy
+      summary: Get a specific CompanyEconomy by processId
+      description: Get a specific CompanyEconomy from the process layer
+      operationId: getCompanyEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getCompanyEconomy request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyEconomyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/CompanyEconomy'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ################################################################################
+  # Get a list of available CompanyEconomies for a given processId
+  # in Activiti
+  ################################################################################
+  /v1/CompanyEconomies/{processId}:
+    get:
+      tags:
+        - getCompanyEconomies
+      summary: get a list of available CompanyEconomies
+      description: Get a list of available CompanyEconomies by ProcessId and companyEconomyId
+      operationId: getCompanyEconomies
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getCompanylEconomies request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        - $ref: '#/parameters/processId'
+        #- $ref: '#/parameters/companyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/CompanyEconomies'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ###########################################
+  # Update of a specific CompanyEconomy
+  ###########################################
+  /v1/updateCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
+    post:
+      tags:
+        - updateCompanyEconomy
+      summary: update a specific CompanyEconomy in Activiti
+      description: Update economy on a specific company
+      operationId: updateCompanyEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a CompanyEconomy in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        #- $ref: '#/components/parameters/companyEconomyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/companyEconomyId'
+        - name: companyeconomy
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CompanyEconomy'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/CompanyEconomy'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ############################################
+  # Delete a specific CompanyEconomy
+  ############################################
+  /v1/deleteCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
+    post:
+      tags:
+        - deleteCompanyEconomy
+      summary: Delete a specific CompanyEconomy on a companyId in Activiti
+      description: >-
+        TBD
+      operationId: deleteCompanyEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to delete a loan in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        #- $ref: '#/components/parameters/companyEconomyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ##################################################################################
+  # Get a list of available Budgets for a given processId om a companyId in Activiti
+  ##################################################################################
+  /v1/Budgets/{processId}/{companyId}:
+    get:
+      tags:
+        - getBudgets
+      summary: get a list of available budgets
+      description: Get a list of available Budgets
+      operationId: getBudgets
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getBudgets request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Budgets'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ############################################################
+  # Update of a specific Budget
+  ############################################################
+  /v1/updateBudget/{processId}/{companyId}/{companyEconomyId}:
+    post:
+      tags:
+        - updateBudget
+      summary: update a specific Budget in Activiti
+      description: >-
+        TBD
+      operationId: updateBudget
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a Budget in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        #- $ref: '#/components/parameters/companyEconomyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Budget'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ############################################################
+  # Delete a specific Budget
+  ############################################################
+  /v1/deleteBudget/{processId}/{companyId}/{companyEconomyId}:
+    post:
+      tags:
+        - deleteBudget
+      summary: Delete a specific Budget in Activiti
+      description: >-
+        TBD
+      operationId: deleteBudget
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to delete a budget in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        #- $ref: '#/components/parameters/companyEconomyId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ################################
+  # KycInformations
+  ################################
+  /v1/KycInformations/{processId}:
+    get:
+      tags:
+        - getKycInformations
+      summary: get a list of available KycInformations
+      description: Get a list of available KycInformations
+      operationId: getKycInformations
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getBudgets request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/parameters/processId'
+        #- $ref: '#/parameters/customerId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/KycInformations'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ####################################################
+  # KycInformation
+  ####################################################
+  /v1/KycInformation/{processId}/{customerId}/{kycId}:
+    get:
+      tags:
+        - getKycInformation
+      summary: get a list of available KycInformations
+      description: Get a list of available KycInformations
+      operationId: getKycInformation
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getKycInformations request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/kycId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/kycId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/KycInformation'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #
+  #########################################################
+  # Update of a specific KycInformation
+  #########################################################
+  /v1/updateKycInformation/{processId}/{customerId}/{kycId}:
+    post:
+      tags:
+        - updateKycInformation
+      summary: update a specific KycInformation in Activiti
+      description: >-
+        TBD
+      operationId: updateKycInformation
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a Budget in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        #- $ref: '#/components/parameters/kycId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/kycId'
+        - name: kycinformation
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/KycInformation'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/KycInformation'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #########################################################
+  # Delete a specific KycInformation
+  #########################################################
+  /v1/deleteKycInformation/{processId}/{companyId}/{kycId}:
+    post:
+      tags:
+        - deleteKycInformation
+      summary: Delete a specific KycInformation in Activiti
+      description: >-
+        TBD
+      operationId: deleteKycInformation
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to delete a budget in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyId'
+        #- $ref: '#/components/parameters/kycId'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/kycId'
+      responses:
+        200:
+          description: Successful
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #################################################
+  # Submit Application
+  #################################################
+  /v1/submitApplication/{processId}/{submitApplication}:
+    post:
+      tags:
+        - submitApplication
+      summary: Submit Application to Landshypotek and handling by a officer
+      description: TBD
+      operationId: submitApplication
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/submitApplication'
+        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/submitApplication'
+      responses:
+        200:
+          description: Successful
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  #
+###############################################################
+# Definitions
+###############################################################
+definitions:
+  caseId:
+    type: string
+    description: reserved caseId in Loan Process
+    example: '106100'
+  submitApplication:
+    type: boolean
+    description: Jag försäkrar att lämnade uppgifter är korrekta. Denna måste vara satt till true, annars kan inte ansökan skickas in till LP. Sökande ska klicka i detta val. Om vi tycker att sökande behöver fylla i mer för att skicka in ansökan ska denna inte gå att sätta till true.
+    enum:
+    - true
+    - false
+    example: true
+  caseIdStatus:
+    type: string
+    description: Set status on the caseid
+    example: CLOSEDBYAPPLICANT
+    enum:
+    - CLOSEDBYAPPLICANT
+    - STARTEDBYAPPLICANT
+    - CLOSEDBYOFFICER
+    - CLOSEDBYTHINNING
+    - READYFOROFFICER
+  processId:
+    type: string
+    description: Activiti framework unique identification
+    format: uuid
+    example: '9a65d28a-46bb-4442-b96d-6a09fda6b18b'
+  processCreatedDate:
+    description: Activiti, processId created date
+    example: '2019-03-01'
+  householdMember:
+    description: Member in a household
+    type: string
+    example: '19640120-3887' # Anna Andersson
+  householdMembers:
+    description: This holds a array of one to many Applicant/make/maka in a household
+    type: array
+    items:
+      $ref: '#/definitions/householdMember'
+  customerId:
+    type: string
+    description: customerId is swedish ssn or corporate organisation number
+    example: '19640120-3887' # Anna Andersson
+  applicantId:
+    type: string
+    description: unique id for each applicant in the credit case
+    format: uuid
+    example: '12ab301d-b0ae-46ba-ac99-ff7389fe356e'
+  applicantName:
+    type: string
+    description: Full name of the customer/applicant
+    example: 'Anna Andersson'
+  applicantAddress:
+    type: string
+    description: Street address of Applicant
+    example: 'Stora vägen 1'
+  applicantPostAddress:
+    type: string
+    description: Postal number and postal city
+    example: '420 20 Katrineholm'
+  applicantRole:
+    type: string
+    description: Huvudlåntagare eller Medlåntagare i SAP (behöver vi hantera detta?)
+    example: 'Huvudlåntagare/medlåntagare in SAP'
+  applicantEmail:
+    type: string
+    description: applicant enter email for notification
+    example: 'anna.andersson@gmail.com'
+  applicantMobileNumber:
+    type: string
+    description: applicant entered mobile number for notification
+    example: '07344455666'
+  applicantMember:
+    type: boolean
+    description: Member in Landshypotek Ekonomiska förening (true/false)
+    enum:
+    - true
+    - false
+    example: true
+  applicantEmployeed:
+    type: string
+    description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer
+    example: EMPLOYEED
+  applicantLPEmployment:
+    type: string
+    description: employment mapping to Loan Process PERMANENT - Anställd, tills-vidare-anställd TEMPORARY - Tidbegränsad anställning PROBATIONARY - Provanställning UNEMPLOYMENT_INSURANCE - Arbetslöshetskassa SELF_EMPLOYED - Eget företag STUDENT_AID - Studiestöd PENSION - Inkomst av pension
+    example: 'PERMANENT'
+    enum:
+    - 'PERMANENT'
+    - 'TEMPORARY'
+    - 'PROBATIONARY'
+    - 'UNEMPLOYMENT_INSURANCE'
+    - 'SELF_EMPLOYED'
+    - 'STUDENT_AID'
+    - 'PENSION'
+  applicantBySms:
+    type: boolean
+    description: Applicant want to be notified by sms (true/false)
+  applicantByeMail:
+    type: boolean
+    description: Applicant want to be notified by eMail (true/false)
+  companyId:
+    type: string
+    description: generated guid in the model
+    format: uuid
+    example: '02d6a03e-5895-4077-98f7-7a5c192868b7'
+  orgNumber:
+    type: string
+    description: Organisation number from external service, swedish ssn (UC or SAP for existing companies)
+    example: '19550101-1010'
+  companyName:
+    type: string
+    description: Full name of the company from external services or BusinessName in SAP
+    example: 'Anna Andersson Mjölkproduktion'
+  companyCreated:
+    type: string
+    description: 'date when company was established, from external service or existing
+      customer in SAP '
+    example: '2012-01-01'
+  ################################  
+  # Household
+  ################################
+  householdId:
+    description: Hosuehold identity key
+    type: string
+    format: uuid
+    example: '02d6a03e-5895-4077-98f7-7a5c192878b8'
+  numberOfChildsAtHome:
+    type: integer
+    description: Number of child in this household
+    example: 2
+  numberOfCars:
+    description: number of cars in this houshold (Will probably be removed for SME-companies)
+    type: integer
+    example: 2
+  childMaintenanceCost:
+    description: Underhållskostnad för barn i annat hushåll Underhållskostander barn
+    type: number
+    format: float
+    example: 2000
+  ################################
+  # Child
+  ################################
+  childsAge:
+    description: Barns ålder i hushållet
+    type: integer
+    example: 5
+  partInHousehold:
+    description: barnet bor i hushållet heltid/deltid (true/false)
+    type: boolean
+    enum:
+    - true
+    - false
+    example: true
+  childId:
+    description: identity for child
+    type: string
+    format: uuid
+    example: 'a3703086-3d94-11e9-b210-d663bd873d93'
+  ##################################
+  # LoanType
+  ##################################
+  loanId:
+    description: Loan identity
+    type: string
+    format: uuid
+    example: '08f55e2f-e947-48f4-89d2-d31af2fc28d6'
+  loanNumber:
+    type: string
+    description: This will only be a temporary loanNumber, when can we reserve a loan number in SAP
+    example: '9397000010'
+  loanAmount:
+    description: Applicants want to loan this amount
+    type: number
+    format: float
+    example: 2500000.50
+  numberOfLoans:
+    description: Customer want to split this loan into 2 loans
+    type: integer
+    example: 2
+  collateralId:
+    type: string
+    description: Collateral identity
+    format: uuid
+    example: '82faaa1a-42f7-4d87-aecf-96c450a0ce59'
+  collateralCode:
+    description: TBD - Fastighetskod (ska denna användas?)
+    type: string
+    example: '10'
+  collateralName:
+    type: string
+    description: Fastighetbeteckning
+    example: 'SKOGEN 4:3'
+  taxedOwner:
+    description: Taxerad ägare till fastigheten
+    type: string
+    example: 'Anna Andersson'
+  collateralMunicipality:
+    type: string
+    description: Kommun där fastigheten och/eller säkerheten finns registrerad
+    example: 'Katrineholm'
+  collateralStreet:
+    type: string
+    description: Street address of the collateral
+    example: 'Bergsgatan 12'
+  useAsCollateral:
+    type: boolean
+    description: Use this collateral as security in this application
+    enum:
+    - true
+    - false
+    example: false
+  buyCollateral:
+    type: boolean
+    description: Applicant has intention to by this collateral
+    enum:
+    - true
+    - false
+    example: true
+  extloanId:
+    type: string
+    description: Type definitions for external loans
+    format: uuid
+    example: '3164d347-e173-4c4f-8839-26d32716e5bf'
+  extCreditInstitut:
+    type: string
+    description: Kreditinstitut, Bank
+    example: 'SEB'
+  extloanNumber:
+    type: string
+    description: Loan originator
+    example: '0028600'
+  extloanClearing:
+    type: string
+    description: Clearing number
+    example: '5270'
+  extloanAmount:
+    description: externa loan, amount
+    type: number
+    format: float
+    example: 200000.00
+  extRedeemLoan:
+    type: boolean
+    description: Redeem loans - Lösa lånet i annan bank
+    enum:
+    - true
+    - false
+    example: true
+  personalEconomyId:
+    type: string
+    description: Type definitions for personal economy
+    format: uuid
+    example: 'b0c0edaa-3d75-4364-9179-1ecc8d9198d0'
+  yearlyIncome:
+    description: Årlig inkomst från näringsverksamhet
+    type: number
+    format: float
+    example: 340000.0
+  income:
+    description: Angiven inkomst av tjänst
+    type: number
+    format: float
+    example: 40000
+  typeOfEmployeement:
+    type: string
+    description: TBD Förmodligen ska vi göra en enum här
+    example: 'Tillsvidare'
+  employeer:
+    type: string
+    description: -> Arbetsgivare
+    example: 'Skatteverket'
+  yearOfEmployment:
+    type: string
+    description: Anställd sedan år
+    example: '2009'
+  mainPurposes:
+    type: string
+    description: Ändamål och syfte (TBD)
+    example: 'KOP'
+    enum:
+    - KOP
+    - OVR
+    - ULN
+    - NOB
+  purposes:
+    type: string
+    description: Ändamål och syfte ska sättas på respektive lån som går över till LP. I de fall där det inte specifiseras ska handläggar gör det innan överföring till SAP. Detta för att de ska bli rätt i statistiken ned i SAS.
+    enum:
+    - FKP
+    - FAF
+    - FKJ
+    - FBB
+    - FBI
+    - RTM
+  purposeDisplayText:
+    type: string
+    description: TBD
+    enum:
+    - Fastighetsköp - privatbostad
+    - Fastighetsköp - annan fastighet
+    - Fastighetsköp - jordbruk
+    - Finansiering befintlig bostad
+    - Finansiering befintlig bostad (omläggning internt)
+    - Ny/tillbyggnad/renovering mjölkstall
+  companyEconomyId:
+    type: string
+    description: Type definition for company economy
+    format: uuid
+    example: '32084646-d030-4c51-a316-b1342c3551ab'
+  budgetId:
+    type: string
+    description: Type definition for company budget
+    format: uuid
+    example: '32084646-d030-4c51-a316-b1342c3551dc'
+  kycId:
+    type: string
+    description: Kyc-identity key
+    format: uuid
+    example: '9bca3a55-2458-41d5-9420-f12bdcd0c809'
+  kycAcceptUC:
+    type: boolean
+    description: Jag är medveten om att Landshypotek Bank inhämtar en kreditupplysning på mig och att det sker när jag går vidare från denna sida i nästa steg i ansökan.
+    enum:
+    - true
+    - false
+    example: false
+  kycAcceptGDPR:
+    type: boolean
+    description: Jag är medveten om att Landshypotek Bank behandlar mina personuppgifter i och med ansökan och att jag kan läsa mer om Landshypotek Banks personuppgiftsbehandling.
+    enum:
+    - true
+    - false
+    example: false
+  kycUCAware:
+    type: boolean
+    description: Jag är medveten om att de uppgifter jag lämnar och resultatet av kreditansökan även visas för medsökande, om en sådan läggs till senare i ansökan. Om jag äger andra fastigheter, som banken hämtar uppgifter om från externa källor, visas även de uppgifterna för medsökande.
+    enum:
+    - true
+    - false
+    example: false
+  kycPublicFunction:
+    type: boolean
+    description: Innehar eller har du de 18 senaste månaderna innehaft en viktig offentlig funnktion?
+    enum:
+    - true
+    - false
+    example: false
+  kycRelatedPublicFunction:
+    type: boolean
+    description: Är du familjemedblem eller medarbetare till en person som har, eller som under de senaste 18 månaderna innehaft en viktig offentlig funktion?
+    enum:
+    - true
+    - false
+    example: false
+  #
+  #################################################################
+  # START Response definitions
+  #################################################################
+  200OK:
+    description: Successful
+  UnauthorizedError:
+    description: Access token is missing or invalid
+  ForbiddenError:
+    description: Access forbidden
+  InvalidPage:
+    description: Invalid page
+  PageNotFound:
+    description: Page not found
+  #################################################################
+  #################################################################
+  # START Type defintions
+  #################################################################
+  #################################################################
+  applicantType:
+    description: Type of applicant instance
+    required:
+    - applicantId
+    - customerId
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      customerId:
+        $ref: '#/definitions/customerId'
+      applicantId:
+        $ref: '#/definitions/applicantId'
+      applicantName:
+        $ref: '#/definitions/applicantName'
+      applicantAddress:
+        $ref: '#/definitions/applicantAddress'
+      applicantPostAddress:
+        $ref: '#/definitions/applicantPostAddress'
+      role:
+        $ref: '#/definitions/applicantRole'
+      contactInformation:
+        $ref: '#/definitions/ContactInformationType'
+      applicantEmployeed:
+        $ref: '#/definitions/applicantEmployeed'
+      applicantLPEmployment:
+        $ref: '#/definitions/applicantLPEmployment'
+      member:
+        $ref: '#/definitions/applicantMember'
+      notifiedBySms:
+        $ref: '#/definitions/applicantBySms'
+      notifiedByeMail:
+        $ref: '#/definitions/applicantByeMail'
+  Applicant:
+    $ref: '#/definitions/applicantType'
+  Applicants:
+    type: array
+    description: List of applicantType
+    items:
+      $ref: '#/definitions/applicantType'
+  ContactInformationType:
+    description: Contact information definitions
+    type: object
+    properties:
+      eMail:
+        $ref: '#/definitions/applicantEmail'
+      mobileNumber:
+        $ref: '#/definitions/applicantMobileNumber'
+  companyType:
+    description: Type of company instance
+    required:
+    - companyId
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      companyId:
+        $ref: '#/definitions/companyId'
+      orgNumber:
+        $ref: '#/definitions/orgNumber'
+      companyName:
+        $ref: '#/definitions/companyName'
+      created:
+        $ref: '#/definitions/companyCreated'
+  Company:
+    $ref: '#/definitions/companyType'
+  Companies:
+    type: array
+    description: List of companyType
+    items:
+      $ref: '#/definitions/companyType'
+  householdMemberType:
+    description: Member in a household
+    type: object
+    properties:
+      householdMember:
+        $ref: '#/definitions/householdMember'
+  householdType:
+    description: Household should be loosely coupled in the model. We have to support many customerId in a household, this is done by adding customerId to the array customerIds.
+    required:
+    - householdId
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      householdId:
+        $ref: '#/definitions/householdId'
+      householdMembers:
+        $ref: '#/definitions/householdMemberType'
+      numberOfChildsAtHome:
+        $ref: '#/definitions/numberOfChildsAtHome'  # antal hemmavarande barn
+      childs:
+        $ref: '#/definitions/childType'
+      numberOfCars:
+        $ref: '#/definitions/numberOfCars'
+      childMaintenaceCost:
+        $ref: '#/definitions/childMaintenanceCost'
+  Household:
+    $ref: '#/definitions/householdType'
+  Households:
+    type: array
+    description: return all available households for a customer
+    items:
+      $ref: '#/definitions/householdType'
+  childType:
+    description: ChildType, belong to household
+    required:
+    - childId
+    type: object
+    properties:
+      childId:
+        $ref: '#/definitions/childId'
+      childsAge:
+        $ref: '#/definitions/childsAge'
+      partInHousehold:
+        $ref: '#/definitions/partInHousehold'
+  Child:
+    $ref: '#/definitions/childType'
+  Childs:
+    description: holds all child in a household
+    type: array
+    items:
+      $ref: '#/definitions/childType'
+  #########################################
+  # LoanType
+  #########################################
+  loanType:
+    description: This represent the customer loan structure
+    required:
+    - loanId
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      loanId:
+        $ref: '#/definitions/loanId'
+      loanNumber:
+        $ref: '#/definitions/loanNumber'
+      loanAmount:
+        $ref: '#/definitions/loanAmount'
+      numberOfLoans:
+        $ref: '#/definitions/numberOfLoans'
+      purposeOfLoan:
+        $ref: '#/definitions/purposes'
+  Loan:
+    $ref: '#/definitions/loanType'
+  Loans:
+    type: array
+    description: TBD
+    items:
+      $ref: '#/definitions/loanType'
+  ###########################################
+  # ExtLoanType
+  ###########################################
+  extLoanType:
+    description: Externa lån kunden har i andra kreditinstitut, detta exkluderar LH-lån
+    required:
+    - customerId
+    - extloanId
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      customerId:
+        $ref: '#/definitions/customerId'
+      extloanId:
+        $ref: '#/definitions/extloanId'
+      extCreditInstitut:
+        $ref: '#/definitions/extCreditInstitut'
+      extloanClearing:
+        $ref: '#/definitions/extloanClearing'
+      extloanNumber:
+        $ref: '#/definitions/extloanNumber'
+      extloanAmount:
+        $ref: '#/definitions/extloanAmount'
+      extRedeemLoan:
+        $ref: '#/definitions/extRedeemLoan'
+  ExtLoan:
+    $ref: '#/definitions/extLoanType'
+  ExtLoans:
+    type: array
+    description: Type definition for external loans
+    items:
+      $ref: '#/definitions/extLoanType'
+  ###########################################
+  # CollateralType
+  ###########################################
+  collateralType:
+    description: Säkerheter för lånet, om köp, även andra fastigheter kan användas som säkerhet för lånet
+    required:
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      customerId:
+        $ref: '#/definitions/customerId'
+      collateralId:
+        $ref: '#/definitions/collateralId'
+      collateralCode:
+        $ref: '#/definitions/collateralCode'
+      collateralName:
+        $ref: '#/definitions/collateralName'
+      taxedOwner:
+        $ref: '#/definitions/taxedOwner'
+      collateralMunicipality:
+        $ref: '#/definitions/collateralMunicipality'
+      collateralStreet:
+        $ref: '#/definitions/collateralStreet'
+      useAsCollateral:
+        $ref: '#/definitions/useAsCollateral'
+      buyCollateral:
+        $ref: '#/definitions/buyCollateral'
+  Collateral:
+    $ref: '#/definitions/collateralType'
+  Collaterals:
+    type: array
+    description: Array list of type collateralType
+    items:
+      $ref: '#/definitions/collateralType'
+  personalEconomyType:
+    description: personal economy for KALP us
+    required:
+    - customerId
+    - personalEconomyId
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      customerId:
+        $ref: '#/definitions/customerId'
+      personalEconomyId:
+        $ref: '#/definitions/personalEconomyId'
+      YearlyIncome:
+        $ref: '#/definitions/yearlyIncome'
+      Income:
+        $ref: '#/definitions/income'
+      TypeOfEmployeement:
+        $ref: '#/definitions/typeOfEmployeement'
+      Employeer:
+        $ref: '#/definitions/employeer'
+      yearOfEmployment:
+        $ref: '#/definitions/yearOfEmployment'
+  PersonalEconomy:
+    $ref: '#/definitions/personalEconomyType'
+  PersonalEconomies:
+    type: array
+    description: -> Get a list of PersonalEconomyType
+    items:
+      $ref: '#/definitions/personalEconomyType'
+  companyEconomyType:
+    description: Type definition for company economy
+    required:
+    - processId
+    - companyId
+    - companyEconomyId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      companyId:
+        $ref: '#/definitions/companyId'
+      companyEconomyId:
+        $ref: '#/definitions/companyEconomyId'
+  CompanyEconomy:
+    $ref: '#/definitions/companyEconomyType'
+  CompanyEconomies:
+    type: array
+    description: -> Type definition for company economies, returns array of CompanyEconomyType
+    items:
+      $ref: '#/definitions/companyEconomyType'
+  budgetType:
+    description: Type definition for companyBudget
+    required:
+    - budgetId
+    - companyId
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      companyId:
+        $ref: '#/definitions/companyId'
+      companyEconomyId:
+        $ref: '#/definitions/budgetId'
+    
+  Budget:
+    $ref: '#/definitions/budgetType'
+  Budgets:
+    description: Return an array of type budgetType
+    type: array
+    items:
+      $ref: '#/definitions/budgetType'
+  processType:
+    description: Process definition
+    required:
+    - customerId
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      customerId:
+        $ref: '#/definitions/customerId'
+      processCreatedDate:
+        $ref: '#/definitions/processCreatedDate'
+  Process:
+    $ref: '#/definitions/processType'
+  Processes:
+    description: Return a list of type processType
+    type: array
+    items:
+      $ref: '#/definitions/processType'
+  kycInformationType:
+    description: KYC-Information
+    required:
+    - customerId
+    - processId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      customerId:
+        $ref: '#/definitions/customerId'
+      kycId:
+        $ref: '#/definitions/kycId'
+      kycAcceptUC:
+        $ref: '#/definitions/kycAcceptUC'
+      kycAcceptGDPR:
+        $ref: '#/definitions/kycAcceptGDPR'
+      kycUCAware:
+        $ref: '#/definitions/kycUCAware'
+      kycPublicFunction:
+        $ref: '#/definitions/kycPublicFunction'
+      kycRelatedPublicFunction:
+        $ref: '#/definitions/kycRelatedPublicFunction'
+  KycInformation:
+    $ref: '#/definitions/kycInformationType'
+  KycInformations:
+    description: Return a list of type kycInformationType
+    type: array
+    items:
+      $ref: '#/definitions/kycInformationType'
+####################################################################################
+####################################################################################
+# END Type definitions
+####################################################################################
+####################################################################################
+# Parameters
+####################################################################################
+####################################################################################
+parameters:
+  customerId:
+    name: customerId
+    in: path
+    required: true
+    type: string
+  processId:
+    name: processId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  caseId:
+    name: caseId
+    in: path
+    required: true
+    type: string
+  caseIdStatus:
+    name: caseIdStatus
+    in: path
+    type: string
+    enum:
+      - CLOSEDBYAPPLICANT   # Kund har aktivt avböjt ansökan
+      - STARTEDBYAPPLICANT  # Kund har startat en ansökan
+      - CLOSEDBYOFFICER     # av handläggare
+      - CLOSEDBYTHINNING    # Gallring?
+      - READYFOROFFICER     # Applicant has submitted the application
+    required: true
+  companyId:
+    name: companyId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  householdId:
+    name: householdId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  householdMember:
+    name: householdMember
+    in: path
+    required: true
+    type: string
+  childId:
+    name: childId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  collateralId:
+    name: collateralId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  loanId:
+    name: loanId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  extloanId:
+    name: extloanId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  personalEconomyId:
+    name: personalEconomyId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  companyEconomyId:
+    name: companyEconomyId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  kycId:
+    name: kycId
+    in: path
+    required: true
+    type: string
+    format: uuid
+  submitApplication:
+    name: submitApplication
+    in: path
+    required: true
+    type: boolean
+    enum:
+    - true
+    - false
+    
+####################################################################################
+####################################################################################
+# END Parameters
+####################################################################################
+####################################################################################
