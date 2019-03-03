@@ -62,6 +62,7 @@ info:
   #                      Changed ChildType in households
   #                      GetLoan has been added
   #                      CollateralType, added taxedOwner, collateralCode
+  #                      Fixed KycInformation, changed companyId to customerId
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -889,7 +890,7 @@ paths:
   #######################################################
   # get a specific colleteral
   #######################################################
-  /v1/Collateral/{processId}/{customerId}/{collateralId}:
+  /v1/Collateral/{processId}/{collateralId}:
     get:
       tags:
         - getCollateral
@@ -907,7 +908,7 @@ paths:
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/collateralId'
         - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/customerId'
+        #- $ref: '#/parameters/customerId'
         - $ref: '#/parameters/collateralId'
       responses:
         200:
@@ -924,9 +925,9 @@ paths:
           $ref: '#/definitions/PageNotFound'
   #
   ######################################################################################
-  # Get a list of available collaterals for a given processId and customerId in Activiti
+  # Get a list of available collaterals for a given processId in Activiti
   ######################################################################################
-  /v1/Collaterals/{processId}/{customerId}:
+  /v1/Collaterals/{processId}:
     get:
       tags:
         - getCollaterals
@@ -943,7 +944,7 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/customerId'
+        #- $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -961,7 +962,7 @@ paths:
   ############################################################
   # Update of a specific household
   ############################################################
-  /v1/updateCollateral/{processId}/{customerId}/{collateralId}:
+  /v1/updateCollateral/{processId}/{collateralId}:
     post:
       tags:
         - updateCollateral
@@ -979,7 +980,7 @@ paths:
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/collateralId'
         - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/customerId'
+        #- $ref: '#/parameters/customerId'
         - $ref: '#/parameters/collateralId'
         - name: collateral
           in: body
@@ -1003,7 +1004,7 @@ paths:
   #############################################################
   # Delete a specific colleteral
   #############################################################
-  /v1/deleteCollateral/{processId}/{customerId}/{collateralId}:
+  /v1/deleteCollateral/{processId}/{collateralId}:
     post:
       tags:
         - deleteCollateral
@@ -1018,23 +1019,9 @@ paths:
       - application/json
       parameters:
       # required parameters to delete a colleteral in Activiti
-        #- $ref: '#/components/parameters/processId'
+        - $ref: '#/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
-        #- $ref: '#/components/parameters/collateralId'
-        - name: processId
-          in: path
-          required: true
-          type: string
-          format: uuid
-        - name: customerId
-          in: path
-          required: true
-          type: string
-        - name: collateralId
-          in: path
-          required: true
-          type: string
-          format: uuid
+        - $ref: '#/parameters/collateralId'
       responses:
         200:
           description: Successful
@@ -1864,7 +1851,7 @@ paths:
   #########################################################
   # Delete a specific KycInformation
   #########################################################
-  /v1/deleteKycInformation/{processId}/{companyId}/{kycId}:
+  /v1/deleteKycInformation/{processId}/{customerId}/{kycId}:
     post:
       tags:
         - deleteKycInformation
@@ -1883,11 +1870,11 @@ paths:
         #- $ref: '#/components/parameters/companyId'
         #- $ref: '#/components/parameters/kycId'
         - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/customerId'
         - $ref: '#/parameters/kycId'
       responses:
         200:
-          description: Successful
+          $ref: '#/definitions/200OK'
         401:
           $ref: '#/definitions/UnauthorizedError'
         403:
