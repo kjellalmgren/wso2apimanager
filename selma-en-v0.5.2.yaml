@@ -1809,7 +1809,6 @@ paths:
         500:
           $ref: '#/definitions/PageNotFound'
   #
-  #
   #########################################################
   # Update of a specific KycInformation
   #########################################################
@@ -1925,20 +1924,20 @@ paths:
   ###################################
   # XLoans
   ###################################
+  ###################################
   /v1/xloans:
-    post:
+    get:
       tags:
-        - getXLoans
-      summary: TBD
-      description: TBD
-      operationId: getXLoans
+        - xloans
+      summary: Get a list of available loans
+      description: Get all available loans based on header parameter XprocessID
+      operationId: GetLoansx
       produces:
       - application/json
       consumes:
       - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
-        - $ref: '#/parameters/loanId'
       responses:
         200:
           $ref: '#/definitions/Loans'
@@ -1950,13 +1949,16 @@ paths:
           $ref: '#/definitions/InvalidPage'
         500:
           $ref: '#/definitions/PageNotFound'
+  ####################################
+  # xloans
+  ####################################
   /v1/xloans/{loanId}:
-    get:
+    post:
       tags:
-        - updateXLoan
-      summary: TBD
-      description: TBD
-      operationId: updateXLoan
+        - xloans
+      summary: Get details on a specific loan
+      description: Get all details bases on header parameter XprocessID and in-path parameter loanId
+      operationId: getByLoanId
       produces:
       - application/json
       consumes:
@@ -1964,11 +1966,6 @@ paths:
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - $ref: '#/parameters/loanId'
-        - name: xloan
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/Loan'
       responses:
         200:
           $ref: '#/definitions/Loan'
@@ -1980,12 +1977,16 @@ paths:
           $ref: '#/definitions/InvalidPage'
         500:
           $ref: '#/definitions/PageNotFound'
+  ########################################
+  #
+  ########################################
+  /v1/xloans/delete/{loanId}:
     delete:
       tags:
-        - deleteXLoan
-      summary: TBD
-      description: TBD
-      operationId: deleteXLoan
+        - xloans
+      summary: Delete a specific loan
+      description: Delete a loan based on header paraameter XprocessID and in-path parameter loanId
+      operationId: deleteLoanId
       produces:
       - application/json
       consumes:
@@ -2591,7 +2592,6 @@ definitions:
     description: This represent the customer loan structure
     required:
     - loanId
-    - processId
     type: object
     properties:
       processId:
@@ -2612,7 +2612,7 @@ definitions:
   #
   Loans:
     type: array
-    description: TBD
+    description: Array list of loanType (Loan)
     items:
       $ref: '#/definitions/loanType'
   #
