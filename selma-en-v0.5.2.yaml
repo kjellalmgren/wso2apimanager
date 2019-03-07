@@ -221,7 +221,7 @@ paths:
   /v1/deleteProcess/{processId}:
     post:
       tags:
-      - deleteProcess
+      - Process
       summary: Delete a specific processId in Activiti
       description: Will remove evry customerId under a processId in Activiti framework. All Applicants in a credit case will be deleted
       operationId: deleteProcess
@@ -262,7 +262,7 @@ paths:
   /v1/reserveCaseId/{processId}/{customerId}/{caseIdStatus}:
     post:
       tags:
-      - reserveCaseId
+      - Process
       summary: Reserve a CaseId in Loan Process
       description: >-
         Reserve a CaseId in Loan Process to be able to use attachment i DM. In this case parameter
@@ -298,7 +298,7 @@ paths:
   /v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}:
     post:
       tags:
-        - setCaseIdStatus
+        - Process
       summary: set status on the reserved caseId
       description: When we create/reserve a caseId in LP we also have to set the status
       operationId: setCaseIdStatus
@@ -336,7 +336,7 @@ paths:
   /v1/Applicant/{processId}/{customerId}:
     get:
       tags:
-        - getApplicant
+        - Applicants
       summary: Get a specific applicant by processId, customerId
       description: Get a specific applicant from the process layer
       operationId: getCustomer
@@ -369,7 +369,7 @@ paths:
   /v1/Applicants/{processId}:
     get:
       tags:
-        - getApplicants
+        - Applicants
       summary: get a list of available applicants
       description: Get a list of available applicants by ProcessId....
       operationId: getApplicants
@@ -402,7 +402,7 @@ paths:
   /v1/updateApplicant/{processId}/{customerId}:
     post:
       tags:
-        - updateApplicant
+        - Applicants
       summary: update a specific applicant in Activiti
       description: >-
         TBD
@@ -444,7 +444,7 @@ paths:
   /v1/deleteApplicant/{processId}/{customerId}:
     post:
       tags:
-        - deleteApplicant
+        - Applicants
       summary: Delete a specific applicant in Activiti
       description: >-
         TBD
@@ -481,7 +481,7 @@ paths:
   /v1/Company/{processId}/{companyId}:
     get:
       tags:
-        - getCompany
+        - Companies
       summary: Get a specific company by ProcessId, companyId
       description: Get a specific company from the process layer
       operationId: getCompany
@@ -516,7 +516,7 @@ paths:
   /v1/Companies/{processId}:
     get:
       tags:
-        - getCompanies
+        - Companies
       summary: get a list of available companies
       description: Get a list of available companies by ProcessId....
       operationId: getCompanies
@@ -549,7 +549,7 @@ paths:
   /v1/updateCompany/{processId}/{companyId}:
     post:
       tags:
-        - updateCompany
+        - Companies
       summary: update a specific company in Activiti
       description: >-
         TBD
@@ -590,7 +590,7 @@ paths:
   /v1/deleteCompany/{processId}/{companyId}:
     post:
       tags:
-        - deleteCompany
+        - Companies
       summary: Delete a specific company in Activiti
       description: descripition
       operationId: deleteCompany
@@ -623,7 +623,7 @@ paths:
   /v1/Household/{processId}/{householdId}:
     get:
       tags:
-        - getHousehold
+        - Households
       summary: Get a specific household by processId
       description: Get a specific household from the process layer
       operationId: getHousehold
@@ -658,7 +658,7 @@ paths:
   /v1/Households/{processId}:
     get:
       tags:
-        - getHouseholds
+        - Households
       summary: get a list of available households
       description: Get a list of available households by ProcessId....
       operationId: getHouseholds
@@ -691,7 +691,7 @@ paths:
   /v1/updateHousehold/{processId}/{householdId}:
     post:
       tags:
-        - updateHousehold
+        - Households
       summary: update a specific household in Activiti
       description: >-
         TBD
@@ -727,7 +727,7 @@ paths:
   /v1/deleteHousehold/{processId}/{householdId}:
     post:
       tags:
-        - deleteHousehold
+        - Households
       summary: Delete a specific household in Activiti
       description: >-
         TBD
@@ -762,7 +762,7 @@ paths:
   /v1/deleteChildInHousehold/{processId}/{householdId}/{childId}:
     post:
       tags:
-        - deleteChildInHousehold
+        - InHouseholds
       summary: delete a specific child in household
       description: TBD
       operationId: deleteChildInHousehold
@@ -794,7 +794,7 @@ paths:
   /v1/addChildInHousehold/{processId}/{householdId}/{childId}:
     post:
       tags:
-        - addChildInHousehold
+        - Households
       summary: add a child to the household
       description: TBD
       operationId: addChildInHousehold
@@ -825,7 +825,7 @@ paths:
   /v1/deleteHouseholdMember/{processId}/{householdId}/{householdMember}:
     post:
       tags:
-        - deleteHouseholdMember
+        - Households
       summary: Remove a applicant from a specific houshold
       description: Will remove {householdMeber} from the array householdMembers in Household 
       operationId: deleteHouseholdMember
@@ -861,7 +861,7 @@ paths:
   /v1/addHouseholdMember/{processId}/{householdId}/{householdMember}:
     post:
       tags:
-        - addHouseholdMember
+        - Households
       summary: Add applicant to a specific household
       description: Will add {householdMember} to the array householdMembers in Household
       operationId: addHouseholdMember
@@ -897,7 +897,7 @@ paths:
   /v1/Collateral/{processId}/{collateralId}:
     get:
       tags:
-        - getCollateral
+        - Collaterals
       summary: Get a specific collateral by processId, customerId and collateralId
       description: Get a specific colleteral from the process layer
       operationId: getColleteral
@@ -934,7 +934,7 @@ paths:
   /v1/Collaterals/{processId}:
     get:
       tags:
-        - getCollaterals
+        - Collaterals
       summary: get a list of available collaterals
       description: Get a list of available collaterals by ProcessId and customerId...
       operationId: getCollaterals
@@ -969,7 +969,7 @@ paths:
   /v1/updateCollateral/{processId}/{collateralId}:
     post:
       tags:
-        - updateCollateral
+        - Collaterals
       summary: update a specific collateral in Activiti
       description: descripition
       operationId: updateCollateral
@@ -1011,7 +1011,7 @@ paths:
   /v1/deleteCollateral/{processId}/{collateralId}:
     post:
       tags:
-        - deleteCollateral
+        - Collaterals
       summary: Delete a specific collateral in Activiti
       description: >-
         TBD
@@ -1044,7 +1044,7 @@ paths:
   /v1/Loan/{processId}/{loanId}:
     get:
       tags:
-        - getLoan
+        - Loans
       summary: Get a specific loan by processId
       description: Get a specific loan from customerId and processId layer
       operationId: getLoan
@@ -1079,7 +1079,7 @@ paths:
   /v1/Loans/{processId}:
     get:
       tags:
-        - getLoans
+        - Loans
       summary: get a list of available loans on processId
       description: Get a list of available loans by ProcessId...
       operationId: getLoans
@@ -1112,7 +1112,7 @@ paths:
   /v1/updateLoan/{processId}/{loanId}:
     post:
       tags:
-        - updateLoan
+        - Loans
       summary: update a specific loan in Activiti
       description: >-
         TBD
@@ -1153,7 +1153,7 @@ paths:
   /v1/deleteLoan/{processId}/{loanId}:
     post:
       tags:
-        - deleteLoan
+        - Loans
       summary: Delete a specific loan on a customer in Activiti
       description: >-
         TBD
@@ -1187,7 +1187,7 @@ paths:
   /v1/ExtLoan/{processId}/{extloanId}:
     get:
       tags:
-        - getExtLoan
+        - ExtLoans
       summary: Get a specific extloan by processId, customerId
       description: Get a specific extloan from the process layer
       operationId: getExtLoan
@@ -1224,7 +1224,7 @@ paths:
   /v1/ExtLoans/{processId}:
     get:
       tags:
-        - getExtLoans
+        - ExtLoans
       summary: get a list of available extloans
       description: Get a list of available extloans by ProcessId and customerId....
       operationId: getExtLoans
@@ -1259,7 +1259,7 @@ paths:
   /v1/updateExtLoan/{processId}/{extloanId}:
     post:
       tags:
-        - updateExtLoan
+        - ExtLoans
       summary: update a specific extloan in Activiti
       description: >-
         TBD
@@ -1301,7 +1301,7 @@ paths:
   /v1/deleteExtLoan/{processId}/{extloanId}:
     post:
       tags:
-        - deleteExtLoan
+        - ExtLoans
       summary: Delete a specific extloan in Activiti
       description: >-
         TBD
@@ -1337,7 +1337,7 @@ paths:
   /v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
     get:
       tags:
-        - getPersonalEconomy
+        - PersonalEconomies
       summary: Get a specific PersonalEconomy by processId, customerId
       description: Get a specific PersonalEconomy from the process layer
       operationId: getPersonalEconomy
@@ -1375,7 +1375,7 @@ paths:
   /v1/PersonalEconomies/{processId}:
     get:
       tags:
-        - getPersonalEconomies
+        - PersonalEconomies
       summary: get a list of available PersonalEconomies
       description: Get a list of available PersonalEconomies by ProcessId and customerId....
       operationId: getPersonalEconomies
@@ -1410,7 +1410,7 @@ paths:
   /v1/updatePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
     post:
       tags:
-        - updatePersonalEconomy
+        - PersonalEconomies
       summary: update a specific PersonalEconomy in Activiti
       description: >-
         TBD
@@ -1448,7 +1448,7 @@ paths:
   /v1/deletePersonalEconomy/{processId}/{customerId}/{personalEconomyId}:
     post:
       tags:
-        - deletePersonalEconomy
+        - PersonalEconomies
       summary: Delete a specific PersonalEconomy in Activiti
       description: >-
         TBD
@@ -1484,7 +1484,7 @@ paths:
   /v1/CompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
     get:
       tags:
-        - getCompanyEconomy
+        - CompanyEconomies
       summary: Get a specific CompanyEconomy by processId
       description: Get a specific CompanyEconomy from the process layer
       operationId: getCompanyEconomy
@@ -1521,7 +1521,7 @@ paths:
   /v1/CompanyEconomies/{processId}:
     get:
       tags:
-        - getCompanyEconomies
+        - CompanyEconomies
       summary: get a list of available CompanyEconomies
       description: Get a list of available CompanyEconomies by ProcessId and companyEconomyId
       operationId: getCompanyEconomies
@@ -1556,7 +1556,7 @@ paths:
   /v1/updateCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
     post:
       tags:
-        - updateCompanyEconomy
+        - CompanyEconomies
       summary: update a specific CompanyEconomy in Activiti
       description: Update economy on a specific company
       operationId: updateCompanyEconomy
@@ -1598,7 +1598,7 @@ paths:
   /v1/deleteCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
     post:
       tags:
-        - deleteCompanyEconomy
+        - CompanyEconomies
       summary: Delete a specific CompanyEconomy on a companyId in Activiti
       description: >-
         TBD
@@ -1634,7 +1634,7 @@ paths:
   /v1/Budgets/{processId}/{companyId}:
     get:
       tags:
-        - getBudgets
+        - Budgets
       summary: get a list of available budgets
       description: Get a list of available Budgets
       operationId: getBudgets
@@ -1669,7 +1669,7 @@ paths:
   /v1/updateBudget/{processId}/{companyId}/{companyEconomyId}:
     post:
       tags:
-        - updateBudget
+        - Budgets
       summary: update a specific Budget in Activiti
       description: >-
         TBD
@@ -1707,7 +1707,7 @@ paths:
   /v1/deleteBudget/{processId}/{companyId}/{companyEconomyId}:
     post:
       tags:
-        - deleteBudget
+        - Budgets
       summary: Delete a specific Budget in Activiti
       description: >-
         TBD
@@ -1743,7 +1743,7 @@ paths:
   /v1/KycInformations/{processId}:
     get:
       tags:
-        - getKycInformations
+        - KycInformations
       summary: get a list of available KycInformations
       description: Get a list of available KycInformations
       operationId: getKycInformations
@@ -1778,7 +1778,7 @@ paths:
   /v1/KycInformation/{processId}/{customerId}/{kycId}:
     get:
       tags:
-        - getKycInformation
+        - KycInformations
       summary: get a list of available KycInformations
       description: Get a list of available KycInformations
       operationId: getKycInformation
@@ -1819,7 +1819,7 @@ paths:
       summary: update a specific KycInformation in Activiti
       description: >-
         TBD
-      operationId: updateKycInformation
+      operationId: KycInformations
       # The method will handle the following MIME/Types
       produces:
       - application/json
@@ -1858,7 +1858,7 @@ paths:
   /v1/deleteKycInformation/{processId}/{customerId}/{kycId}:
     post:
       tags:
-        - deleteKycInformation
+        - KycInformations
       summary: Delete a specific KycInformation in Activiti
       description: >-
         TBD
@@ -1894,9 +1894,9 @@ paths:
   /v1/submitApplication/{processId}/{submitApplication}:
     post:
       tags:
-        - submitApplication
+        - submitApplications
       summary: Submit Application to Landshypotek and handling by a officer
-      description: TBD
+      description: Submit customer application to Loan Process if we find the application to be close to complete
       operationId: submitApplication
       # The method will handle the following MIME/Types
       produces:
@@ -2992,6 +2992,9 @@ parameters:
     required: true
     type: string
     format: uuid
+  ############################################################################
+  # submitApplication, true; allow to sumbit, complitines 90%, otherwise false
+  ############################################################################
   submitApplication:
     name: submitApplication
     in: path
@@ -3000,6 +3003,9 @@ parameters:
     enum:
     - true
     - false
+  ############################
+  # Header definitions
+  ############################
   X-process-ID:
     name: X-process-ID
     in: header
