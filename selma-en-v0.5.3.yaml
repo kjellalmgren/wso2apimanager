@@ -126,6 +126,7 @@ info:
     url: api.landshypotek.se/v1/sme
     email: developer@landshypotek.se
 host: '127.0.0.1:8443'
+#host: 'localhost:8443'
 basePath: /
 tags:
   - name: Selma SME(EN) API Definitions
@@ -190,7 +191,7 @@ paths:
   # Processes
   ##############################################################
   /v1/Processes/{customerId}:
-    get:
+    post:
       tags:
       - Processes
       summary: get a list of active processes for a customerId
@@ -333,44 +334,11 @@ paths:
         500:
           $ref: '#/definitions/PageNotFound'
   #
-  ##################################################
-  # get a specific Applicant
-  ##################################################
-  /v1/Applicant/{processId}/{customerId}:
-    get:
-      tags:
-        - Applicants
-      summary: Get a specific applicant by processId, customerId
-      description: Get a specific applicant from the process layer
-      operationId: getApplicant
-      # The method will handle the following MIME/Types
-      produces:
-      - application/json
-      consumes:
-      - application/json
-      parameters:
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/customerId'
-        # parameters required for getApplicant
-      responses:
-        200:
-          description: Successful
-          schema:
-            $ref: '#/definitions/Applicant'
-        401:
-          $ref: '#/definitions/UnauthorizedError'
-        403:
-          $ref: '#/definitions/ForbiddenError'
-        404:
-          $ref: '#/definitions/InvalidPage'
-        500:
-          $ref: '#/definitions/PageNotFound'
-  #
   ####################################################################
   # Get a list of available applicant for a given processId in Activiti
   ####################################################################
-  /v1/Applicants/{processId}:
-    get:
+  /v1/Applicants:
+    post:
       tags:
         - Applicants
       summary: get a list of available applicants
@@ -383,7 +351,7 @@ paths:
       - application/json
       parameters:
         # parameters required for getApplicants request
-        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/X-process-ID'
         #- $ref: '#/components/parameters/processId'
       responses:
         200:
@@ -399,34 +367,29 @@ paths:
         500:
           $ref: '#/definitions/PageNotFound'
   #
-  ###########################################
-  # Update of a specific Applicant
-  ###########################################
-  /v1/Applicant/{customerId}:
+  ##################################################
+  # get a specific Applicant
+  ##################################################
+  /v1/Applicant:
     post:
       tags:
         - Applicants
-      summary: update a specific applicant in Activiti
-      description: >-
-        TBD
-      operationId: updateApplicant
+      summary: Get a specific applicant by processId, customerId
+      description: Get a specific applicant from the process layer
+      operationId: getApplicant
       # The method will handle the following MIME/Types
       produces:
       - application/json
       consumes:
       - application/json
       parameters:
-      # required parameters to update a applicant in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/customerId'
         - $ref: '#/parameters/X-process-ID'
-        - $ref: '#/parameters/customerId'
-        - name: applicant
+        - name: customerId1
           in: body
+          required: true
           schema:
-            $ref: '#/definitions/Applicant'
-      #requestBody:
-      #  $ref: '#/definitions/Applicant'
+            $ref: '#/definitions/customerId'
+        # parameters required for getApplicant
       responses:
         200:
           description: Successful
@@ -444,8 +407,8 @@ paths:
   ############################################
   # Delete a specific applicant
   ############################################
-  /v1/deleteApplicant/{processId}/{customerId}:
-    post:
+  #/v1/Applicant:
+    delete:
       tags:
         - Applicants
       summary: Delete a specific applicant in Activiti
@@ -461,13 +424,58 @@ paths:
         # required parameters to delete a customer in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: customerId
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/customerId'
       responses:
         200:
           description: Successful
           schema:
             $ref: '#/definitions/200OK'
+        401:
+          $ref: '#/definitions/UnauthorizedError'
+        403:
+          $ref: '#/definitions/ForbiddenError'
+        404:
+          $ref: '#/definitions/InvalidPage'
+        500:
+          $ref: '#/definitions/PageNotFound'
+  #
+  ###########################################
+  # Update of a specific Applicant
+  ###########################################
+  #/v1/Applicant:
+    patch:
+      tags:
+        - Applicants
+      summary: update a specific applicant in Activiti
+      description: >-
+        TBD
+      operationId: updateApplicant
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a applicant in Activiti
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/customerId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: applicant
+          in: body
+          schema:
+            $ref: '#/definitions/Applicant'
+      #requestBody:
+      #  $ref: '#/definitions/Applicant'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Applicant'
         401:
           $ref: '#/definitions/UnauthorizedError'
         403:
@@ -1927,7 +1935,7 @@ paths:
   ###################################
   ###################################
   /v1/xloans:
-    get:
+    post:
       tags:
         - xloans (Experimental)
       summary: Get a list of available loans
