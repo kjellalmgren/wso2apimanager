@@ -67,6 +67,7 @@ info:
   #                      taxedOwner has been changed to a array
   # 2019-03-04 0.5.2 kal revenueType has been added to companyEconomy
   # 2019-03-08 0.5.3 kal ExtLoan has added support for many owners
+  # 2019-03-10 0.5.3 kal Budget has been completted
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -2416,9 +2417,134 @@ definitions:
     example: '32084646-d030-4c51-a316-b1342c3551dc'
   #
   budgetYear:
-    description: Budget avser år, ska generas av API, föregående år - 2 år
+    description: Budget avser år, ska generas av API, föregående år - 2 år. Value1-7 är intäkter och summeras i Loan Process
     type: integer
     example: 2018
+  value1:
+    description: Intäkter skog
+    type: number
+    format: float
+    example: 1000
+  value2:
+    description: Intäkter växtodling
+    type: number
+    format: float
+    example: 2000
+  value3:
+    description: Intäkter EU-Stöd
+    type: number
+    format: float
+    example: 3000
+  value4:
+    description: Intäkter Övrig djurproduktion
+    type: number
+    format: float
+    example: 4000
+  value5:
+    description: Intäkter Förändring av lager produktion
+    type: number
+    format: float
+    example: 5000
+  value6:
+    description: Intäkter Mjölk
+    type: number
+    format: float
+    example: 6000
+  value7:
+    description: Övriga intäkter
+    type: number
+    format: float
+    example: 7000
+  value8:
+    description: Omsättning totalt (totala intäkter)
+    type: number
+    format: float
+    example: 25000
+  value9:
+    description: Kostnader, inköp (Råvaror och förnödenheter)
+    type: number
+    format: float
+    example: -650000
+  value10:
+    description: Kostnader, arrendekostnader
+    type: number
+    format: float
+    example: 0
+  value11:
+    description: Kostnader, personalkostnader
+    type: number
+    format: float
+    example: -25000
+  value12:
+    description: Kostnader, övriga rörelsekostnader
+    type: number
+    format: float
+    example: -700000
+  value13:
+    description: Kostnader, summa kostnader
+    type: number
+    format: float
+    example: -650000
+  value14:
+    description: Resultat för avskrivningar
+    type: number
+    format: float
+    example: 1450000
+  value15:
+    description: Avskrivningar inventarier (exkl byggn.inventarier)
+    type: number
+    format: float
+    example: -650000
+  value16:
+    description: Avskrivningar, övriga avskrivningar och nedskrivningar
+    type: number
+    format: float
+    example: -650000
+  value17:
+    description: Summa Avskrivningar
+    type: number
+    format: float
+    example: -650000
+  value18:
+    description: Resultat efter avskrivmningar
+    type: number
+    format: float
+    example: 825000
+  value19:
+    description: Finansiella intäkter
+    type: number
+    format: float
+    example: 0
+  value20:
+    description: Finansiella kostnader
+    type: number
+    format: float
+    example: -75000
+  value21:
+    description: Resultat efter finansiella poster
+    type: number
+    format: float
+    example: 750000
+  value22:
+    description: Extraordinärar intäkter och kostnader
+    type: number
+    format: float
+    example: 0
+  value23:
+    description: Bokslutdispositioner
+    type: number
+    format: float
+    example: 0
+  value24:
+    description: Skatt (Ägaruttag prognosår EF)
+    type: number
+    format: float
+    example: 0
+  value25:
+    description: Årets resultat
+    type: number
+    format: float
+    example: -650000
   #
   #######################################
   # Definition KycInformation
@@ -2894,6 +3020,57 @@ definitions:
         $ref: '#/definitions/budgetId'
       budgetYear:
         $ref: '#/definitions/budgetYear'
+      value1:
+        $ref: '#/definitions/value1'
+      value2:
+        $ref: '#/definitions/value2'
+      value3:
+        $ref: '#/definitions/value3'
+      value4:
+        $ref: '#/definitions/value4'
+      value5:
+        $ref: '#/definitions/value5'
+      value6:
+        $ref: '#/definitions/value6'
+      value7:
+        $ref: '#/definitions/value7'
+      value8:
+        $ref: '#/definitions/value8'
+      value9:
+        $ref: '#/definitions/value9'
+      value10:
+        $ref: '#/definitions/value10'
+      value11:
+        $ref: '#/definitions/value11'
+      value12:
+        $ref: '#/definitions/value12'
+      value13:
+        $ref: '#/definitions/value13'
+      value14:
+        $ref: '#/definitions/value14'
+      value15:
+        $ref: '#/definitions/value15'
+      value16:
+        $ref: '#/definitions/value16'
+      value17:
+        $ref: '#/definitions/value17'
+      value18:
+        $ref: '#/definitions/value18'
+      value19:
+        $ref: '#/definitions/value19'
+      value20:
+        $ref: '#/definitions/value20'
+      value21:
+        $ref: '#/definitions/value21'
+      value22:
+        $ref: '#/definitions/value22'
+      value23:
+        $ref: '#/definitions/value23'
+      value24:
+        $ref: '#/definitions/value24'
+      value25:
+        $ref: '#/definitions/value25'
+        
   #
   Budget:
     $ref: '#/definitions/budgetType'
