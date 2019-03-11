@@ -68,6 +68,8 @@ info:
   # 2019-03-04 0.5.2 kal revenueType has been added to companyEconomy
   # 2019-03-08 0.5.3 kal ExtLoan has added support for many owners
   # 2019-03-10 0.5.3 kal Budget has been completted
+  # 2019-03-11 0.5.3 kal stakeholderType har lagts till i ApplicantType (Intressent i LP)
+  #                      ErrorModel has been implementeted in some methods
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -154,7 +156,7 @@ securityDefinitions:
     type: apiKey
     name: api_key
     in: header
-
+#
 # Here we apply the security flow called 'application' globally to all the opeartions in the spec. 
 # This security scheme is defined above in the 'securityDefinitions' section.
 # Global security can be overriden an operation level as seen in the example below
@@ -190,11 +192,11 @@ paths:
   ##############################################################
   # Processes
   ##############################################################
-  /v1/Processes/{customerId}:
+  /v1/Processes:
     post:
       tags:
       - Processes
-      summary: get a list of active processes for a customerId
+      summary: get a list of active processes for a in:body parameter customerId
       description: Return a list of active applications for a customer.
       operationId: getProcesses
       # The method will handle the following MIME/Types
@@ -204,30 +206,70 @@ paths:
       - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
-        - $ref: '#/parameters/customerId'
+        - name: customerId
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/customerId'
       responses:
         200:
           description: Successful
           schema:
             $ref: '#/definitions/Processes'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: "#/definitions/ErrorModel"        
         401:
-          description: Access token is missing or invalid
+          description: "Unauthorized"       
+          schema:
+            $ref: "#/definitions/ErrorModel"   
         403:
-          description: Access forbidden
+          description: "Forbidden"          
+          schema:
+            $ref: "#/definitions/ErrorModel"
         404:
-          description: Invalid page
+          description: "Not found"          
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "Method Not Allowed" 
+          schema:
+            $ref: "#/definitions/ErrorModel"         
+        406:
+          description: "Not Acceptable"     
+          schema:
+            $ref: "#/definitions/ErrorModel"     
+        408:
+          description: "Request Timeout"    
+          schema:
+            $ref: "#/definitions/ErrorModel"      
+        415:
+          description: "Unsupported media type"          
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "Too many requests"          
+          schema:
+            $ref: "#/definitions/ErrorModel"
         500:
-          description: Page not found
+          description: "Internal server error"          
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "Service unavailable"    
+          schema:
+            $ref: "#/definitions/ErrorModel"
   #
   ####################################################
   # DeleteProcess
   ####################################################
-  /v1/Processes:
+  #/v1/Processes:
     delete:
       tags:
       - Processes
       summary: Set status CLOSEDBYAPPLICANT at the X-process-ID in Activiti
-      description: The customer has choise to end the application, the whole X-process-ID will be CLOSEDBYAPPLICANT and will be removed during the batch thinning process.
+      description: The customer has choise to end the application, the whole X-process-ID will be CLOSEDBYAPPLICANT and will be removed during the batch thinning process in Loan Process.
       operationId: deleteProcess
       # The method will handle the following MIME/Types
       produces:
@@ -242,22 +284,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/200OK'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: "#/definitions/ErrorModel"        
         401:
-          description: Access token is missing or invalid
+          description: "Unauthorized"       
           schema:
-            $ref: '#/definitions/UnauthorizedError'
+            $ref: "#/definitions/ErrorModel"   
         403:
-          description: Access forbidden
+          description: "Forbidden"          
           schema:
-            $ref: '#/definitions/ForbiddenError'
+            $ref: "#/definitions/ErrorModel"
         404:
-          description: Invalid page
+          description: "Not found"          
           schema:
-           $ref: '#/definitions/InvalidPage'
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "Method Not Allowed" 
+          schema:
+            $ref: "#/definitions/ErrorModel"         
+        406:
+          description: "Not Acceptable"     
+          schema:
+            $ref: "#/definitions/ErrorModel"     
+        408:
+          description: "Request Timeout"    
+          schema:
+            $ref: "#/definitions/ErrorModel"      
+        415:
+          description: "Unsupported media type"          
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "Too many requests"          
+          schema:
+            $ref: "#/definitions/ErrorModel"
         500:
-          description: Page not found
+          description: "Internal server error"          
           schema:
-           $ref: '#/definitions/PageNotFound'
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "Service unavailable"    
+          schema:
+            $ref: "#/definitions/ErrorModel"
   #
   ##################################################
   # reserveCaseId in Loan Process
@@ -292,18 +362,26 @@ paths:
           schema:
             $ref: '#/definitions/caseId'
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: Unauthorized Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: Forbidden Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: Invalid page
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: Page Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ##################################################
   # setCaseIdStatus
   ##################################################
-  /v1/setCaseIdStatus/{caseId}/{caseId}:
+  /v1/setCaseIdStatus/{caseId}:
     post:
       tags:
         - Processes
@@ -326,13 +404,21 @@ paths:
             # This has to be defined in a different way
             $ref: '#/definitions/200OK'
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: Unauthorized Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: Forbidden Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: Invalid page
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: Page Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ####################################################################
   # Get a list of available applicant for a given processId in Activiti
@@ -359,13 +445,21 @@ paths:
           schema:
             $ref: '#/definitions/Applicants'
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: Unauthorized Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: Forbidden Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: Invalid page
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: Page Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ##################################################
   # get a specific Applicant
@@ -384,7 +478,7 @@ paths:
       - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
-        - name: customerId1
+        - name: customerId
           in: body
           required: true
           schema:
@@ -396,13 +490,21 @@ paths:
           schema:
             $ref: '#/definitions/Applicant'
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: Unauthorized Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: Forbidden Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: Invalid page
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: Page Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ############################################
   # Delete a specific applicant
@@ -436,13 +538,21 @@ paths:
           schema:
             $ref: '#/definitions/200OK'
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: Unauthorized Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: Forbidden Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: Invalid page
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: Page Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ###########################################
   # Update of a specific Applicant
@@ -452,8 +562,7 @@ paths:
       tags:
         - Applicants
       summary: update a specific applicant in Activiti
-      description: >-
-        TBD
+      description: Only update the values that the customer is allowed på update, it´s a subset of Applicant, se updateApplicantType definitions.
       operationId: updateApplicant
       # The method will handle the following MIME/Types
       produces:
@@ -468,7 +577,7 @@ paths:
         - name: applicant
           in: body
           schema:
-            $ref: '#/definitions/Applicant'
+            $ref: '#/definitions/updateApplicantType'
       #requestBody:
       #  $ref: '#/definitions/Applicant'
       responses:
@@ -477,13 +586,21 @@ paths:
           schema:
             $ref: '#/definitions/Applicant'
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: Unauthorized Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: Forbidden Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: Invalid page
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: Page Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ####################################################
   # Company
@@ -2063,6 +2180,33 @@ paths:
 ###############################################################
 definitions:
 ########################################
+#
+########################################
+  ErrorModel:
+    type: "object"
+    required:
+    - "message"
+    - "status"
+    properties:     
+      status:
+        type: "integer"
+        format: "int32"
+        description: "HTTP error code"
+      error:
+        type: "string"
+        description: "HTTP error text"
+        maxLength: 140
+      message:
+        type: "string"
+        description: "HTTP textual reason phrase"
+        maxLength: 140      
+    description: "Generic error report structure"
+    example:      
+      status: "[Error Code]"
+      error: "[Error Text]"
+      message: "[Error Reason]"
+#
+########################################
 # Request definitions
 ########################################
   #
@@ -2109,6 +2253,9 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/householdMember'
+  #####################################################
+  # ApplicantType
+  #####################################################
   customerId:
     type: string
     description: customerId is swedish ssn or corporate organisation number
@@ -2130,10 +2277,20 @@ definitions:
     type: string
     description: Postal number and postal city
     example: '420 20 Katrineholm'
-  applicantRole:
+  stakeholderType:
+    description: Maps to Loan Process stakeholders 'Borgensman', 'Driftbolag', 'Maka/Make/regpartner', 'sambo', 'ägarandel i pant', 'äg<re juridiskt över 50%', 'övriga med ekonomisk intressegemenskap'
     type: string
-    description: Huvudlåntagare eller Medlåntagare i SAP (behöver vi hantera detta?)
-    example: 'Huvudlåntagare/medlåntagare in SAP'
+    enum:
+    - NA
+    - INTRESSENT
+    - BORGENSMAN
+    - DRIFTBOLAG
+    - MAKEMAKAREGPART
+    - AGAREJURIDIKO50
+    - AGARANDELIPANT
+    - SAMBO
+    - EKONOMISKINTRESSEGEMNESKAP
+    example: 'NA'
   applicantEmail:
     type: string
     description: applicant enter email for notification
@@ -2218,6 +2375,11 @@ definitions:
   ################################
   # Child
   ################################
+  childId:
+    description: identity for child
+    type: string
+    format: uuid
+    example: 'a3703086-3d94-11e9-b210-d663bd873d93'
   childsAge:
     description: Barns ålder i hushållet
     type: integer
@@ -2229,11 +2391,6 @@ definitions:
     - true
     - false
     example: true
-  childId:
-    description: identity for child
-    type: string
-    format: uuid
-    example: 'a3703086-3d94-11e9-b210-d663bd873d93'
   ##################################
   # LoanType
   ##################################
@@ -2255,6 +2412,9 @@ definitions:
     description: Customer want to split this loan into 2 loans
     type: integer
     example: 2
+  ###################################
+  # Collaterals
+  ###################################
   collateralId:
     description: Collateral identity
     type: string
@@ -2291,6 +2451,9 @@ definitions:
     - true
     - false
     example: true
+  ##################################
+  # ExtLoans
+  ##################################
   extloanId:
     description: Type definitions for external loans
     type: string
@@ -2325,6 +2488,9 @@ definitions:
     - false
     example: true
   #
+  #####################################
+  # PersonalConomies
+  #####################################
   personalEconomyId:
     description: Type definitions for personal economy
     type: string
@@ -2358,6 +2524,9 @@ definitions:
     description: Anställd sedan år
     example: '2009'
   #
+  #######################################
+  # mainPurpose
+  #######################################
   mainPurposes:
     type: string
     description: Ändamål och syfte (TBD)
@@ -2390,6 +2559,9 @@ definitions:
     - Finansiering befintlig bostad (omläggning internt)
     - Ny/tillbyggnad/renovering mjölkstall
   #
+  ###################################
+  # CompanyEconomies
+  ###################################
   companyEconomyId:
     type: string
     description: Type definition for company economy
@@ -2416,7 +2588,7 @@ definitions:
     example: 2000000
   #
   #######################################
-  # Budget
+  # BudgetType
   #######################################
   budgetId:
     description: Type definition for company budget
@@ -2614,7 +2786,6 @@ definitions:
   #################################################################
   #################################################################
   # START Type defintions
-  #
   #################################################################
   # Definition ApplicantType
   #################################################################
@@ -2638,8 +2809,8 @@ definitions:
         $ref: '#/definitions/applicantAddress'
       applicantPostAddress:
         $ref: '#/definitions/applicantPostAddress'
-      role:
-        $ref: '#/definitions/applicantRole'
+      stakeholderType:
+        $ref: '#/definitions/stakeholderType'
       contactInformation:
         $ref: '#/definitions/ContactInformationType'
       applicantEmployeed:
@@ -2670,6 +2841,19 @@ definitions:
         $ref: '#/definitions/applicantEmail'
       mobileNumber:
         $ref: '#/definitions/applicantMobileNumber'
+  #
+  updateApplicantType:
+    description: updateApplicantType; följande element i Applicant kan uppdateras från kund via http.patch
+    type: object
+    properties:
+      contactInformation:
+        $ref: '#/definitions/ContactInformationType'
+      notifiedBySms:
+        $ref: '#/definitions/applicantBySms'
+      notifiedByeMail:
+        $ref: '#/definitions/applicantByeMail'
+      stakeholderType:
+        $ref: '#/definitions/stakeholderType'
   #
   #################################################
   # Definition CompanyType
@@ -2800,6 +2984,7 @@ definitions:
     description: Array list of loanType (Loan)
     items:
       $ref: '#/definitions/loanType'
+  #
   updateLoanType:
     description: This represent the customer loan structure
     required:
@@ -2842,8 +3027,10 @@ definitions:
         $ref: '#/definitions/extloanAmount'
       extRedeemLoan:
         $ref: '#/definitions/extRedeemLoan'
+  #
   ExtLoan:
     $ref: '#/definitions/extLoanType'
+  #
   ExtLoans:
     type: array
     description: Type definition for external loans
@@ -2885,8 +3072,10 @@ definitions:
         $ref: '#/definitions/useAsCollateral'
       buyCollateral:
         $ref: '#/definitions/buyCollateral'
+  #
   Collateral:
     $ref: '#/definitions/collateralType'
+  #
   Collaterals:
     type: array
     description: Array list of type collateralType
@@ -3078,7 +3267,6 @@ definitions:
         $ref: '#/definitions/value24'
       value25:
         $ref: '#/definitions/value25'
-        
   #
   Budget:
     $ref: '#/definitions/budgetType'
