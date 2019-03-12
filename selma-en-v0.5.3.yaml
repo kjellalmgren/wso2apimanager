@@ -134,8 +134,8 @@ tags:
   - name: Selma SME(EN) API Definitions
     description: Access layer to the process engine(Activiti)
 schemes:
-  - http
   - https
+  - http
 # Under securityDefinitions we declare which security schemes can be used.
 # These definitions do not affect to the operations, but can be applied
 # using the 'security' key at the global level or the operation level.
@@ -219,47 +219,47 @@ paths:
         400:
           description: "Bad request"  
           schema:
-            $ref: "#/definitions/ErrorModel"        
+            $ref: '#/definitions/ErrorModel'        
         401:
           description: "Unauthorized"       
           schema:
-            $ref: "#/definitions/ErrorModel"   
+            $ref: '#/definitions/ErrorModel'   
         403:
-          description: "Forbidden"          
+          description: 'Forbidden'
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         404:
-          description: "Not found"          
+          description: 'Not found'
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         405:
-          description: "Method Not Allowed" 
+          description: 'Method Not Allowed'
           schema:
-            $ref: "#/definitions/ErrorModel"         
+            $ref: '#/definitions/ErrorModel'         
         406:
-          description: "Not Acceptable"     
+          description: 'Not Acceptable'
           schema:
-            $ref: "#/definitions/ErrorModel"     
+            $ref: '#/definitions/ErrorModel'     
         408:
-          description: "Request Timeout"    
+          description: 'Request Timeout'
           schema:
-            $ref: "#/definitions/ErrorModel"      
+            $ref: '#/definitions/ErrorModel'      
         415:
-          description: "Unsupported media type"          
+          description: 'Unsupported media type'          
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         429:
-          description: "Too many requests"          
+          description: 'Too many requests'        
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         500:
-          description: "Internal server error"          
+          description: 'Internal server error'          
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         503:
-          description: "Service unavailable"    
+          description: 'Service unavailable'    
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
   #
   ####################################################
   # DeleteProcess
@@ -287,47 +287,47 @@ paths:
         400:
           description: "Bad request"  
           schema:
-            $ref: "#/definitions/ErrorModel"        
+            $ref: '#/definitions/ErrorModel'        
         401:
           description: "Unauthorized"       
           schema:
-            $ref: "#/definitions/ErrorModel"   
+            $ref: '#/definitions/ErrorModel'   
         403:
-          description: "Forbidden"          
+          description: 'Forbidden'
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         404:
-          description: "Not found"          
+          description: 'Not found'
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         405:
-          description: "Method Not Allowed" 
+          description: 'Method Not Allowed'
           schema:
-            $ref: "#/definitions/ErrorModel"         
+            $ref: '#/definitions/ErrorModel'         
         406:
-          description: "Not Acceptable"     
+          description: 'Not Acceptable'
           schema:
-            $ref: "#/definitions/ErrorModel"     
+            $ref: '#/definitions/ErrorModel'     
         408:
-          description: "Request Timeout"    
+          description: 'Request Timeout'
           schema:
-            $ref: "#/definitions/ErrorModel"      
+            $ref: '#/definitions/ErrorModel'      
         415:
-          description: "Unsupported media type"          
+          description: 'Unsupported media type'          
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         429:
-          description: "Too many requests"          
+          description: 'Too many requests'        
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         500:
-          description: "Internal server error"          
+          description: 'Internal server error'          
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
         503:
-          description: "Service unavailable"    
+          description: 'Service unavailable'    
           schema:
-            $ref: "#/definitions/ErrorModel"
+            $ref: '#/definitions/ErrorModel'
   #
   ##################################################
   # reserveCaseId in Loan Process
@@ -361,20 +361,48 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/caseId'
-        401:
-          description: Unauthorized Error
+        400:
+          description: "Bad request"  
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          description: Forbidden Error
+          description: 'Forbidden'
           schema:
             $ref: '#/definitions/ErrorModel'
         404:
-          description: Invalid page
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
           schema:
             $ref: '#/definitions/ErrorModel'
         500:
-          description: Page Not Found
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
   #
@@ -403,20 +431,48 @@ paths:
           schema:
             # This has to be defined in a different way
             $ref: '#/definitions/200OK'
-        401:
-          description: Unauthorized Error
+        400:
+          description: "Bad request"  
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          description: Forbidden Error
+          description: 'Forbidden'
           schema:
             $ref: '#/definitions/ErrorModel'
         404:
-          description: Invalid page
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
           schema:
             $ref: '#/definitions/ErrorModel'
         500:
-          description: Page Not Found
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
   #
@@ -444,20 +500,48 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Applicants'
-        401:
-          description: Unauthorized Error
+        400:
+          description: "Bad request"  
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          description: Forbidden Error
+          description: 'Forbidden'
           schema:
             $ref: '#/definitions/ErrorModel'
         404:
-          description: Invalid page
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
           schema:
             $ref: '#/definitions/ErrorModel'
         500:
-          description: Page Not Found
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
   #
@@ -480,7 +564,6 @@ paths:
         - $ref: '#/parameters/X-process-ID'
         - name: customerId
           in: body
-          required: true
           schema:
             $ref: '#/definitions/customerId'
         # parameters required for getApplicant
@@ -489,20 +572,48 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Applicant'
-        401:
-          description: Unauthorized Error
+        400:
+          description: "Bad request"  
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          description: Forbidden Error
+          description: 'Forbidden'
           schema:
             $ref: '#/definitions/ErrorModel'
         404:
-          description: Invalid page
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
           schema:
             $ref: '#/definitions/ErrorModel'
         500:
-          description: Page Not Found
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
   #
@@ -529,7 +640,6 @@ paths:
         - $ref: '#/parameters/X-process-ID'
         - name: customerId
           in: body
-          required: true
           schema:
             $ref: '#/definitions/customerId'
       responses:
@@ -537,20 +647,48 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/200OK'
-        401:
-          description: Unauthorized Error
+        400:
+          description: "Bad request"  
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          description: Forbidden Error
+          description: 'Forbidden'
           schema:
             $ref: '#/definitions/ErrorModel'
         404:
-          description: Invalid page
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
           schema:
             $ref: '#/definitions/ErrorModel'
         500:
-          description: Page Not Found
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
   #
@@ -574,7 +712,7 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         - $ref: '#/parameters/X-process-ID'
-        - name: applicant
+        - name: updateApplicantType
           in: body
           schema:
             $ref: '#/definitions/updateApplicantType'
@@ -585,20 +723,48 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Applicant'
-        401:
-          description: Unauthorized Error
+        400:
+          description: "Bad request"  
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          description: Forbidden Error
+          description: 'Forbidden'
           schema:
             $ref: '#/definitions/ErrorModel'
         404:
-          description: Invalid page
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
           schema:
             $ref: '#/definitions/ErrorModel'
         500:
-          description: Page Not Found
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
   #
@@ -629,14 +795,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Company'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #####################################################################
   # Get a list of available companies for a given processId in Activiti
@@ -662,14 +864,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Companies'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ########################################################
   # Update of a specific company
@@ -703,14 +941,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Company'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ########################################################
   # Delete a specific company
@@ -736,14 +1010,50 @@ paths:
       responses:
         200:
           description: Successful
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ##################################################
   # get a specific household
@@ -771,14 +1081,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Household'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #####################################################################################
   # Get a list of available households for a given processId  in Activiti
@@ -804,14 +1150,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Households'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ###########################################
   # Update of a specific household
@@ -840,14 +1222,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Household'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ############################################
   # Delete a specific household
@@ -876,14 +1294,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/200OK'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   ##############################################################
   # deleteChildInHousehold
   ##############################################################
@@ -907,14 +1361,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/200OK'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #################################################################
   # addChildInHousehold
@@ -939,14 +1429,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Child'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   ######################################################################
   # deleteHouseholdMember
   ######################################################################
@@ -974,14 +1500,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/200OK'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ##################################################################
   # addHouseholdMember
@@ -1010,14 +1572,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/householdMember'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #######################################################
   # get a specific colleteral
@@ -1047,14 +1645,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Collateral'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ######################################################################################
   # Get a list of available collaterals for a given processId in Activiti
@@ -1082,14 +1716,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Collaterals'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ############################################################
   # Update of a specific household
@@ -1124,14 +1794,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Collateral'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #############################################################
   # Delete a specific colleteral
@@ -1157,14 +1863,50 @@ paths:
       responses:
         200:
           description: Successful
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: 'Unauthorized error'     
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #############################################
   # get a specific loan by processId and loanId
@@ -1192,14 +1934,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Loan'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ################################################################################
   # Get a list of available loans for a given processId and companyId in Activiti
@@ -1225,14 +2003,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Loans'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ###########################################
   # Update of a specific loan
@@ -1266,14 +2080,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Loan'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ############################################
   # Delete a specific loan
@@ -1300,14 +2150,50 @@ paths:
       responses:
         200:
           description: Successful
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ##################################################
   # get a specific extloan
@@ -1335,14 +2221,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/ExtLoan'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ################################################################################
   # Get a list of available extloans for a given processId and customerId in Activiti
@@ -1370,14 +2292,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/ExtLoans'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #######################################################
   # Update of a specific extloan
@@ -1412,14 +2370,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/ExtLoan'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #######################################################
   # Delete a specific extloan
@@ -1448,14 +2442,50 @@ paths:
       responses:
         200:
           description: Successful
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #################################################################
   # PersonalEconomy
@@ -1485,14 +2515,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/PersonalEconomy'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ################################################################################
   # Get a list of available PersonalEconomies for a given processId and customerId
@@ -1521,14 +2587,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/PersonalEconomies'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #######################################################################
   # Update of a specific PersonalEconomy
@@ -1559,14 +2661,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/PersonalEconomy'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ######################################################################
   # Delete a specific PersonalEconomy
@@ -1595,14 +2733,50 @@ paths:
       responses:
         200:
           description: Successful
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ###############################################
   # CompanyEconomy
@@ -1631,14 +2805,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/CompanyEconomy'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ################################################################################
   # Get a list of available CompanyEconomies for a given processId
@@ -1667,14 +2877,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/CompanyEconomies'
+        400:
+          description: 'Bad request' 
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ####################################################################
   # Update of a specific CompanyEconomy
@@ -1709,14 +2955,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/CompanyEconomy'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ####################################################################
   # Delete a specific CompanyEconomy
@@ -1745,14 +3027,50 @@ paths:
       responses:
         200:
           $ref: '#/definitions/200OK'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ##################################################################################
   # Get a list of available Budgets for a given processId on a companyId in Activiti
@@ -1780,14 +3098,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Budgets'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ############################################################
   # Update of a specific Budget
@@ -1818,14 +3172,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/Budget'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ############################################################
   # Delete a specific Budget
@@ -1854,14 +3244,50 @@ paths:
       responses:
         200:
           description: Successful
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ################################
   # KycInformations
@@ -1889,14 +3315,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/KycInformations'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ####################################################
   # KycInformation
@@ -1926,14 +3388,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/KycInformation'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #########################################################
   # Update of a specific KycInformation
@@ -1969,14 +3467,50 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/KycInformation'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #########################################################
   # Delete a specific KycInformation
@@ -2005,14 +3539,50 @@ paths:
       responses:
         200:
           $ref: '#/definitions/200OK'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #################################################
   # Submit Application
@@ -2037,14 +3607,50 @@ paths:
       responses:
         200:
           description: Successful
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ###################################
   ###################################
@@ -2067,14 +3673,50 @@ paths:
       responses:
         200:
           $ref: '#/definitions/Loans'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ####################################
   # xloans POST Update
@@ -2100,14 +3742,50 @@ paths:
       responses:
         200:
           $ref: '#/definitions/Loan'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ########################################
   # xloans DELETE
@@ -2133,14 +3811,50 @@ paths:
       responses:
         200:
           $ref: '#/definitions/200OK'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
         401:
-          $ref: '#/definitions/UnauthorizedError'
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
         403:
-          $ref: '#/definitions/ForbiddenError'
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
-          $ref: '#/definitions/InvalidPage'
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
         500:
-          $ref: '#/definitions/PageNotFound'
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ########################################
   # Delete Loan (Exprimental)
@@ -2180,31 +3894,31 @@ paths:
 ###############################################################
 definitions:
 ########################################
-#
+# ErrorModel object
 ########################################
   ErrorModel:
-    type: "object"
+    type: object
     required:
-    - "message"
-    - "status"
+    - message
+    - status
     properties:     
       status:
-        type: "integer"
-        format: "int32"
-        description: "HTTP error code"
+        type: integer
+        format: int32
+        description: 'HTTP error code'
       error:
-        type: "string"
-        description: "HTTP error text"
+        type: string
+        description: 'HTTP error text'
         maxLength: 140
       message:
-        type: "string"
-        description: "HTTP textual reason phrase"
+        type: string
+        description: 'HTTP textual reason phrase'
         maxLength: 140      
-    description: "Generic error report structure"
+    description: 'Generic error report structure'
     example:      
-      status: "[Error Code]"
-      error: "[Error Text]"
-      message: "[Error Reason]"
+      status: '[Error Code]'
+      error: '[Error Text]'
+      message: '[Error Reason]'
 #
 ########################################
 # Request definitions
@@ -2223,7 +3937,7 @@ definitions:
     - false
     example: true
   submitReadyness:
-    description: En skala för att bedömTBD
+    description: En skala för att bedöm graden av ifylld ansökan
     type: integer
     example: 1
   caseIdStatus:
@@ -2259,7 +3973,7 @@ definitions:
   customerId:
     type: string
     description: customerId is swedish ssn or corporate organisation number
-    example: '19640120-3887' # Anna Andersson
+    example: { 'customerId': '19640120-3887' } # Anna Andersson
   applicantId:
     type: string
     description: unique id for each applicant in the credit case
@@ -2278,7 +3992,7 @@ definitions:
     description: Postal number and postal city
     example: '420 20 Katrineholm'
   stakeholderType:
-    description: Maps to Loan Process stakeholders 'Borgensman', 'Driftbolag', 'Maka/Make/regpartner', 'sambo', 'ägarandel i pant', 'äg<re juridiskt över 50%', 'övriga med ekonomisk intressegemenskap'
+    description: <h3>StakeholderType</h3><br>Maps to Loan Process stakeholders<br><b>'Borgensman'<br>'Driftbolag'<br>'Maka/Make/regpartner'<br>'sambo'<br>'ägarandel i pant'<br>'ägare juridiskt över 50%'<br>'övriga med ekonomisk intressegemenskap'<br>'NA'</b> - betyder att de är en sökande på lånet.<br>
     type: string
     enum:
     - NA
@@ -2289,7 +4003,7 @@ definitions:
     - AGAREJURIDIKO50
     - AGARANDELIPANT
     - SAMBO
-    - EKONOMISKINTRESSEGEMNESKAP
+    - EKONOMISKINTRESSEGEMENSKAP
     example: 'NA'
   applicantEmail:
     type: string
@@ -2532,21 +4246,21 @@ definitions:
     description: Ändamål och syfte (TBD)
     example: 'KOP'
     enum:
-    - KOP
-    - OVR
-    - ULN
-    - NOB
+    - 'Köp'
+    - 'Övertag'
+    - 'Utökning lån'
+    - 'Utlåning mot obelånat'
   #
   purposes:
     type: string
-    description: Ändamål och syfte ska sättas på respektive lån som går över till LP. I de fall där det inte specifiseras ska handläggar gör det innan överföring till SAP. Detta för att de ska bli rätt i uppföljning ned i SAS och den finsiella rapporteringen.
+    description: Ändamål och syfte ska sättas på respektive lån som går över till LP. I de fall där det inte specifiseras ska handläggaren göra det innan överföring till SAP. Detta för att de ska bli rätt i uppföljning ned i SAS och den finsiella rapporteringen.
     enum:
-    - FKP
-    - FAF
-    - FKJ
-    - FBB
-    - FBI
-    - RTM
+    - 'Fastighetsköp - privatbostad'
+    - 'Fastighetsköp - annan fastighet'
+    - 'Fastighetsköp - jordbruk'
+    - 'Finansiering befintlig bostad'
+    - 'Finansiering befintlig bostad (omläggning internt)'
+    - 'Ny/tillbyggnad/renovering mjölkstall'
   #
   purposeDisplayText:
     type: string
@@ -2848,9 +4562,9 @@ definitions:
     properties:
       contactInformation:
         $ref: '#/definitions/ContactInformationType'
-      notifiedBySms:
+      applicantBySms:
         $ref: '#/definitions/applicantBySms'
-      notifiedByeMail:
+      applicantByeMail:
         $ref: '#/definitions/applicantByeMail'
       stakeholderType:
         $ref: '#/definitions/stakeholderType'
