@@ -217,11 +217,11 @@ paths:
           schema:
             $ref: '#/definitions/Processes'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -285,11 +285,11 @@ paths:
           schema:
             $ref: '#/definitions/200OK'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'      
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -362,11 +362,11 @@ paths:
           schema:
             $ref: '#/definitions/caseId'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -432,11 +432,11 @@ paths:
             # This has to be defined in a different way
             $ref: '#/definitions/200OK'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -501,11 +501,11 @@ paths:
           schema:
             $ref: '#/definitions/Applicants'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -573,11 +573,11 @@ paths:
           schema:
             $ref: '#/definitions/Applicant'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -648,11 +648,11 @@ paths:
           schema:
             $ref: '#/definitions/200OK'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -724,11 +724,11 @@ paths:
           schema:
             $ref: '#/definitions/updateApplicantType'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -793,11 +793,11 @@ paths:
           schema:
             $ref: '#/definitions/Companies'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -866,11 +866,11 @@ paths:
           schema:
             $ref: '#/definitions/Company'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -914,7 +914,7 @@ paths:
   ########################################################
   # Update of a specific company
   ########################################################
-  /v1/updateCompany:
+  #/v1/Company:
     patch:
       tags:
         - Companies
@@ -940,13 +940,13 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Company'
+            $ref: '#/definitions/updateCompanyType'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -989,8 +989,8 @@ paths:
   ########################################################
   # Delete a specific company
   ########################################################
-  /v1/deleteCompany/{processId}/{companyId}:
-    post:
+  #/v1/Company:
+    delete:
       tags:
         - Companies
       summary: Delete a specific company in Activiti
@@ -1005,17 +1005,20 @@ paths:
       # required parameters to delete a customer in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: companyId
+          in: body
+          schema:
+            $ref: '#/definitions/companyId'
       responses:
         200:
           description: Successful
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1082,11 +1085,11 @@ paths:
           schema:
             $ref: '#/definitions/Household'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1151,11 +1154,11 @@ paths:
           schema:
             $ref: '#/definitions/Households'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1223,11 +1226,11 @@ paths:
           schema:
             $ref: '#/definitions/Household'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1295,11 +1298,11 @@ paths:
           schema:
             $ref: '#/definitions/200OK'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1338,6 +1341,7 @@ paths:
           description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
+  #
   ##############################################################
   # deleteChildInHousehold
   ##############################################################
@@ -1362,11 +1366,11 @@ paths:
           schema:
             $ref: '#/definitions/200OK'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1430,11 +1434,11 @@ paths:
           schema:
             $ref: '#/definitions/Child'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1473,6 +1477,7 @@ paths:
           description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
+  #
   ######################################################################
   # deleteHouseholdMember
   ######################################################################
@@ -1501,11 +1506,11 @@ paths:
           schema:
             $ref: '#/definitions/200OK'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1573,11 +1578,11 @@ paths:
           schema:
             $ref: '#/definitions/householdMember'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1646,11 +1651,11 @@ paths:
           schema:
             $ref: '#/definitions/Collateral'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1717,11 +1722,11 @@ paths:
           schema:
             $ref: '#/definitions/Collaterals'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1795,11 +1800,11 @@ paths:
           schema:
             $ref: '#/definitions/Collateral'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1908,38 +1913,36 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
-  #############################################
-  # get a specific loan by processId and loanId
-  #############################################
-  /v1/Loan/{processId}/{loanId}:
-    get:
+  ################################################################################
+  # Get a list of available loans for a given processId and companyId in Activiti
+  ################################################################################
+  /v1/Loans:
+    post:
       tags:
         - Loans
-      summary: Get a specific loan by processId
-      description: Get a specific loan from customerId and processId layer
-      operationId: getLoan
+      summary: get a list of available loans on processId
+      description: Get a list of available loans by ProcessId...
+      operationId: getLoans
       # The method will handle the following MIME/Types
       produces:
       - application/json
       consumes:
       - application/json
       parameters:
-        # parameters required for getCustomer request
+        # parameters required for getHouseholds request
         #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/loanId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/loanId'
+        - $ref: '#/parameters/X-process-ID'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Loan'
+            $ref: '#/definitions/Loans'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -1979,36 +1982,41 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
-  ################################################################################
-  # Get a list of available loans for a given processId and companyId in Activiti
-  ################################################################################
-  /v1/Loans/{processId}:
-    get:
+  #############################################
+  # get a specific loan by processId and loanId
+  #############################################
+  /v1/Loan:
+    post:
       tags:
         - Loans
-      summary: get a list of available loans on processId
-      description: Get a list of available loans by ProcessId...
-      operationId: getLoans
+      summary: Get a specific loan by processId
+      description: Get a specific loan from customerId and processId layer
+      operationId: getLoan
       # The method will handle the following MIME/Types
       produces:
       - application/json
       consumes:
       - application/json
       parameters:
-        # parameters required for getHouseholds request
+        # parameters required for getCustomer request
         #- $ref: '#/components/parameters/processId'
-        - $ref: '#/parameters/processId'
+        #- $ref: '#/components/parameters/loanId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: loanId
+          in: body
+          schema:
+            $ref: '#/definitions/loanId'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Loans'
+            $ref: '#/definitions/Loan'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'     
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2051,8 +2059,8 @@ paths:
   ###########################################
   # Update of a specific loan
   ###########################################
-  /v1/updateLoan/{processId}/{loanId}:
-    post:
+  #/v1/Loan:
+    patch:
       tags:
         - Loans
       summary: update a specific loan in Activiti
@@ -2066,26 +2074,22 @@ paths:
       - application/json
       parameters:
       # required parameters to update a customer in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/loanId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/loanId'
-        - name: loan
+        - $ref: '#/parameters/X-process-ID'
+        - name: loanId
           in: body
-          required: true
           schema:
-            $ref: '#/definitions/Loan'
+            $ref: '#/definitions/updateLoanType'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Loan'
+            $ref: '#/definitions/updateLoanType'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2128,8 +2132,8 @@ paths:
   ############################################
   # Delete a specific loan
   ############################################
-  /v1/deleteLoan/{processId}/{loanId}:
-    post:
+  #/v1/Loan:
+    delete:
       tags:
         - Loans
       summary: Delete a specific loan on a customer in Activiti
@@ -2143,19 +2147,20 @@ paths:
       - application/json
       parameters:
       # required parameters to delete a loan in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/loanId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/loanId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: loanId
+          in: body
+          schema:
+            $ref: '#/definitions/loanId'
       responses:
         200:
           description: Successful
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2195,82 +2200,11 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
-  ##################################################
-  # get a specific extloan
-  ##################################################
-  /v1/ExtLoan/{processId}/{extloanId}:
-    get:
-      tags:
-        - ExtLoans
-      summary: Get a specific extloan by processId, customerId
-      description: Get a specific extloan from the process layer
-      operationId: getExtLoan
-      # The method will handle the following MIME/Types
-      produces:
-      - application/json
-      consumes:
-      - application/json
-      parameters:
-        # parameters required for getExtLoan request
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/extloanId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/extloanId'
-      responses:
-        200:
-          description: Successful
-          schema:
-            $ref: '#/definitions/ExtLoan'
-        400:
-          description: "Bad request"  
-          schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: "Unauthorized"       
-          schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
-          schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
-          schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
-          schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
-          schema:
-            $ref: '#/definitions/ErrorModel'
-  #
-  ################################################################################
+   ################################################################################
   # Get a list of available extloans for a given processId and customerId in Activiti
   ################################################################################
-  /v1/ExtLoans/{processId}:
-    get:
+  /v1/ExtLoans:
+    post:
       tags:
         - ExtLoans
       summary: get a list of available extloans
@@ -2285,19 +2219,91 @@ paths:
         # parameters required for getExtLoans request
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
-        - $ref: '#/parameters/processId'
-        #- $ref: '#/parameters/customerId'
+        - $ref: '#/parameters/X-process-ID'
       responses:
         200:
           description: Successful
           schema:
             $ref: '#/definitions/ExtLoans'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  ##################################################
+  # get a specific extloan
+  ##################################################
+  /v1/ExtLoan:
+    post:
+      tags:
+        - ExtLoans
+      summary: Get a specific extloan by processId, customerId
+      description: Get a specific extloan from the process layer
+      operationId: getExtLoan
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getExtLoan request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/extloanId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: extLoanId
+          in: body
+          schema:
+            $ref: '#/definitions/extloanId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/ExtLoan'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2337,11 +2343,12 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
+  #
   #######################################################
   # Update of a specific extloan
   #######################################################
-  /v1/updateExtLoan/{processId}/{extloanId}:
-    post:
+  #/v1/ExtLoan:
+    patch:
       tags:
         - ExtLoans
       summary: update a specific extloan in Activiti
@@ -2355,27 +2362,22 @@ paths:
       - application/json
       parameters:
       # required parameters to update a extLoan in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/customerId'
-        #- $ref: '#/components/parameters/extloanId'
-        - $ref: '#/parameters/processId'
-        #- $ref: '#/parameters/customerId'
-        - $ref: '#/parameters/extloanId'
-        - name: extloan
+        - $ref: '#/parameters/X-process-ID'
+        - name: extloanId
           in: body
           schema:
-            $ref: '#/definitions/ExtLoan'
+            $ref: '#/definitions/updateExtLoanType'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/ExtLoan'
+            $ref: '#/definitions/updateExtLoanType'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2418,8 +2420,8 @@ paths:
   #######################################################
   # Delete a specific extloan
   #######################################################
-  /v1/deleteExtLoan/{processId}/{extloanId}:
-    post:
+  #/v1/ExtLoan:
+    delete:
       tags:
         - ExtLoans
       summary: Delete a specific extloan in Activiti
@@ -2436,18 +2438,20 @@ paths:
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/customerId'
         #- $ref: '#/components/parameters/extloanId'
-        - $ref: '#/parameters/processId'
-        #- $ref: '#/parameters/customerId'
-        - $ref: '#/parameters/extloanId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: extloanId
+          in: body
+          schema:
+            $ref: '#/definitions/extloanId'
       responses:
         200:
           description: Successful
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2516,11 +2520,11 @@ paths:
           schema:
             $ref: '#/definitions/PersonalEconomy'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2588,11 +2592,11 @@ paths:
           schema:
             $ref: '#/definitions/PersonalEconomies'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2662,11 +2666,11 @@ paths:
           schema:
             $ref: '#/definitions/PersonalEconomy'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2734,83 +2738,11 @@ paths:
         200:
           description: Successful
         400:
-          description: "Bad request"  
-          schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: "Unauthorized"       
-          schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
-          schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
-          schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
-          schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
-          schema:
-            $ref: '#/definitions/ErrorModel'
-  #
-  ###############################################
-  # CompanyEconomy
-  ###############################################
-  /v1/CompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
-    get:
-      tags:
-        - CompanyEconomies
-      summary: Get a specific CompanyEconomy by processId
-      description: Get a specific CompanyEconomy from the process layer
-      operationId: getCompanyEconomy
-      # The method will handle the following MIME/Types
-      produces:
-      - application/json
-      consumes:
-      - application/json
-      parameters:
-        # parameters required for getCompanyEconomy request
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyEconomyId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/companyId'
-        - $ref: '#/parameters/companyEconomyId'
-      responses:
-        200:
-          description: Successful
-          schema:
-            $ref: '#/definitions/CompanyEconomy'
-        400:
           description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2854,7 +2786,7 @@ paths:
   # Get a list of available CompanyEconomies for a given processId
   # in Activiti
   ################################################################################
-  /v1/CompanyEconomies/{processId}:
+  /v1/CompanyEconomies:
     get:
       tags:
         - CompanyEconomies
@@ -2868,10 +2800,11 @@ paths:
       - application/json
       parameters:
         # parameters required for getCompanylEconomies request
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyId'
-        - $ref: '#/parameters/processId'
-        #- $ref: '#/parameters/companyId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: companyId
+          in: body
+          schema:
+            $ref: '#/definitions/companyEconomyId'
       responses:
         200:
           description: Successful
@@ -2882,7 +2815,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -2922,11 +2855,86 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
+  ###############################################
+  # CompanyEconomy
+  ###############################################
+  /v1/CompanyEconomy:
+    post:
+      tags:
+        - CompanyEconomies
+      summary: Get a specific CompanyEconomy by processId
+      description: Get a specific CompanyEconomy from the process layer
+      operationId: getCompanyEconomy
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getCompanyEconomy request
+        #- $ref: '#/components/parameters/processId'
+        #- $ref: '#/components/parameters/companyEconomyId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: companyEconomyId
+          in: body
+          schema:
+            $ref: '#/definitions/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/CompanyEconomy'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  
   ####################################################################
   # Update of a specific CompanyEconomy
   ####################################################################
-  /v1/updateCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
-    post:
+  #/v1/CompanyEconomy:
+    patch:
       tags:
         - CompanyEconomies
       summary: update a specific CompanyEconomy in Activiti
@@ -2939,17 +2947,11 @@ paths:
       - application/json
       parameters:
       # required parameters to update a CompanyEconomy in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyId'
-        #- $ref: '#/components/parameters/companyEconomyId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/companyId'
-        - $ref: '#/parameters/companyEconomyId'
-        - name: companyeconomy
+        - $ref: '#/parameters/X-process-ID'
+        - name: companyEconomyId
           in: body
-          required: true
           schema:
-            $ref: '#/definitions/CompanyEconomy'
+            $ref: '#/definitions/companyEconomyId'
       responses:
         200:
           description: Successful
@@ -2960,7 +2962,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3003,8 +3005,8 @@ paths:
   ####################################################################
   # Delete a specific CompanyEconomy
   ####################################################################
-  /v1/deleteCompanyEconomy/{processId}/{companyId}/{companyEconomyId}:
-    post:
+  #/v1/CompanyEconomy:
+    delete:
       tags:
         - CompanyEconomies
       summary: Delete a specific CompanyEconomy on a companyId in Activiti
@@ -3018,21 +3020,20 @@ paths:
       - application/json
       parameters:
       # required parameters to delete a loan in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyId'
-        #- $ref: '#/components/parameters/companyEconomyId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/companyId'
-        - $ref: '#/parameters/companyEconomyId'
+        - $ref: '#/parameters/X-process-ID'
+        - name: companyEconomyId
+          in: body
+          schema:
+            $ref: '#/definitions/companyEconomyId'
       responses:
         200:
           $ref: '#/definitions/200OK'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3099,11 +3100,11 @@ paths:
           schema:
             $ref: '#/definitions/Budgets'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3173,11 +3174,11 @@ paths:
           schema:
             $ref: '#/definitions/Budget'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3245,11 +3246,11 @@ paths:
         200:
           description: Successful
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3316,11 +3317,11 @@ paths:
           schema:
             $ref: '#/definitions/KycInformations'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3389,11 +3390,11 @@ paths:
           schema:
             $ref: '#/definitions/KycInformation'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3468,11 +3469,11 @@ paths:
           schema:
             $ref: '#/definitions/KycInformation'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3540,11 +3541,11 @@ paths:
         200:
           $ref: '#/definitions/200OK'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3608,11 +3609,11 @@ paths:
         200:
           description: Successful
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3674,11 +3675,11 @@ paths:
         200:
           $ref: '#/definitions/Loans'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3743,11 +3744,11 @@ paths:
         200:
           $ref: '#/definitions/Loan'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -3812,11 +3813,11 @@ paths:
         200:
           $ref: '#/definitions/200OK'
         400:
-          description: "Bad request"  
+          description: 'Bad request'  
           schema:
             $ref: '#/definitions/ErrorModel'        
         401:
-          description: "Unauthorized"       
+          description: 'Unauthorized'       
           schema:
             $ref: '#/definitions/ErrorModel'   
         403:
@@ -4791,6 +4792,29 @@ definitions:
     items:
       $ref: '#/definitions/customerId'
   #
+  updateExtLoanType:
+    description: update of ExtLoanType
+    required:
+    - extloanId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      extLoanOwners:
+        $ref: '#/definitions/extLoanOwner'
+      extloanId:
+        $ref: '#/definitions/extloanId'
+      extCreditInstitut:
+        $ref: '#/definitions/extCreditInstitut'
+      extloanClearing:
+        $ref: '#/definitions/extloanClearing'
+      extloanNumber:
+        $ref: '#/definitions/extloanNumber'
+      extloanAmount:
+        $ref: '#/definitions/extloanAmount'
+      extRedeemLoan:
+        $ref: '#/definitions/extRedeemLoan'
+  #
   ###########################################
   # CollateralType
   ###########################################
@@ -5193,9 +5217,9 @@ parameters:
   #  required: true
   #  type: string
   #  enum:
-  #  - "delete"
-  #  - "update"
-  #  - "get"
+  #  - 'delete'
+  #  - 'update'
+  #  - 'get'
   #############################
   # Resource (Exprimental)
   #############################
@@ -5206,10 +5230,10 @@ parameters:
   #  required: true
   #  type: string
   #  enum:
-  #  - "Process"
-  #  - "Loans"
-  #  - "Applicants"
-  #  - "Companies"
+  #  - 'Process'
+  #  - 'Loans'
+  #  - 'Applicants'
+  #  - 'Companies'
   ############################
   # resource id
   ############################
