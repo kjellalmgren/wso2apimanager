@@ -722,7 +722,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Applicant'
+            $ref: '#/definitions/updateApplicantType'
         400:
           description: "Bad request"  
           schema:
@@ -4046,6 +4046,9 @@ definitions:
     - true
     - false
     example: true
+  ###############################
+  # Companies
+  ###############################
   companyId:
     type: string
     description: generated guid in the model
@@ -4057,14 +4060,36 @@ definitions:
     type: string
     example: '19550101-1010'
   companyName:
-    description: Full name of the company from external services or BusinessName in SAP
+    description: Full name of the company from external services or BusinessName in SAP.
     type: string
     example: 'Anna Andersson Mjölkproduktion'
   companyCreated:
     description: 'date when company was established, from external service or existing
     type: string
-      customer in SAP '
+      customer in SAP'
     example: '2012-01-01'
+  businessFocus:
+    description: Huvudsaklig verksamhetsinriktning
+    type: string
+    enum:
+    - 'Jordbruksväxter'
+    - 'Trädgårdsväxter'
+    - 'Nötkreatur'
+    - 'Får och getter'
+    - 'Svinproduktion'
+    - 'Fjäderfåskötsel'
+    - 'Hästverksamhet'
+    - 'Annan djurskötsel'
+    - 'Prod av skog'
+    - 'Förädling av skog'
+    - 'Övrig skogsverksamhet'
+    - 'Maskinenteprenad'
+    - 'Lokaler'
+    - 'Turism'
+    - 'Tillverkning'
+    - 'Tjänst-, konsultverksamhet'
+    - 'Övrig *tas bort*'
+    example: 'Jordbruksväxter'
   ################################  
   # Household
   ################################
@@ -4531,11 +4556,11 @@ definitions:
         $ref: '#/definitions/applicantEmployeed'
       applicantLPEmployment:
         $ref: '#/definitions/applicantLPEmployment'
-      member:
+      applicantMember:
         $ref: '#/definitions/applicantMember'
-      notifiedBySms:
+      applicantBySms:
         $ref: '#/definitions/applicantBySms'
-      notifiedByeMail:
+      applicantByeMail:
         $ref: '#/definitions/applicantByeMail'
   #
   Applicant:
@@ -4551,9 +4576,9 @@ definitions:
     description: Contact information definitions
     type: object
     properties:
-      eMail:
+      applicanteMail:
         $ref: '#/definitions/applicantEmail'
-      mobileNumber:
+      applicantMobileNumber:
         $ref: '#/definitions/applicantMobileNumber'
   #
   updateApplicantType:
@@ -4589,6 +4614,8 @@ definitions:
         $ref: '#/definitions/companyName'
       created:
         $ref: '#/definitions/companyCreated'
+      businessFocus:
+        $ref: '#/definitions/businessFocus'
   #
   Company:
     $ref: '#/definitions/companyType'
