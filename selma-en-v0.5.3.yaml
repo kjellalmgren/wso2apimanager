@@ -768,83 +768,11 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
-  ####################################################
-  # Company
-  ####################################################
-  # get a specific company
-  /v1/Company/{processId}/{companyId}:
-    get:
-      tags:
-        - Companies
-      summary: Get a specific company by ProcessId, companyId
-      description: Get a specific company from the process layer
-      operationId: getCompany
-      # The method will handle the following MIME/Types
-      produces:
-      - application/json
-      consumes:
-      - application/json
-      parameters:
-        # parameters required for getCompany request
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/companyId'
-      responses:
-        200:
-          description: Successful
-          schema:
-            $ref: '#/definitions/Company'
-        400:
-          description: "Bad request"  
-          schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: "Unauthorized"       
-          schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
-          schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
-          schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
-          schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
-          schema:
-            $ref: '#/definitions/ErrorModel'
-  #
   #####################################################################
   # Get a list of available companies for a given processId in Activiti
   #####################################################################
-  /v1/Companies/{processId}:
-    get:
+  /v1/Companies:
+    post:
       tags:
         - Companies
       summary: get a list of available companies
@@ -858,7 +786,7 @@ paths:
       parameters:
         # parameters required for getCompanies request
         #- $ref: '#/components/parameters/processId'
-        - $ref: '#/parameters/processId'
+        - $ref: '#/parameters/X-process-ID'
       responses:
         200:
           description: Successful
@@ -909,11 +837,85 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
+  ####################################################
+  # Company
+  ####################################################
+  # get a specific company
+  /v1/Company:
+    post:
+      tags:
+        - Companies
+      summary: Get a specific company by ProcessId, companyId
+      description: Get a specific company from the process layer
+      operationId: getCompany
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        # parameters required for getCompany request
+        - $ref: '#/parameters/X-process-ID'
+        - name: companyId
+          in: body
+          schema:
+            $ref: '#/definitions/companyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Company'
+        400:
+          description: "Bad request"  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: "Unauthorized"       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  
   ########################################################
   # Update of a specific company
   ########################################################
-  /v1/updateCompany/{processId}/{companyId}:
-    post:
+  /v1/updateCompany:
+    patch:
       tags:
         - Companies
       summary: update a specific company in Activiti
@@ -929,13 +931,11 @@ paths:
       # required parameters to update a customer in Activiti
         #- $ref: '#/components/parameters/processId'
         #- $ref: '#/components/parameters/companyId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/companyId'
-        - name: company
+        - $ref: '#/parameters/X-process-ID'
+        - name: updateCompanyType
           in: body
-          required: true
           schema:
-            $ref: '#/definitions/Company'
+            $ref: '#/definitions/updateCompanyType'
       responses:
         200:
           description: Successful
@@ -4069,7 +4069,7 @@ definitions:
       customer in SAP'
     example: '2012-01-01'
   businessFocus:
-    description: Huvudsaklig verksamhetsinriktning
+    description: Huvudsaklig verksamhetsinriktning (kan vi få den via extern tjänst)
     type: string
     enum:
     - 'Jordbruksväxter'
@@ -4077,7 +4077,7 @@ definitions:
     - 'Nötkreatur'
     - 'Får och getter'
     - 'Svinproduktion'
-    - 'Fjäderfåskötsel'
+    - 'Fjäderfäskötsel'
     - 'Hästverksamhet'
     - 'Annan djurskötsel'
     - 'Prod av skog'
@@ -4228,7 +4228,7 @@ definitions:
     example: true
   #
   #####################################
-  # PersonalConomies
+  # PersonalCompanies
   #####################################
   personalEconomyId:
     description: Type definitions for personal economy
@@ -4625,6 +4625,13 @@ definitions:
     description: List of companyType
     items:
       $ref: '#/definitions/companyType'
+  #
+  updateCompanyType:
+    description: TBD
+    type: object
+    properties:
+      businessFocus:
+        $ref: '#/definitions/businessFocus'
   #
   ##########################################
   # HouseholdMemberType
