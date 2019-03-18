@@ -484,7 +484,7 @@ paths:
   # Get a list of available applicant for a given processId in Activiti
   ####################################################################
   /v1/Applicants:
-    post:
+    get:
       tags:
         - Applicants
       summary: get a list of available applicants
@@ -553,7 +553,7 @@ paths:
   # get a specific Applicant
   ##################################################
   /v1/Applicant:
-    post:
+    get:
       tags:
         - Applicants
       summary: Get a specific applicant by processId, customerId
@@ -768,6 +768,80 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
+  ##############################################
+  # Add new Applicant if not exists
+  ##############################################
+  #/v1/Applicant:  
+    put:
+      tags:
+        - Applicants
+      summary: add a specific applicant in Activiti if not present
+      description: Only add an Appliant if not exists.
+      operationId: AddApplicant
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to update a applicant in Activiti
+        - $ref: '#/parameters/X-process-ID'
+        - name: Applicant
+          in: body
+          schema:
+            $ref: '#/definitions/Applicant'
+      #requestBody:
+      #  $ref: '#/definitions/Applicant'
+      responses:
+        201:
+          description: Successfully added
+          schema:
+            $ref: '#/definitions/Applicant'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    
   #####################################################################
   # Get a list of available companies for a given processId in Activiti
   #####################################################################
