@@ -128,8 +128,8 @@ info:
     name: API v1 for SME initiative
     url: api.landshypotek.se/v1/sme
     email: developer@landshypotek.se
-host: '127.0.0.1:8443'
-#host: 'localhost:8443'
+#host: '127.0.0.1:8443'
+host: 'localhost:8443'
 basePath: /
 tags:
   - name: Selma SME(EN) API Definitions
@@ -194,7 +194,7 @@ paths:
   # Processes
   ##############################################################
   /v1/Processes:
-    post:
+    get:
       tags:
       - Processes
       summary: get a list of active processes for a in:body parameter customerId
@@ -207,11 +207,12 @@ paths:
       - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
-        - name: customerId
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/customerId'
+        - $ref: '#/parameters/X-customer-ID'
+        #- name: customerId
+        #  in: body
+        #  required: true
+        #  schema:
+        #    $ref: '#/definitions/customerId'
       responses:
         200:
           description: Successful
@@ -265,7 +266,7 @@ paths:
   ####################################################
   # Delete Process
   ####################################################
-  #/v1/Processes:
+  /v1/Process:
     delete:
       tags:
       - Processes
@@ -498,7 +499,6 @@ paths:
       parameters:
         # parameters required for getApplicants request
         - $ref: '#/parameters/X-process-ID'
-        #- $ref: '#/components/parameters/processId'
       responses:
         200:
           description: Successful
@@ -795,8 +795,8 @@ paths:
       responses:
         201:
           description: Successfully added
-          schema:
-            $ref: '#/definitions/Applicant'
+          #schema:
+            #$ref: '#/definitions/Applicant'
         400:
           description: 'Bad request'  
           schema:
@@ -5179,7 +5179,7 @@ definitions:
       processId:
         $ref: '#/definitions/processId'
       customerId:
-        $ref: '#/definitions/customerId'
+        $ref: '#/definitions/customerIdType'
       processCreatedDate:
         $ref: '#/definitions/processCreatedDate'
   #
@@ -5191,6 +5191,13 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/processType'
+  #
+  customerIdType:
+    description: cusotmers in a processid
+    type: object
+    properties:
+      customerId:
+        $ref: '#/definitions/customerId'
   #
   #################################################
   # Definition KycInformationType
@@ -5383,6 +5390,13 @@ parameters:
       - CLOSEDBYTHINNING    # Gallring?
       - READYFOROFFICER     # Applicant has submitted the application
     required: true
+  #
+  X-customer-ID:
+    description: TBD
+    name: X-customer-ID
+    in: header
+    required: true
+    type: string
 #
 ####################################################################################
 ####################################################################################
