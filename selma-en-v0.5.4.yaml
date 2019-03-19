@@ -74,6 +74,7 @@ info:
   # 2019-03-19           Post på getProcesses
   #                      Hosueholds, Household has changed to in: header & in: body structure
   #                      collateralAreal and collateralAge to be used with forrest collateral
+  #                      Fixed example body json data
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -4124,7 +4125,7 @@ definitions:
     type: string
     description: generated guid in the model
     format: uuid
-    example: '02d6a03e-5895-4077-98f7-7a5c192868b7'
+    example: '{companyId": "02d6a03e-5895-4077-98f7-7a5c192868b7"}'
   orgNumber:
     description: Organisation number from external service, swedish ssn (UC or SAP for existing
       companies)
@@ -4208,7 +4209,7 @@ definitions:
     description: Loan identity
     type: string
     format: uuid
-    example: '08f55e2f-e947-48f4-89d2-d31af2fc28d6'
+    example: '{"loanId": "08f55e2f-e947-48f4-89d2-d31af2fc28d6"}'
   loanNumber:
     description: This will only be a temporary loanNumber, when can we reserve a loan number in SAP
     type: string
@@ -4229,7 +4230,7 @@ definitions:
     description: Collateral identity
     type: string
     format: uuid
-    example: '82faaa1a-42f7-4d87-aecf-96c450a0ce59'
+    example: '{"collateralId": "82faaa1a-42f7-4d87-aecf-96c450a0ce59"}'
   collateralCode:
     description: TBD - Fastighetskod (ska denna användas?)
     type: string
@@ -4281,7 +4282,7 @@ definitions:
     description: Type definitions for external loans
     type: string
     format: uuid
-    example: '3164d347-e173-4c4f-8839-26d32716e5bf'
+    example: '{"extloanId": "3164d347-e173-4c4f-8839-26d32716e5bf"}'
   extCreditInstitut:
     description: Kreditinstitut, Bank
     type: string
@@ -4318,7 +4319,7 @@ definitions:
     description: Type definitions for personal economy
     type: string
     format: uuid
-    example: 'b0c0edaa-3d75-4364-9179-1ecc8d9198d0'
+    example: '{"personalEconomyId": "b0c0edaa-3d75-4364-9179-1ecc8d9198d0"}'
   #
   yearlyIncome:
     description: Årlig inkomst från näringsverksamhet
@@ -4417,7 +4418,7 @@ definitions:
     description: Type definition for company budget
     type: string
     format: uuid
-    example: '32084646-d030-4c51-a316-b1342c3551dc'
+    example: '{"budgetId": "32084646-d030-4c51-a316-b1342c3551dc"}'
   #
   budgetYear:
     description: Budget avser år, ska generas av API, föregående år - 2 år. Value1-7 är intäkter och summeras i Loan Process
@@ -4556,7 +4557,7 @@ definitions:
     type: string
     description: Kyc-identity key
     format: uuid
-    example: '9bca3a55-2458-41d5-9420-f12bdcd0c809'
+    example: '{"kycId": "9bca3a55-2458-41d5-9420-f12bdcd0c809"}'
   AcceptUC:
     type: boolean
     description: Jag är medveten om att Landshypotek Bank inhämtar en kreditupplysning på mig och att det sker när jag går vidare från denna sida i nästa steg i ansökan.
