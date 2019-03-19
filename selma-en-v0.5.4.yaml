@@ -73,6 +73,7 @@ info:
   # 2019-03-14 0.5.4 kal Förändra samtliga API mot GET, POST, PATCH samt DELETE
   # 2019-03-19           Post på getProcesses
   #                      Hosueholds, Household has changed to in: header & in: body structure
+  #                      collateralAreal and collateralAge to be used with forrest collateral
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -209,7 +210,6 @@ paths:
       - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
-        #- $ref: '#/parameters/X-customer-ID'
         - name: customerId
           in: body
           required: true
@@ -861,7 +861,6 @@ paths:
       - application/json
       parameters:
         # parameters required for getCompanies request
-        #- $ref: '#/components/parameters/processId'
         - $ref: '#/parameters/X-process-ID'
       responses:
         200:
@@ -1005,8 +1004,6 @@ paths:
       - application/json
       parameters:
       # required parameters to update a customer in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyId'
         - $ref: '#/parameters/X-process-ID'
         - name: updateCompanyType
           in: body
@@ -4249,7 +4246,20 @@ definitions:
     description: Street address of the collateral
     type: string
     example: 'Bergsgatan 12'
-  #
+  collateralAreal:
+    description: Areal för skogen
+    type: string
+    example: '12'
+  collateralAge:
+    description: Ålder på skogen för sökerhet
+    type: string
+    enum:
+    - '0-20 år'
+    - '21-40 år'
+    - '41-60 år'
+    - '61-80 år'
+    - '81-100 år'
+    example: '0-20 år'
   useAsCollateral:
     description: Use this collateral as security in this application
     type: boolean
@@ -4913,6 +4923,10 @@ definitions:
         $ref: '#/definitions/collateralMunicipality'
       collateralStreet:
         $ref: '#/definitions/collateralStreet'
+      collateralAreal:
+        $ref: '#/definitions/collateralAreal'
+      collateralAge:
+        $ref: '#/definitions/collateralAge'
       useAsCollateral:
         $ref: '#/definitions/useAsCollateral'
       buyCollateral:
