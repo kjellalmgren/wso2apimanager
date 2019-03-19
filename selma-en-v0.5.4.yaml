@@ -71,6 +71,8 @@ info:
   # 2019-03-11 0.5.3 kal stakeholderType har lagts till i ApplicantType (Intressent i LP)
   #                      ErrorModel has been implementeted in some methods
   # 2019-03-14 0.5.4 kal Förändra samtliga API mot GET, POST, PATCH samt DELETE
+  # 2019-03-19           Post på getProcesses
+  #                      Hosueholds, Household has changed to in: header & in: body structure
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -194,7 +196,7 @@ paths:
   # Processes
   ##############################################################
   /v1/Processes:
-    get:
+    post:
       tags:
       - Processes
       summary: get a list of active processes for a in:body parameter customerId
@@ -207,12 +209,12 @@ paths:
       - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
-        - $ref: '#/parameters/X-customer-ID'
-        #- name: customerId
-        #  in: body
-        #  required: true
-        #  schema:
-        #    $ref: '#/definitions/customerId'
+        #- $ref: '#/parameters/X-customer-ID'
+        - name: customerId
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/customerId'
       responses:
         200:
           description: Successful
@@ -1132,32 +1134,30 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
-  ##################################################
-  # get a specific household
-  ##################################################
-  /v1/Household/{processId}/{householdId}:
+  #####################################################################################
+  # Get a list of available households for a given processId  in Activiti
+  #####################################################################################
+  /v1/Households:
     get:
       tags:
         - Households
-      summary: Get a specific household by processId
-      description: Get a specific household from the process layer
-      operationId: getHousehold
+      summary: get a list of available households
+      description: Get a list of available households by ProcessId....
+      operationId: getHouseholds
       # The method will handle the following MIME/Types
       produces:
       - application/json
       consumes:
       - application/json
       parameters:
-        # parameters required for getCustomer request
+        # parameters required for getHouseholds request
         #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/householdId'
-        - $ref: '#/parameters/processId'
-        - $ref: '#/parameters/householdId'
+        - $ref: '#/parameters/X-process-ID'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Household'
+            $ref: '#/definitions/Households'
         400:
           description: 'Bad request'  
           schema:
@@ -1203,30 +1203,33 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
-  #####################################################################################
-  # Get a list of available households for a given processId  in Activiti
-  #####################################################################################
-  /v1/Households/{processId}:
-    get:
+  ##################################################
+  # get a specific household
+  ##################################################
+  /v1/Household:
+    post:
       tags:
         - Households
-      summary: get a list of available households
-      description: Get a list of available households by ProcessId....
-      operationId: getHouseholds
+      summary: Get a specific household by processId
+      description: Get a specific household from the process layer
+      operationId: getHousehold
       # The method will handle the following MIME/Types
       produces:
       - application/json
       consumes:
       - application/json
       parameters:
-        # parameters required for getHouseholds request
-        #- $ref: '#/components/parameters/processId'
-        - $ref: '#/parameters/processId'
+        # parameters required for getCustomer request
+        - $ref: '#/parameters/X-process-ID'
+        - name: householdId
+          in: body
+          schema:
+            $ref: '#/definitions/householdId'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Households'
+            $ref: '#/definitions/Household'
         400:
           description: 'Bad request'  
           schema:
@@ -4168,7 +4171,7 @@ definitions:
     description: Hosuehold identity key
     type: string
     format: uuid
-    example: '02d6a03e-5895-4077-98f7-7a5c192878b8'
+    example: '{ "householdId": "4253017a-3d17-11e9-b210-d663bd873d93" }'
   numberOfChildsAtHome:
     type: integer
     description: Number of child in this household
@@ -5193,7 +5196,7 @@ definitions:
       $ref: '#/definitions/processType'
   #
   customerIdType:
-    description: cusotmers in a processid
+    description: customers in a processid, a list array of customerId
     type: object
     properties:
       customerId:
