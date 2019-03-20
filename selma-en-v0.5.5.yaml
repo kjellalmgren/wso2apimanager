@@ -67,7 +67,7 @@ info:
   #                      taxedOwner has been changed to a array
   # 2019-03-04 0.5.2 kal revenueType has been added to companyEconomy
   # 2019-03-08 0.5.3 kal ExtLoan has added support for many owners
-  # 2019-03-10 0.5.3 kal Budget has been completted
+  # 2019-03-10 0.5.3 kal Budgets and Budget has been completted
   # 2019-03-11 0.5.3 kal stakeholderType har lagts till i ApplicantType (Intressent i LP)
   #                      ErrorModel has been implementeted in some methods
   # 2019-03-14 0.5.4 kal Förändra samtliga API mot GET, POST, PATCH samt DELETE
@@ -78,9 +78,9 @@ info:
   # 2019-03-20 0.5.4 kal householdMemberId has been added to struct
   # 2019-03-20 0.5.5 kal New version, all path parameters replaced by in body parameters
   # 2019-03-20           Add new LoanType to support different aims
-  ###########################################################################################
+  ##########################################################################################
   # Errors definitions has not been defined in any responses
-  ###########################################################################################
+  ##########################################################################################
   # Future request
   #   getAvailableProcessIds(customerId)
   #     - will return all of user started applications
@@ -4147,6 +4147,15 @@ definitions:
     - 'Tjänst-, konsultverksamhet'
     - 'Övrig *tas bort*'
     example: 'Jordbruksväxter'
+  #
+  selectedCompany:
+    description: Customer has selected this company for the loan to apply for
+    type: boolean
+    enum:
+    - false
+    - true
+    example: true
+  #
   ###################################  
   # Household
   ###################################
@@ -4696,6 +4705,8 @@ definitions:
         $ref: '#/definitions/companyCreated'
       businessFocus:
         $ref: '#/definitions/businessFocus'
+      selectedCompany:
+        $ref: '#/definitions/selectedCompany'
   #
   Company:
     $ref: '#/definitions/companyType'
