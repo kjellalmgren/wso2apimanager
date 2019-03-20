@@ -491,7 +491,7 @@ paths:
   # Get a list of available applicant for a given processId in Activiti
   ####################################################################
   /v1/Applicants:
-    get:
+    post:
       tags:
         - Applicants
       summary: get a list of available applicants
@@ -559,7 +559,7 @@ paths:
   # get a specific Applicant
   ##################################################
   /v1/Applicant:
-    get:
+    post:
       tags:
         - Applicants
       summary: Get a specific applicant by processId, customerId
@@ -1139,7 +1139,7 @@ paths:
   # Get a list of available households for a given processId  in Activiti
   #####################################################################################
   /v1/Households:
-    get:
+    post:
       tags:
         - Households
       summary: get a list of available households
@@ -2079,8 +2079,6 @@ paths:
       - application/json
       parameters:
         # parameters required for getCustomer request
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/loanId'
         - $ref: '#/parameters/X-process-ID'
         - name: loanId
           in: body
@@ -2145,7 +2143,7 @@ paths:
         - Loans
       summary: update a specific loan in Activiti
       description: >-
-        TBD
+        TBD; we have to discuss if we need a method addLoanAim and deleteLoanAim or if just updateLoanType should handle this. Will result in a more heavy disc io
       operationId: updateLoan
       # The method will handle the following MIME/Types
       produces:
@@ -2218,7 +2216,7 @@ paths:
         - Loans
       summary: Delete a specific loan on a customer in Activiti
       description: >-
-        TBD
+        This will delete the hole loan with all aimType
       operationId: deleteLoan
       # The method will handle the following MIME/Types
       produces:
@@ -2870,7 +2868,7 @@ paths:
   # in Activiti
   ################################################################################
   /v1/CompanyEconomies:
-    get:
+    post:
       tags:
         - CompanyEconomies
       summary: get a list of available CompanyEconomies
@@ -4228,7 +4226,7 @@ definitions:
     description: Loan identity
     type: string
     format: uuid
-    example: '{"loanId": "08f55e2f-e947-48f4-89d2-d31af2fc28d6"}'
+    example: '{"loanId": "9b8e4822-3cb7-11e9-b210-d663bd873d93"}'
   loanNumber:
     description: This will only be a temporary loanNumber, when can we reserve a loan number in SAP
     type: string
@@ -4901,7 +4899,9 @@ definitions:
       loanAmount:
         $ref: '#/definitions/loanAmount'
       purposeOfLoan:
-        $ref: '#/definitions/aimText'
+        $ref: '#/definitions/mainPurposes'
+      aims:
+        $ref: '#/definitions/aimType'
   #
   ###########################################
   # ExtLoanType
