@@ -1080,8 +1080,6 @@ paths:
       - application/json
       parameters:
       # required parameters to delete a customer in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyId'
         - $ref: '#/parameters/X-process-ID'
         - name: companyId
           in: body
@@ -1152,7 +1150,6 @@ paths:
       - application/json
       parameters:
         # parameters required for getHouseholds request
-        #- $ref: '#/components/parameters/processId'
         - $ref: '#/parameters/X-process-ID'
       responses:
         200:
@@ -1294,8 +1291,6 @@ paths:
       - application/json
       parameters:
       # required parameters to update a household in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/householdId'
         - $ref: '#/parameters/X-process-ID'
         - name: householdId
           in: body
@@ -1444,8 +1439,6 @@ paths:
           in: body
           schema:
             $ref: '#/definitions/householdIdChildIdType'
-        #- $ref: '#/parameters/householdId'
-        #- $ref: '#/parameters/childId'
       responses:
         200:
           description: Successful
@@ -1516,8 +1509,6 @@ paths:
           in: body
           schema:
             $ref: '#/definitions/householdIdChildIdType'
-        #- $ref: '#/parameters/householdId'
-        #- $ref: '#/parameters/childId'
       responses:
         200:
           description: Successful
@@ -1585,7 +1576,7 @@ paths:
       - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
-        - name: householdIdhouseholdMemberType
+        - name: householdIdhouseholdMemberIdType
           in: body
           schema:
             $ref: '#/definitions/householdIdHouseholdMemberIdType'
@@ -2010,7 +2001,6 @@ paths:
       - application/json
       parameters:
         # parameters required for getHouseholds request
-        #- $ref: '#/components/parameters/processId'
         - $ref: '#/parameters/X-process-ID'
       responses:
         200:
@@ -2712,7 +2702,6 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
-  #
   #######################################################################
   # Update of a specific PersonalEconomy
   #######################################################################
@@ -2731,9 +2720,6 @@ paths:
       - application/json
       parameters:
       # required parameters to update a PersonalEconomy in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/customerId'
-        #- $ref: '#/components/parameters/personalEconomyId'
         - $ref: '#/parameters/X-process-ID'
         - name: personalEconomyId
           in: body
@@ -2807,9 +2793,6 @@ paths:
       - application/json
       parameters:
       # required parameters to delete a loan in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/customerId'
-        #- $ref: '#/components/parameters/personalEconomyId'
         - $ref: '#/parameters/X-process-ID'
         - name: personalEconomyId
           in: body
@@ -2953,8 +2936,6 @@ paths:
       - application/json
       parameters:
         # parameters required for getCompanyEconomy request
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyEconomyId'
         - $ref: '#/parameters/X-process-ID'
         - name: companyEconomyId
           in: body
@@ -3171,8 +3152,6 @@ paths:
       - application/json
       parameters:
         # parameters required for getBudgets request
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyId'
         - $ref: '#/parameters/X-process-ID'
         - name: companyId
           in: body
@@ -3390,7 +3369,6 @@ paths:
       parameters:
         # parameters required for getBudgets request
         - $ref: '#/parameters/X-process-ID'
-        #- $ref: '#/parameters/customerId'
       responses:
         200:
           description: Successful
@@ -3458,9 +3436,6 @@ paths:
       - application/json
       parameters:
         # parameters required for getKycInformations request
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/customerId'
-        #- $ref: '#/components/parameters/kycId'
         - $ref: '#/parameters/X-process-ID'
         - name: kycId
           in: body
@@ -3534,9 +3509,6 @@ paths:
       - application/json
       parameters:
       # required parameters to update a Budget in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/customerId'
-        #- $ref: '#/components/parameters/kycId'
         - $ref: '#/parameters/X-process-ID'
         - name: updateKyc
           in: body
@@ -3610,9 +3582,6 @@ paths:
       - application/json
       parameters:
       # required parameters to delete a budget in Activiti
-        #- $ref: '#/components/parameters/processId'
-        #- $ref: '#/components/parameters/companyId'
-        #- $ref: '#/components/parameters/kycId'
         - $ref: '#/parameters/X-process-ID'
         - name: kycId
           in: body
