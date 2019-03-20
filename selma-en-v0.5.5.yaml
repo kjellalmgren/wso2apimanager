@@ -5389,42 +5389,7 @@ parameters:
     enum:
     - true
     - false
-  ############################
-  # Action definitions
-  ############################
-  #Action:
-  #  name: Action
-  #  in: path
-  #  required: true
-  #  type: string
-  #  enum:
-  #  - 'delete'
-  #  - 'update'
-  #  - 'get'
-  #############################
-  # Resource (Exprimental)
-  #############################
-  #Resource:
-  #  description: Resource in the business-/informationmodel
-  #  name: Resource
-  #  in: path
-  #  required: true
-  #  type: string
-  #  enum:
-  #  - 'Process'
-  #  - 'Loans'
-  #  - 'Applicants'
-  #  - 'Companies'
-  ############################
-  # resource id
-  ############################
-  #keyId:
-  #  description: unique keyid for the resource
-  #  name: keyId
-  #  in: path
-  #  required: true
-  #  type: string
-  #  format: uuid
+  #
   ############################
   # Header definitions
   ############################
@@ -5448,12 +5413,12 @@ parameters:
       - READYFOROFFICER     # Applicant has submitted the application
     required: true
   #
-  X-customer-ID:
-    description: TBD
-    name: X-customer-ID
-    in: header
-    required: true
-    type: string
+  #X-customer-ID:
+  #  description: TBD
+  #  name: X-customer-ID
+  #  in: header
+  #  required: true
+  #  type: string
 #
 ####################################################################################
 ####################################################################################
