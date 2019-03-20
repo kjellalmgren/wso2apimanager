@@ -77,6 +77,7 @@ info:
   #                      Fixed example body json data
   # 2019-03-20 0.5.4 kal householdMemberId has been added to struct
   # 2019-03-20 0.5.5 kal New version, all path parameters replaced by in body parameters
+  # 2019-03-20           Add new LoanType to support different aims
   ###########################################################################################
   # Errors definitions has not been defined in any responses
   ###########################################################################################
@@ -4237,10 +4238,19 @@ definitions:
     type: number
     format: float
     example: 2500000.00
-  numberOfLoans:
-    description: Customer want to split this loan into 2 loans
-    type: integer
-    example: 2
+  #
+  aimId:
+    description: TBD
+    type: string
+    format: uuid
+    example: '607db102-4af7-11e9-8646-d663bd873d93'
+  #
+  loanAmountPart:
+    description: TBD
+    type: number
+    format: float
+    example: 200000.00
+  #
   ###################################
   # Collaterals
   ###################################
@@ -4372,14 +4382,14 @@ definitions:
   mainPurposes:
     type: string
     description: Ändamål och syfte (TBD)
-    example: 'KOP'
+    example: 'Utökning av lån'
     enum:
     - 'Köp'
     - 'Övertag'
     - 'Utökning lån'
     - 'Utlåning mot obelånat'
   #
-  purposes:
+  aimText:
     type: string
     description: Ändamål och syfte ska sättas på respektive lån som går över till LP. I de fall där det inte specifiseras ska handläggaren göra det innan överföring till SAP. Detta för att de ska bli rätt i uppföljning ned i SAS och den finsiella rapporteringen.
     enum:
@@ -4851,12 +4861,12 @@ definitions:
         $ref: '#/definitions/loanId'
       loanNumber:
         $ref: '#/definitions/loanNumber'
+      purposeOfLoan:
+        $ref: '#/definitions/mainPurposes'
       loanAmount:
         $ref: '#/definitions/loanAmount'
-      numberOfLoans:
-        $ref: '#/definitions/numberOfLoans'
-      purposeOfLoan:
-        $ref: '#/definitions/purposes'
+      aims:
+        $ref: '#/definitions/aimType'
   #
   Loan:
     $ref: '#/definitions/loanType'
@@ -4866,6 +4876,19 @@ definitions:
     description: Array list of loanType (Loan)
     items:
       $ref: '#/definitions/loanType'
+  #
+  aimType:
+    description: TBD
+    required:
+    - aimId
+    type: object
+    properties:
+      aimId:
+        $ref: '#/definitions/aimId'
+      aimText:
+        $ref: '#/definitions/aimText'
+      loanAmountPart:
+        $ref: '#/definitions/loanAmountPart'
   #
   updateLoanType:
     description: This represent the customer loan structure
@@ -4877,10 +4900,8 @@ definitions:
         $ref: '#/definitions/loanId'
       loanAmount:
         $ref: '#/definitions/loanAmount'
-      numberOfLoans:
-        $ref: '#/definitions/numberOfLoans'
       purposeOfLoan:
-        $ref: '#/definitions/purposes'
+        $ref: '#/definitions/aimText'
   #
   ###########################################
   # ExtLoanType
