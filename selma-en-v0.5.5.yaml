@@ -197,6 +197,33 @@ paths:
       responses:
         200:
           description: OK
+  #
+  ##############################################################
+  # getProcessAll
+  ##############################################################
+  /v1/getProcess:
+    get:
+      tags:
+      - Processes
+      summary: TBD
+      description: TBD
+      operationId: getProcessAll
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+      responses:
+        200:
+          description: Successful
+          schema:
+             $ref: '#/definitions/LinksAll'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
   ##############################################################
   # Processes
   ##############################################################
@@ -5302,6 +5329,30 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/kycInformationType'
+  #
+  LinksAll:
+    description: TBD
+    type: object
+    properties:
+      processes:
+        $ref: '#/definitions/Processes'
+      applicants:
+        $ref: '#/definitions/Applicants'
+      loans:
+        $ref: '#/definitions/Loans'
+  #
+  hrefType:
+      description: Link to a resource
+      type: object
+      properties:
+        href:
+          $ref: '#/definitions/hrefEntry'
+  #
+  hrefEntry:
+      description: Link to a resource
+      type: string
+      example: /v1/Applicants/{processId}
+#
 ####################################################################################
 ####################################################################################
 # END Type definitions
