@@ -3180,10 +3180,6 @@ paths:
       parameters:
         # parameters required for getBudgets request
         - $ref: '#/parameters/X-process-ID'
-        - name: companyId
-          in: body
-          schema:
-            $ref: '#/definitions/companyId'
       responses:
         200:
           description: Successful
@@ -5188,8 +5184,6 @@ definitions:
   budgetType:
     description: Type definition for companyBudget
     required:
-    - budgetId
-    - companyId
     - processId
     type: object
     properties:
