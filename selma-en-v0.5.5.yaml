@@ -78,6 +78,8 @@ info:
   # 2019-03-20 0.5.4 kal householdMemberId has been added to struct
   # 2019-03-20 0.5.5 kal New version, all path parameters replaced by in body parameters
   # 2019-03-20           Add new LoanType to support different aims
+  # 2019-03-23           RevenueId has been removed from RevenueTyp
+  #                      json files has been added for Landshypotek type cases
   ##########################################################################################
   # Errors definitions has not been defined in any responses
   ##########################################################################################
@@ -2892,10 +2894,6 @@ paths:
       parameters:
         # parameters required for getCompanylEconomies request
         - $ref: '#/parameters/X-process-ID'
-        - name: companyId
-          in: body
-          schema:
-            $ref: '#/definitions/companyEconomyId'
       responses:
         200:
           description: Successful
@@ -3231,10 +3229,10 @@ paths:
             $ref: '#/definitions/ErrorModel'
   #
   ############################################################
-  # Update of a specific Budget
+  # get a specific Budget
   ############################################################
   /v1/Budget:
-    patch:
+    post:
       tags:
         - Budgets
       summary: update a specific Budget in Activiti
@@ -3249,10 +3247,11 @@ paths:
       parameters:
       # required parameters to update a Budget in Activiti
         - $ref: '#/parameters/X-process-ID'
-        - name: companyEconomyId
+        - name: companyEconomyBudgetYear
           in: body
           schema:
-            $ref: '#/definitions/Budget'
+            # contains companyEconomyId and budgetYear
+            $ref: '#/definitions/companyEconomyBudgetYearId'
       responses:
         200:
           description: Successful
@@ -3322,10 +3321,10 @@ paths:
       parameters:
       # required parameters to delete a budget in Activiti
         - $ref: '#/parameters/X-process-ID'
-        - name: budgetId
+        - name: companyEconomyId
           in: body
           schema:
-            $ref: '#/definitions/budgetId'
+            $ref: '#/definitions/companyEconomyId'
       responses:
         200:
           description: Successful
@@ -4133,7 +4132,7 @@ definitions:
     type: string
     description: generated guid in the model
     format: uuid
-    example: '{companyId": "02d6a03e-5895-4077-98f7-7a5c192868b7"}'
+    example: '{"companyId": "461460c2-3d14-11e9-b210-d663bd873d93"}'
   orgNumber:
     description: Organisation number from external service, swedish ssn (UC or SAP for existing
       companies)
@@ -4257,7 +4256,7 @@ definitions:
     description: Collateral identity
     type: string
     format: uuid
-    example: '{"collateralId": "82faaa1a-42f7-4d87-aecf-96c450a0ce59"}'
+    example: '{"collateralId": "b25961de-3cc3-11e9-b210-d663bd873d93"}'
   collateralCode:
     description: TBD - Fastighetskod (ska denna användas?)
     type: string
@@ -4309,7 +4308,7 @@ definitions:
     description: Type definitions for external loans
     type: string
     format: uuid
-    example: '{"extloanId": "3164d347-e173-4c4f-8839-26d32716e5bf"}'
+    example: '{"extloanId": "5aa735e8-3cbd-11e9-b210-d663bd873d93"}'
   extCreditInstitut:
     description: Kreditinstitut, Bank
     type: string
@@ -4346,7 +4345,7 @@ definitions:
     description: Type definitions for personal economy
     type: string
     format: uuid
-    example: '{"personalEconomyId": "b0c0edaa-3d75-4364-9179-1ecc8d9198d0"}'
+    example: '{"personalEconomyId": "52a50f80-3d28-11e9-b210-d663bd873d93"}'
   #
   yearlyIncome:
     description: Årlig inkomst från näringsverksamhet
@@ -4417,23 +4416,33 @@ definitions:
     type: string
     description: Type definition for company economy
     format: uuid
-    example: '32084646-d030-4c51-a316-b1342c3551ab'
+    example: '{ "companyEconomyId": "4804f0c2-3d2d-11e9-b210-d663bd873d93"}'
+  #
+  companyEconomyBudgetYearId:
+    type: object
+    description: type defintion for individual budget
+    properties:
+      companyEconomyId:
+        $ref: '#/definitions/companyEconomyId'
+      budgetId:
+        $ref: '#/definitions/budgetYear'
+    example: '{ "companyEconomyId": "4804f0c2-3d2d-11e9-b210-d663bd873d93", "budgetYear": 2019}'
   #
   ####################################
   # revenueType
   ####################################
-  revenueId:
-    description: Unique identity key
-    type: string
-    format: uuid
-    example: 'd85fa472-3f31-11e9-b210-d663bd873d93'
+  #revenueId:
+  #  description: Unique identity key
+  #  type: string
+  #  format: uuid
+  #  example: 'd85fa472-3f31-11e9-b210-d663bd873d93'
   revenueYear:
     description: year of revenue, föregående år och 2 år tillbaka. Även om resultat inte fastställt
       så ber vi kunden registrera uppskattat. När vi väl kommer till LP så kommer handläggaren
-      ändå verifiera bokslutet.
+      ändå verifiera bokslutet. Detta fält är read-only i användargränssnittet
     type: integer
   revenue:
-    description: Företagets omsättning för året angivet i revenueYear
+    description: Företagets omsättning för året angivet i revenueYear (3 år)
     type: number
     format: float
     example: 2000000
@@ -4441,11 +4450,11 @@ definitions:
   #######################################
   # BudgetType
   #######################################
-  budgetId:
-    description: Type definition for company budget
-    type: string
-    format: uuid
-    example: '{"budgetId": "32084646-d030-4c51-a316-b1342c3551dc"}'
+  #budgetId:
+  #  description: Type definition for company budget
+  #  type: string
+  #  format: uuid
+  #  example: '{"budgetId": "32084646-d030-4c51-a316-b1342c3551dc"}'
   #
   budgetYear:
     description: Budget avser år, ska generas av API, föregående år - 2 år. Value1-7 är intäkter och summeras i Loan Process
@@ -4782,6 +4791,7 @@ definitions:
     required:
     - householdId
     - householdMemberId
+    type: object
     properties:
       householdId:
         $ref: '#/definitions/householdId'
@@ -5153,8 +5163,8 @@ definitions:
     - revenue
     type: object
     properties:
-      revenueId:
-        $ref: '#/definitions/revenueId'
+      #revenueId:
+      #  $ref: '#/definitions/revenueId'
       revenueYear:
         $ref: '#/definitions/revenueYear'
       revenue:
@@ -5189,10 +5199,24 @@ definitions:
     properties:
       processId:
         $ref: '#/definitions/processId'
-      companyId:
-        $ref: '#/definitions/companyId'
       companyEconomyId:
-        $ref: '#/definitions/budgetId'
+        $ref: '#/definitions/companyEconomyId'
+      budgetYears:
+        $ref: '#/definitions/budgetYear'
+  #
+  Budget:
+    $ref: '#/definitions/budgetType'
+  #
+  Budgets:
+    description: Return an array of type budgetType
+    type: array
+    items:
+      $ref: '#/definitions/budgetType'
+  #
+  BudgetYear:
+    description: TBD
+    type: object
+    properties:
       budgetYear:
         $ref: '#/definitions/budgetYear'
       value1:
@@ -5245,15 +5269,6 @@ definitions:
         $ref: '#/definitions/value24'
       value25:
         $ref: '#/definitions/value25'
-  #
-  Budget:
-    $ref: '#/definitions/budgetType'
-  #
-  Budgets:
-    description: Return an array of type budgetType
-    type: array
-    items:
-      $ref: '#/definitions/budgetType'
   #
   ###############################################
   # Definition ProcessType
