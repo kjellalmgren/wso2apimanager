@@ -80,6 +80,7 @@ info:
   # 2019-03-20           Add new LoanType to support different aims
   # 2019-03-23           RevenueId has been removed from RevenueTyp
   #                      json files has been added for Landshypotek type cases
+  # 2019-03-24 0.5.5 kal Added PUT company after external service provider
   ##########################################################################################
   # Errors definitions has not been defined in any responses
   ##########################################################################################
@@ -1047,6 +1048,76 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/updateCompanyType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'     
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  ########################################################
+  # Add a company from external service provider
+  ########################################################
+  #/v1/Copmany:
+    put:
+      tags:
+        - Companies
+      summary: add a specific company to the processid in activiti
+      description: Company will be add when customer login to the service thru a external service provider
+      operationId: AddCompany
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # required parameters to delete a customer in Activiti
+        - $ref: '#/parameters/X-process-ID'
+        - name: AddCompany
+          in: body
+          schema:
+            $ref: '#/definitions/Company'
+      responses:
+        200:
+          description: Successful
         400:
           description: 'Bad request'  
           schema:
@@ -4158,7 +4229,7 @@ definitions:
     - 'Fjäderfäskötsel'
     - 'Hästverksamhet'
     - 'Annan djurskötsel'
-    - 'Prod av skog'
+    - 'Produktion av skog'
     - 'Förädling av skog'
     - 'Övrig skogsverksamhet'
     - 'Maskinenteprenad'
@@ -4169,6 +4240,14 @@ definitions:
     - 'Övrig *tas bort*'
     example: 'Jordbruksväxter'
   #
+  industriCode:
+    description: SNI-code from eternal company service
+    type: string
+    example: '41200'
+  industriText:
+    description: SNI-Text from external company service, catagory text
+    type: string
+    example: 'Byggentreprenör'
   selectedCompany:
     description: Customer has selected this company for the loan to apply for
     type: boolean
@@ -4731,6 +4810,10 @@ definitions:
         $ref: '#/definitions/companyCreated'
       businessFocus:
         $ref: '#/definitions/businessFocus'
+      industriCode:
+        $ref: '#/definitions/industriCode'
+      industriText:
+        $ref: '#/definitions/industriText'
       selectedCompany:
         $ref: '#/definitions/selectedCompany'
   #
