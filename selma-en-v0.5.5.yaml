@@ -3235,7 +3235,7 @@ paths:
     post:
       tags:
         - Budgets
-      summary: update a specific Budget in Activiti
+      summary: get a specific Budget to a company in Activiti
       description: >-
         TBD
       operationId: updateBudget
@@ -3247,11 +3247,11 @@ paths:
       parameters:
       # required parameters to update a Budget in Activiti
         - $ref: '#/parameters/X-process-ID'
-        - name: companyEconomyBudgetYear
+        - name: companyEconomyId
           in: body
           schema:
-            # contains companyEconomyId and budgetYear
-            $ref: '#/definitions/companyEconomyBudgetYearId'
+            # contains companyEconomyId to access a budget records for a company
+            $ref: '#/definitions/companyEconomyId'
       responses:
         200:
           description: Successful
@@ -3998,7 +3998,6 @@ definitions:
 # Request definitions
 ########################################
   #
-  #
   caseId:
     description: reserved caseId in Loan Process
     type: string
@@ -4418,16 +4417,6 @@ definitions:
     format: uuid
     example: '{ "companyEconomyId": "4804f0c2-3d2d-11e9-b210-d663bd873d93"}'
   #
-  companyEconomyBudgetYearId:
-    type: object
-    description: type defintion for individual budget
-    properties:
-      companyEconomyId:
-        $ref: '#/definitions/companyEconomyId'
-      budgetId:
-        $ref: '#/definitions/budgetYear'
-    example: '{ "companyEconomyId": "4804f0c2-3d2d-11e9-b210-d663bd873d93", "budgetYear": 2019}'
-  #
   ####################################
   # revenueType
   ####################################
@@ -4456,6 +4445,11 @@ definitions:
   #  format: uuid
   #  example: '{"budgetId": "32084646-d030-4c51-a316-b1342c3551dc"}'
   #
+  budgetId:
+    description: unique identifier for a specifict budget
+    type: string
+    format: uuid
+    example: '{ "budgetId": "6737d7be-520f-47f5-a761-b24c1db2df5e"}'
   budgetYear:
     description: Budget avser år, ska generas av API, föregående år - 2 år. Value1-7 är intäkter och summeras i Loan Process
     type: integer
