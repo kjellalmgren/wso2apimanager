@@ -80,7 +80,7 @@ info:
   # 2019-03-20           Add new LoanType to support different aims
   # 2019-03-23           RevenueId has been removed from RevenueTyp
   #                      json files has been added for Landshypotek type cases
-  # 2019-03-24 0.5.5 kal Added PUT company after external service provider
+  # 2019-03-24 0.5.5 kal Added company PUT after external service provider
   ##########################################################################################
   # Errors definitions has not been defined in any responses
   ##########################################################################################
@@ -208,8 +208,8 @@ paths:
     get:
       tags:
       - Processes
-      summary: TBD
-      description: TBD
+      summary: Return all data for a given processid
+      description: Return all data for all object in the activiti process regardless if the contains any information, empty objects will return null
       operationId: getProcessAll
       produces:
       - application/json
@@ -235,7 +235,7 @@ paths:
       tags:
       - Processes
       summary: get a list of active processes for a in:body parameter customerId
-      description: Return a list of active applications for a customer.
+      description: Return a list of active applications for a specific customer.
       operationId: getProcesses
       # The method will handle the following MIME/Types
       produces:
@@ -306,8 +306,8 @@ paths:
     delete:
       tags:
       - Processes
-      summary: Set status CLOSEDBYAPPLICANT at the X-process-ID in Activiti
-      description: The customer has choise to end the application, the whole X-process-ID will be CLOSEDBYAPPLICANT and will be removed during the batch thinning process in Loan Process.
+      summary: Set status CLOSEDBYAPPLICANT at the X-process-ID in Activiti 
+      description: The customer has choise to end the application process, the whole X-process-ID will be CLOSEDBYAPPLICANT and will be removed during the batch thinning process in Loan Process. A call to LP is required to set ststus on the reserved caseid.
       operationId: deleteProcess
       # The method will handle the following MIME/Types
       produces:
@@ -370,7 +370,7 @@ paths:
   ##################################################
   # reserveCaseId in Loan Process
   # We should have a discussion if we should use
-  # customerId as a parameter in this method
+  # customerId as a header parameter in this method
   ##################################################
   /v1/reserveCaseId:
     post:
@@ -525,7 +525,7 @@ paths:
       tags:
         - Applicants
       summary: get a list of available applicants
-      description: Get a list of available applicants by ProcessId....
+      description: Get a list of available applicants by a given ProcessId, this will by used by "Översiktsidan"
       operationId: getApplicants
       # The method will handle the following MIME/Types
       produces:
@@ -738,7 +738,7 @@ paths:
       tags:
         - Applicants
       summary: update a specific applicant in Activiti
-      description: Only update the values that the customer is allowed på update, it´s a subset of Applicant, se updateApplicantType definitions.
+      description: Only update the values that the customer is allowed på update, it´s a subset of Applicant, see updateApplicantType definitions.
       operationId: updateApplicant
       # The method will handle the following MIME/Types
       produces:
@@ -1029,7 +1029,7 @@ paths:
         - Companies
       summary: update a specific company in Activiti
       description: >-
-        TBD
+        Update a specific company, only the elements allowed to be changed, see definition of updateCompanyType
       operationId: updateCompany
       # The method will handle the following MIME/Types
       produces:
@@ -1168,10 +1168,11 @@ paths:
   ########################################################
   #/v1/Company:
     delete:
+      deprecated: true
       tags:
         - Companies
       summary: Delete a specific company in Activiti
-      description: descripition
+      description: This should probably not be possibly, we are using a external service provider
       operationId: deleteCompany
       # The method will handle the following MIME/Types
       produces:
@@ -1188,6 +1189,8 @@ paths:
       responses:
         200:
           description: Successful
+          schema:
+            $ref: '#/definitions/200OK'
         400:
           description: 'Bad request'  
           schema:
@@ -1241,7 +1244,7 @@ paths:
       tags:
         - Households
       summary: get a list of available households
-      description: Get a list of available households by ProcessId....
+      description: Get a list of available households by ProcessId
       operationId: getHouseholds
       # The method will handle the following MIME/Types
       produces:
@@ -1301,10 +1304,82 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
+  #####################################################################################
+  # Add household to the model
+  #####################################################################################
+  /v1/Household:
+    put:
+      tags:
+        - Households
+      summary: Add a household to the model
+      description: TBD
+      operationId: addHousehold
+      # The method will handle the following MIME/Types
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      # parameters required for getHouseholds request
+        - $ref: '#/parameters/X-process-ID'
+        - name: addHousehold
+          in: body
+          schema:
+            $ref: '#/definitions/Household'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/Household'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'     
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
   ##################################################
   # get a specific household
   ##################################################
-  /v1/Household:
+  #/v1/Household:
     post:
       tags:
         - Households
@@ -1667,7 +1742,7 @@ paths:
       tags:
         - Households
       summary: Remove a applicant from a specific houshold
-      description: Will remove {householdMeber} from the array householdMembers in Household 
+      description: Will remove {householdMember} from the array householdMembers in Household 
       operationId: deleteHouseholdMember
       # The method will handle the following MIME/Types
       produces:
@@ -1942,14 +2017,14 @@ paths:
             $ref: '#/definitions/ErrorModel'
   #
   ############################################################
-  # Update of a specific household
+  # Add/Update of a specific collateral
   ############################################################
   #/v1/Collateral:
     patch:
       tags:
         - Collaterals
       summary: update a specific collateral in Activiti
-      description: descripition
+      description: Add or update a specific collateral in the model, connects to a external service provider of LMV/Metria
       operationId: updateCollateral
       # The method will handle the following MIME/Types
       produces:
@@ -2022,7 +2097,7 @@ paths:
         - Collaterals
       summary: Delete a specific collateral in Activiti
       description: >-
-        TBD
+        Will remove a specific collaterals from the model in Activiti
       operationId: deleteCollateral
       # The method will handle the following MIME/Types
       produces:
