@@ -159,7 +159,7 @@ securityDefinitions:
   application:
     type: oauth2
     # This should be updated to the Token URL of your OAuth provider.
-    tokenUrl: http://example.com/oauth/token
+    tokenUrl: http://landshypotek.se/oauth/token
     flow: application
     scopes:
       write: allows modifying resources
@@ -315,7 +315,7 @@ paths:
       consumes:
       - application/json
       parameters:
-        - $ref: '#/definitions/caseIdStatus'
+        - $ref: '#/parameters/caseIdStatus'
         - name: customerId
           in: body
           schema:
@@ -1553,7 +1553,7 @@ paths:
   # Delete a specific household
   ############################################
   /v1/deleteHousehold:
-    post:
+    delete:
       tags:
         - Households
       summary: Delete a specific household in Activiti
@@ -3838,7 +3838,7 @@ paths:
     post:
       tags:
         - submitApplications
-      summary: Submit Application to Landshypotek and handling by a officer
+      summary: Submit Application to Landshypotek and handeld by a officer
       description: Submit customer application to Loan Process if we find the application to be close to complete
       operationId: submitApplication
       # The method will handle the following MIME/Types
@@ -4176,17 +4176,20 @@ definitions:
     description: reserved caseId in Loan Process
     type: string
     example: '{"caseId": "106800"}'
+  #
   submitApplication:
     description: Jag försäkrar att lämnade uppgifter är korrekta. Denna måste vara satt till true, annars kan inte ansökan skickas in till LP. Sökande ska klicka i detta val. Om vi tycker att sökande behöver fylla i mer för att skicka in ansökan ska denna inte gå att sätta till true.
     type: boolean
     enum:
     - true
     - false
-    example: true
+    example: '{"submitApplication": true}'
+  #
   submitReadyness:
     description: En skala för att bedöm graden av ifylld ansökan
     type: integer
     example: 1
+  #
   caseIdStatus:
     type: string
     description: Set status on the caseId
@@ -4197,23 +4200,28 @@ definitions:
     - CLOSEDBYOFFICER
     - CLOSEDBYTHINNING
     - READYFOROFFICER
+  #
   processId:
     type: string
     description: Activiti framework unique identification
     format: uuid
     example: '9a65d28a-46bb-4442-b96d-6a09fda6b18b'
+  #
   processCreatedDate:
     description: Activiti, processId created date
     example: '2019-03-01'
+  #
   householdMemberId:
     description: unique identification of a household member
     type: string
     format: uuid
     example: '{"householdMemberId": "a3196b54-4ae9-11e9-8646-d663bd873d93"}'
+  #
   householdMember:
     description: Member in a household
     type: string
     example: '19640120-3887' # Anna Andersson
+  #
   householdMembers:
     description: This holds a array of one to many Applicant/make/maka in a household
     type: array
@@ -4226,23 +4234,28 @@ definitions:
     type: string
     description: customerId is swedish ssn or corporate organisation number
     example: { 'customerId': '19640120-3887' } # Anna Andersson
+  #
   applicantId:
     type: string
     description: unique id for each applicant in the credit case
     format: uuid
     example: '12ab301d-b0ae-46ba-ac99-ff7389fe356e'
+  #
   applicantName:
     type: string
     description: Full name of the customer/applicant
     example: 'Anna Andersson'
+  #
   applicantAddress:
     type: string
     description: Street address of Applicant
     example: 'Stora vägen 1'
+  #
   applicantPostAddress:
     type: string
     description: Postal number and postal city
     example: '420 20 Katrineholm'
+  #
   stakeholderType:
     description: <h3>StakeholderType</h3><br>Maps to Loan Process stakeholders<br><b>'Borgensman'<br>'Driftbolag'<br>'Maka/Make/regpartner'<br>'sambo'<br>'ägarandel i pant'<br>'ägare juridiskt över 50%'<br>'övriga med ekonomisk intressegemenskap'<br>'NA'</b> - betyder att de är en sökande på lånet.<br>
     type: string
@@ -4257,14 +4270,17 @@ definitions:
     - SAMBO
     - EKONOMISKINTRESSEGEMENSKAP
     example: 'NA'
+  #
   applicantEmail:
     type: string
     description: applicant enter email for notification
     example: 'anna.andersson@gmail.com'
+  #
   applicantMobileNumber:
     type: string
     description: applicant entered mobile number for notification
     example: '07344455666'
+  #
   applicantMember:
     type: boolean
     description: Member in Landshypotek Ekonomiska förening (true/false)
@@ -4272,10 +4288,12 @@ definitions:
     - true
     - false
     example: true
+  #
   applicantEmployeed:
     type: string
     description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer
     example: EMPLOYEED
+  #
   applicantLPEmployment:
     type: string
     description: employment mapping to Loan Process PERMANENT - Anställd, tills-vidare-anställd TEMPORARY - Tidbegränsad anställning PROBATIONARY - Provanställning UNEMPLOYMENT_INSURANCE - Arbetslöshetskassa SELF_EMPLOYED - Eget företag STUDENT_AID - Studiestöd PENSION - Inkomst av pension
@@ -4288,9 +4306,11 @@ definitions:
     - 'SELF_EMPLOYED'
     - 'STUDENT_AID'
     - 'PENSION'
+  #
   applicantBySms:
     description: Applicant want to be notified by sms (true/false)
     type: boolean
+  #
   applicantByeMail:
     description: Applicant want to be notified by eMail (true/false)
     type: boolean
@@ -4298,6 +4318,7 @@ definitions:
     - true
     - false
     example: true
+  #
   ###############################
   # Companies
   ###############################
@@ -4306,20 +4327,24 @@ definitions:
     description: generated guid in the model
     format: uuid
     example: '{"companyId": "461460c2-3d14-11e9-b210-d663bd873d93"}'
+  #
   orgNumber:
     description: Organisation number from external service, swedish ssn (UC or SAP for existing
       companies)
     type: string
     example: '19550101-1010'
+  #
   companyName:
     description: Full name of the company from external services or BusinessName in SAP.
     type: string
     example: 'Anna Andersson Mjölkproduktion'
+  #
   companyCreated:
     description: 'date when company was established, from external service or existing
     type: string
       customer in SAP'
     example: '2012-01-01'
+  #
   businessFocus:
     description: Huvudsaklig verksamhetsinriktning (kan vi få den via extern tjänst)
     type: string
@@ -4347,10 +4372,12 @@ definitions:
     description: SNI-code from eternal company service
     type: string
     example: '41200'
+  #
   industriText:
     description: SNI-Text from external company service, catagory text
     type: string
     example: 'Byggentreprenör'
+  #
   selectedCompany:
     description: Customer has selected this company for the loan to apply for
     type: boolean
@@ -5571,96 +5598,97 @@ definitions:
 # END header definitions
 ####################################################################################
 ####################################################################################
-# Parameters
+# Parameters (has been removed from this API, we use header and in body data
+# in request)
 ####################################################################################
 ####################################################################################
 parameters:
-  customerId:
-    name: customerId
-    in: path
-    required: true
-    type: string
-  processId:
-    name: processId
-    in: path
-    required: true
-    type: string
-    format: uuid
-  caseId:
-    name: caseId
-    in: path
-    required: true
-    type: string
-  companyId:
-    name: companyId
-    in: path
-    required: true
-    type: string
-    format: uuid
-  householdId:
-    name: householdId
-    in: path
-    required: true
-    type: string
-    format: uuid
-  householdMember:
-    name: householdMember
-    in: path
-    required: true
-    type: string
-  childId:
-    name: childId
-    in: path
-    required: true
-    type: string
-    format: uuid
-  collateralId:
-    name: collateralId
-    in: path
-    required: true
-    type: string
-    format: uuid
-  loanId:
-    name: loanId
-    in: path
-    required: true
-    type: string
-    format: uuid
-  extloanId:
-    name: extloanId
-    in: path
-    required: true
-    type: string
-    format: uuid
-  personalEconomyId:
-    name: personalEconomyId
-    in: path
-    required: true
-    type: string
-    format: uuid
-  companyEconomyId:
-    name: companyEconomyId
-    in: path
-    required: true
-    type: string
-    format: uuid
-  kycId:
-    name: kycId
-    in: path
-    required: true
-    type: string
-    format: uuid
+  #customerId:
+  #  name: customerId
+  #  in: path
+  #  required: true
+  #  type: string
+  #processId:
+  #  name: processId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
+  #caseId:
+  #  name: caseId
+  #  in: path
+  #  required: true
+  #  type: string
+  #companyId:
+  #  name: companyId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
+  #householdId:
+  #  name: householdId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
+  #householdMember:
+  #  name: householdMember
+  #  in: path
+  #  required: true
+  #  type: string
+  #childId:
+  #  name: childId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
+  #collateralId:
+  #  name: collateralId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
+  #loanId:
+  #  name: loanId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
+  #extloanId:
+  #  name: extloanId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
+  #personalEconomyId:
+  #  name: personalEconomyId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
+  #companyEconomyId:
+  #  name: companyEconomyId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
+  #kycId:
+  #  name: kycId
+  #  in: path
+  #  required: true
+  #  type: string
+  #  format: uuid
   ############################################################################
   # submitApplication, true; allow to sumbit, complitines 90%, otherwise false
   ############################################################################
-  submitApplication:
-    name: submitApplication
-    in: path
-    required: true
-    type: boolean
-    enum:
-    - true
-    - false
+  #submitApplication:
+  #  name: submitApplication
+  #  in: path
+  #  required: true
+  #  type: boolean
+  #  enum:
+  #  - true
+  #  - false
   #
   ############################
   # Header definitions
