@@ -3551,7 +3551,7 @@ paths:
   # KycInformations
   #########################################
   /v1/KycInformations:
-    post:
+    get:
       tags:
         - KycInformations
       summary: get a list of available KycInformations
@@ -5521,15 +5521,6 @@ definitions:
         $ref: '#/definitions/processId'
       caseId:
         $ref: '#/definitions/caseId'
-  #
-  #processId:
-  #  description: Generated processId to be used i header X-process-ID htru out the hole application
-  #  type: string
-  #  format: uuid
-  #
-  #caseId:
-  #  description: Generated case id in Loan Process
-  #  type: string
   #
   #################################################
   # Definition KycInformationType
