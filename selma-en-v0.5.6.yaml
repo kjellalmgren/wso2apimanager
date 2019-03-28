@@ -82,6 +82,8 @@ info:
   #                      json files has been added for Landshypotek type cases
   # 2019-03-24 0.5.5 kal Added company PUT after external service provider
   # 2019-03-25 0.5.6 kal Added addProcess to tags - processes
+  #                      Changed Know-your-customer information
+  # 2019-03-28 0.56 kal  Bugg in Applicant regarding example value for customerId
   ##########################################################################################
   # Errors definitions has not been defined in any responses
   ##########################################################################################
@@ -110,27 +112,22 @@ info:
     **Processes**<br>
     **Processes/Process**<br>
     **Security/oauth2**<br>
-    **ApplicationData**<br>
+    **Applicants/Applicant**<br>
+    **Households/Household**<br>
     **Loans/Loan**<br>
-    **Applicant/ELoans/ELoan**<br>
-    **Applicant/PersonalEconomies/PersonalEconomy**<br>
-    **Applicant/ApplicantInformation**
-    **Companies/Budgets/Budget**<br>
-    **Companies/CompanyEconomies/CompanyEconomy**<br>
-    **Companies**/**Collaterals**/**Colleteral**<br><br>
-    
+    **ExtLoans/ExtLoan**<br>
+    **PersonalEconomies/PersonalEconony**<br>
+    **Companies/Company**<br>
+    **CompanyEconomies/CompanyEconomy**<br>
+    **Collaterals/Colleteral**<br>
+    **Budgets/Budget**<br>
+    **KycInformations/KycInformation**<br>
+    **SubmitApplications**<br>
+    <br>
     To be decided where this should be connected (Sökande/Medsökande)<br>
     
-    **Households**<br>
-    **Households/Household**<br>
-    **Households/Houseold/householdMember**<br>
-    **Households/Household/Cars/Car**<br>
-    **Households/Household/Childs/Child**<br>
-    **KycInformations**<br>
-    **KycInformations/KycInformation**<br><br>
-    When customer logg-in to Selma-EN, we will create a processId with apllicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
-    All update-methods should act as a add-method if e.g.Applicant does not exist
-    
+    When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
+  #  
   termsOfService: 'http://www.landshypotek.se/sme/terms'
   license:
     name: MIT
@@ -144,7 +141,7 @@ host: 'localhost:8443'
 basePath: /
 tags:
   - name: Selma SME(EN) API Definitions
-    description: Access layer to the process engine(Activiti)
+    description: Access layer to the process engine (Activiti)
 schemes:
   - https
   - http
@@ -201,32 +198,6 @@ paths:
       responses:
         200:
           description: OK
-  #
-  ##############################################################
-  # getProcessAll
-  ##############################################################
-  /v1/getProcess:
-    get:
-      tags:
-      - Processes
-      summary: Return all data for a given processid
-      description: Return all data for all object in the activiti process regardless if the contains any information, empty objects will return null
-      operationId: getProcessAll
-      produces:
-      - application/json
-      consumes:
-      - application/json
-      parameters:
-        - $ref: '#/parameters/X-process-ID'
-      responses:
-        200:
-          description: Successful
-          schema:
-             $ref: '#/definitions/LinksAll'
-        404:
-          description: 'Not found'
-          schema:
-            $ref: '#/definitions/ErrorModel'
   #
   ##############################################################
   # Processes
@@ -300,6 +271,32 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
+  ##############################################################
+  # getProcessAll
+  ##############################################################
+  /v1/getProcess:
+    get:
+      tags:
+      - Processes
+      summary: Return all data for a given processid
+      description: Return all data for all object in the activiti process regardless if the contains any information, empty objects will return null
+      operationId: getProcessAll
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+      responses:
+        200:
+          description: Successful
+          schema:
+             $ref: '#/definitions/LinksAll'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
   ####################################################
   # addProcess
   ####################################################
@@ -308,7 +305,7 @@ paths:
       tags:
       - Processes
       summary: Operation will be invoked when a customer want to create a new application
-      description: This operation will return a processid that has to be used i header X-process-ID for all other requests in the application. As parameter we will allways be using STARTEDBYAPPLICANT
+      description: This operation will return a processid that has to be used i header X-process-ID for all other requests in all APIs. As parameter we will allways be using STARTEDBYAPPLICANT
       operationId: addProcess
       produces:
       - application/json
@@ -334,7 +331,7 @@ paths:
       tags:
       - Processes
       summary: Set status CLOSEDBYAPPLICANT at the X-process-ID in Activiti 
-      description: The customer has choise to end the application process, the whole X-process-ID will be CLOSEDBYAPPLICANT and will be removed during the batch thinning process in Loan Process. A call to LP is required to set ststus on the reserved caseid.
+      description: The customer has choice to end the application process, the whole X-process-ID will be CLOSEDBYAPPLICANT and will be removed during the batch thinning process in Loan Process. A call to LP is required to set ststus on the reserved caseid.
       operationId: deleteProcess
       # The method will handle the following MIME/Types
       produces:
@@ -4233,7 +4230,7 @@ definitions:
   customerId:
     type: string
     description: customerId is swedish ssn or corporate organisation number
-    example: { 'customerId': '19640120-3887' } # Anna Andersson
+    example: '{ "customerId": "19640120-3887"}'  # Anna Andersson
   #
   applicantId:
     type: string
@@ -5395,6 +5392,7 @@ definitions:
         $ref: '#/definitions/companyEconomyId'
       revenues:
         $ref: '#/definitions/revenueType'
+  #
   ##############################################
   # Definition BudgetType
   ##############################################
@@ -5693,7 +5691,10 @@ parameters:
     format: uuid
   #
   caseIdStatus:
+    description: Will be used when a applicant want to start an application (**STARTEDBYAPPLICANT**) or when a applicant want to close un application. In this case the applicant set status **CLOSEDBYAPPLICANT**. When this application is sent to Landshypotek the status will be set to **READYFOROFFICER**.
+      
     name: caseIdStatus
+    required: true
     in: header
     type: string
     enum:
@@ -5702,7 +5703,6 @@ parameters:
       - CLOSEDBYOFFICER     # av handläggare
       - CLOSEDBYTHINNING    # Gallring?
       - READYFOROFFICER     # Applicant has submitted the application
-    required: true
   #
   #X-customer-ID:
   #  description: TBD
