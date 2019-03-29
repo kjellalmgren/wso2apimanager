@@ -851,13 +851,11 @@ paths:
           in: body
           schema:
             $ref: '#/definitions/Applicant'
-      #requestBody:
-      #  $ref: '#/definitions/Applicant'
       responses:
         201:
           description: Successfully added
-          #schema:
-            #$ref: '#/definitions/Applicant'
+          schema:
+            $ref: '#/definitions/Applicant'
         400:
           description: 'Bad request'  
           schema:
