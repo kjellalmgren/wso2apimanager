@@ -83,7 +83,9 @@ info:
   # 2019-03-24 0.5.5 kal Added company PUT after external service provider
   # 2019-03-25 0.5.6 kal Added addProcess to tags - processes
   #                      Changed Know-your-customer information
-  # 2019-03-28 0.56 kal  Bugg in Applicant regarding example value for customerId
+  # 2019-03-28 0.5.6 kal Bugg in Applicant regarding example value for customerId
+  # 2019-03-29 0.5.7 kal Changed location for json-files
+  # 2019-04-01 0.5.7 kal customerCategory has been added to CompanyEconomies (from SAS)
   ##########################################################################################
   # Errors definitions has not been defined in any responses
   ##########################################################################################
@@ -4381,6 +4383,11 @@ definitions:
     - true
     example: true
   #
+  customerCategory:
+    description: Customer category return by SAS
+    type: integer
+    example: 1
+  #
   ###################################  
   # Household
   ###################################
@@ -5356,6 +5363,8 @@ definitions:
         $ref: '#/definitions/companyEconomyId'
       revenues:
         $ref: '#/definitions/revenueType'
+      customerCategory:
+        $ref: '#/definitions/customerCategory'
   #
   CompanyEconomy:
     $ref: '#/definitions/companyEconomyType'
@@ -5399,6 +5408,8 @@ definitions:
         $ref: '#/definitions/companyEconomyId'
       revenues:
         $ref: '#/definitions/revenueType'
+      customerCategory:
+        $ref: '#/definitions/customerCategory'
   #
   ##############################################
   # Definition BudgetType
