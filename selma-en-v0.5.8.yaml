@@ -1904,7 +1904,7 @@ paths:
   ######################################################################################
   # Get a list of available collaterals for a given processId in Activiti
   ######################################################################################
-  /v1/Collaterals:
+  /v1/getCollaterals:
     post:
       tags:
         - Collaterals
@@ -1972,8 +1972,8 @@ paths:
   #######################################################
   # get a specific colleteral
   #######################################################
-  /v1/Collateral:
-    post:
+  /v1/getCollateral:
+    get:
       tags:
         - Collaterals
       summary: Get a specific collateral by processId, customerId and collateralId
@@ -2044,7 +2044,7 @@ paths:
   ############################################################
   # Add/Update of a specific collateral
   ############################################################
-  #/v1/Collateral:
+  /v1/updateCollateral:
     patch:
       tags:
         - Collaterals
@@ -2116,7 +2116,7 @@ paths:
   #############################################################
   # Delete a specific colleteral
   #############################################################
-  #/v1/Collateral:
+  /v1/deleteCollateral:
     delete:
       tags:
         - Collaterals
