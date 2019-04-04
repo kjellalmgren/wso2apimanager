@@ -145,8 +145,8 @@ tags:
   - name: Selma SME(EN) API Definitions
     description: Access layer to the process engine (Activiti)
 schemes:
-  - https
   - http
+  - https
 # Under securityDefinitions we declare which security schemes can be used.
 # These definitions do not affect to the operations, but can be applied
 # using the 'security' key at the global level or the operation level.
@@ -200,6 +200,31 @@ paths:
       responses:
         200:
           description: OK
+  #
+  #############################################################
+  # file upload
+  #############################################################
+  /v1/upload:
+    post:
+      tags:
+      - Uploads
+      description: The file to upload.
+      operationId: fileUpload
+      summary: Uploads a file.
+      consumes:
+      - multipart/form-data
+      parameters:
+      - in: formData
+        name: upfile
+        type: array
+        items:
+          type: string
+          format: binary
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/200OK'
   #
   ##############################################################
   # Processes
@@ -277,7 +302,7 @@ paths:
   # getProcessAll
   ##############################################################
   /v1/getProcess:
-    get:
+    post:
       tags:
       - Processes
       summary: Return all data for a given processid

@@ -46,6 +46,6 @@ RUN apt-get update && \
 RUN update-alternatives --install "/usr/bin/java" "java" "${JAVA_HOME}/bin/java" 1 && \
     update-alternatives --set java "${JAVA_HOME}/bin/java"
 
-EXPOSE 9443 9763 8243 8280 10397 7711
+EXPOSE 9443 9763 8243 8280 10397 7711 8443
 
 ENTRYPOINT ["bin/wso2server.sh"]
