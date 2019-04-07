@@ -6,7 +6,7 @@
 
 	 $ docker network create --driver bridge selmasme-net
 	 $ docker run -d -p 9443:9443 --name apim --network selmasme-net -t tetracon/apim:2.6.0
-     $ docker run -d -p 9443:9443 --name apim --network="host" -t tetracon/apim:2.6.0
+     $ 
 
 ## How-to install Java8 in the container
 

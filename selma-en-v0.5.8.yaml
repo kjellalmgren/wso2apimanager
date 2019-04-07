@@ -87,6 +87,7 @@ info:
   # 2019-03-29 0.5.7 kal Changed location for json-files
   # 2019-04-01 0.5.7 kal customerCategory has been added to CompanyEconomies (from SAS)
   # 2019-04-04 0.5.8 kal File upload multipart has been added
+  # 2019-04-07 0.5.8 kal kycHighRiskIndustri has been added (högriskbransch)
   ##########################################################################################
   # Errors definitions has not been defined in any responses
   ##########################################################################################
@@ -4863,12 +4864,18 @@ definitions:
     - false
     example: false
   kycRelatedPublicFunction:
-    type: boolean
     description: Är du familjemedlem eller medarbetare till en person som har, eller som under de senaste 18 månaderna innehaft en viktig offentlig funktion?
+    type: boolean
     enum:
     - true
     - false
     example: false
+  kycHighRiskIndustri:
+    description: High risk industri, högriskbransch (true/false)
+    type: boolean
+    enum:
+    - true
+    - false
   #
   #################################################################
   # START Response definitions
@@ -5590,6 +5597,8 @@ definitions:
         $ref: '#/definitions/kycPublicFunction'
       kycRelatedPublicFunction:
         $ref: '#/definitions/kycRelatedPublicFunction'
+      kycHighRiskIndustri:
+        $ref: '#/definitions/kycHighRiskIndustri'
   #
   KycInformation:
     $ref: '#/definitions/kycInformationType'
