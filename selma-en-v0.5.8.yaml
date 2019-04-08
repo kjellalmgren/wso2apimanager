@@ -3078,7 +3078,7 @@ paths:
   # in Activiti
   ################################################################################
   /v1/getcompanyeconomies:
-    post:
+    get:
       tags:
         - CompanyEconomies
       summary: get a list of available CompanyEconomies
@@ -3362,7 +3362,7 @@ paths:
   # Get a list of available Budgets for a given processId on a companyId in Activiti
   ##################################################################################
   /v1/getbudgets:
-    post:
+    get:
       tags:
         - Budgets
       summary: get a list of available budgets
@@ -3787,7 +3787,7 @@ paths:
   #########################################################
   # Delete a specific KycInformation
   #########################################################
-  /v1/deletekKycinformation:
+  /v1/deletekkycinformation:
     delete:
       tags:
         - KycInformations
