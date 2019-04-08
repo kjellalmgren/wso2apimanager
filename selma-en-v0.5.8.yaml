@@ -231,7 +231,7 @@ paths:
   ##############################################################
   # Processes
   ##############################################################
-  /v1/getProcesses:
+  /v1/getprocesses:
     post:
       tags:
       - Processes
@@ -303,7 +303,7 @@ paths:
   ##############################################################
   # getProcessAll
   ##############################################################
-  /v1/getProcess:
+  /v1/getprocess:
     post:
       tags:
       - Processes
@@ -329,13 +329,13 @@ paths:
   ####################################################
   # addProcess
   ####################################################
-  /v1/updateProcess:
+  /v1/updateprocess:
     put:
       tags:
       - Processes
       summary: Operation will be invoked when a customer want to create a new application
       description: This operation will return a processid that has to be used i header X-process-ID for all other requests in all APIs. As parameter we will allways be using STARTEDBYAPPLICANT
-      operationId: addProcess
+      operationId: updateProcess
       produces:
       - application/json
       consumes:
@@ -355,7 +355,7 @@ paths:
   ####################################################
   # Delete Process
   ####################################################
-  /v1/deleteProcess:
+  /v1/deleteprocess:
     delete:
       tags:
       - Processes
@@ -425,7 +425,7 @@ paths:
   # We should have a discussion if we should use
   # customerId as a header parameter in this method
   ##################################################
-  /v1/reserveCaseId:
+  /v1/reserveeaseid:
     post:
       deprecated: true
       tags:
@@ -501,7 +501,7 @@ paths:
   ##################################################
   # setCaseIdStatus
   ##################################################
-  /v1/setCaseIdStatus:
+  /v1/setcaseidstatus:
     patch:
       tags:
         - Processes
@@ -574,7 +574,7 @@ paths:
   ####################################################################
   # Get a list of available applicant for a given processId in Activiti
   ####################################################################
-  /v1/Applicants:
+  /v1/getapplicants:
     post:
       tags:
         - Applicants
@@ -642,7 +642,7 @@ paths:
   ##################################################
   # get a specific Applicant
   ##################################################
-  /v1/Applicant:
+  /v1/getapplicant:
     post:
       tags:
         - Applicants
@@ -714,7 +714,7 @@ paths:
   ############################################
   # Delete a specific applicant
   ############################################
-  #/v1/Applicant:
+  /v1/deleteapplicant:
     delete:
       tags:
         - Applicants
@@ -787,7 +787,7 @@ paths:
   ###########################################
   # Update of a specific Applicant
   ###########################################
-  #/v1/Applicant:
+  /v1/updateapplicant:
     patch:
       tags:
         - Applicants
