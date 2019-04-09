@@ -2861,7 +2861,7 @@ paths:
   #################################################################
   # PersonalEconomy
   #################################################################
-  /v1/getPersonaleconomy:
+  /v1/getpersonaleconomy:
     post:
       tags:
         - PersonalEconomies
