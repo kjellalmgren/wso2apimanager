@@ -4325,7 +4325,6 @@ definitions:
     description: <h3>StakeholderType</h3><br>Maps to Loan Process stakeholders<br><b>'Borgensman'<br>'Driftbolag'<br>'Maka/Make/regpartner'<br>'sambo'<br>'ägarandel i pant'<br>'ägare juridiskt över 50%'<br>'övriga med ekonomisk intressegemenskap'<br>'SOKANDE'</b> - betyder att de är en sökande på lånet.<br>
     type: string
     enum:
-    - NA
     - SOKANDE
     - INTRESSENT
     - BORGENSMAN
@@ -4335,7 +4334,7 @@ definitions:
     - AGARANDELIPANT
     - SAMBO
     - EKONOMISKINTRESSEGEMENSKAP
-    example: 'NA'
+    example: 'SOKANDE'
   #
   applicantEmail:
     type: string
@@ -4356,14 +4355,23 @@ definitions:
     example: true
   #
   applicantEmployeed:
+    description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer.
+      employment mapping to Loan Process PERMANENT - Anställd, tills-vidare-anställd TEMPORARY - Tidbegränsad anställning PROBATIONARY - Provanställning UNEMPLOYMENT_INSURANCE - Arbetslöshetskassa SELF_EMPLOYED - Eget företag STUDENT_AID - Studiestöd PENSION - Inkomst av pension
     type: string
-    description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer
-    example: EMPLOYEED
+    enum:
+    - 'PERMANENT'
+    - 'TEMPORARY'
+    - 'PROBATIONARY'
+    - 'UNEMPLOYMENT_INSURANCE'
+    - 'SELF_EMPLOYED'
+    - 'STUDENT_AID'
+    - 'PENSION'
+    example: 'PERMANENT'
   #
   applicantLPEmployment:
-    type: string
     description: employment mapping to Loan Process PERMANENT - Anställd, tills-vidare-anställd TEMPORARY - Tidbegränsad anställning PROBATIONARY - Provanställning UNEMPLOYMENT_INSURANCE - Arbetslöshetskassa SELF_EMPLOYED - Eget företag STUDENT_AID - Studiestöd PENSION - Inkomst av pension
     example: 'PERMANENT'
+    type: string
     enum:
     - 'PERMANENT'
     - 'TEMPORARY'
